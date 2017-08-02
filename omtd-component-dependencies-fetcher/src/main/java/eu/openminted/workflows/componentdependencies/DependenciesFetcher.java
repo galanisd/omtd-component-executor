@@ -75,25 +75,5 @@ public class DependenciesFetcher {
 		return session;
 	}
 	
-	// Fetch
-	public static void main(String[] args) throws Exception {
 
-		String [] coordinatesList = {"org.springframework:spring-context:4.3.4.RELEASE", "org.apache.maven:maven-profile:2.2.1", "uk.ac.gate:gate-core:8.4.1"};
-
-		FileOutputStream stream = new FileOutputStream("target/classpaths.list");
-		
-		DependenciesFetcher fetcher = new DependenciesFetcher();
-		
-		for(int i = 0; i < coordinatesList.length; i++){
-			
-			System.out.println(coordinatesList[i] + " \n\n\n");
-			stream.write( (coordinatesList[i] + "\n").getBytes());
-			stream.flush();
-			String classpath = fetcher.resolveDependencies(coordinatesList[i]);
-			stream.write( (classpath + "\n").getBytes());
-			stream.flush();
-			System.out.println(classpath);
-		}
-		
-	}
 }
