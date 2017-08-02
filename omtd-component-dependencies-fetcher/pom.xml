@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eu.openminted</groupId>
+	<artifactId>omtd-simple-workflows-dependencies-fetcher</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>omtd-simple-workflows-dependencies-fetcher</name>
+	<url>http://maven.apache.org</url>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.2.RELEASE</version>
+	</parent>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+
+		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
+		<uima.version>2.9.0</uima.version>
+		<uimafit.version>2.2.0</uimafit.version>
+		
+		<start-class>eu.openminted.simplewokflows.dkpro.componentdependencies.DependenciesFetcher</start-class>		
+
+	</properties>
+	
+	<dependencies>
+
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.eclipse.aether/aether-api -->
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-api</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-util</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.apache.maven</groupId>
+    		<artifactId>maven-aether-provider</artifactId>
+    		<version>3.3.9</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-spi</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-transport-http</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-transport-file</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.eclipse.aether</groupId>
+		    <artifactId>aether-connector-basic</artifactId>
+		    <version>1.1.0</version>
+		</dependency>
+						
+		<!-- 
+		<dependency>
+		    <groupId>org.apache.maven</groupId>
+		    <artifactId>maven-plugin-api</artifactId>
+		    <version>3.5.0</version>
+		</dependency>
+		 -->
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+				
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+							<!--
+							<mainClass>${start-class}</mainClass>
+							<layout>ZIP</layout>
+							-->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

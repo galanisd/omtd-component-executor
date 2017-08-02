@@ -1,0 +1,10 @@
+/.settings
+/testOutput
+/.classpath
+/.project
+*/target
+
+/testOutput2/
+/testOutput3/
+/testOutput4/
+/bin/
