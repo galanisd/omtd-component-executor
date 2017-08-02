@@ -1,4 +1,4 @@
-package eu.openminted.simpleworkflows.dkpro.componentdependencies;
+package eu.openminted.workflows.componentdependencies;
 
 import java.io.FileOutputStream;
 

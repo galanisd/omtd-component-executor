@@ -1,4 +1,4 @@
-package eu.openminted.simpleworkflows.dkpro.executor;
+package eu.openminted.workflows.dkpro.executor;
 
 import java.util.Arrays;
 
