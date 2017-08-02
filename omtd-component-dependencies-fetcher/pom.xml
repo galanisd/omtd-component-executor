@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.openminted</groupId>
-	<artifactId>omtd-simple-workflows-dependencies-fetcher</artifactId>
+	<artifactId>omtd-component-dependencies-fetcher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>omtd-simple-workflows-dependencies-fetcher</name>
+	<name>omtd-component-dependencies-fetcher</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>

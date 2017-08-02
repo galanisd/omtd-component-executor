@@ -1,5 +1,7 @@
 package eu.openminted.simpleworkflows.dkpro.componentdependencies;
 
+import java.io.FileOutputStream;
+
 import org.apache.maven.repository.internal.MavenRepositorySystemUtils;
 import org.eclipse.aether.DefaultRepositorySystemSession;
 import org.eclipse.aether.RepositorySystem;
@@ -25,11 +27,15 @@ import org.eclipse.aether.util.graph.visitor.PreorderNodeListGenerator;
  */
 public class DependenciesFetcher {
 
+	private RepositorySystem repoSystem;
+	private RepositorySystemSession session;
+	
+	public DependenciesFetcher(){
+		repoSystem = newRepositorySystem();
+		session = newSession(repoSystem);
+	}
+	
 	public String resolveDependencies(String coordinates) throws Exception {
-		RepositorySystem repoSystem = newRepositorySystem();
-
-		RepositorySystemSession session = newSession(repoSystem);
-
 		Dependency dependency = new Dependency(new DefaultArtifact(coordinates), "compile");
 		RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/")
 				.build();
@@ -74,12 +80,18 @@ public class DependenciesFetcher {
 
 		String [] coordinatesList = {"org.springframework:spring-context:4.3.4.RELEASE", "org.apache.maven:maven-profile:2.2.1", "uk.ac.gate:gate-core:8.4.1"};
 
-
+		FileOutputStream stream = new FileOutputStream("target/classpaths.list");
+		
 		DependenciesFetcher fetcher = new DependenciesFetcher();
 		
 		for(int i = 0; i < coordinatesList.length; i++){
+			
 			System.out.println(coordinatesList[i] + " \n\n\n");
+			stream.write( (coordinatesList[i] + "\n").getBytes());
+			stream.flush();
 			String classpath = fetcher.resolveDependencies(coordinatesList[i]);
+			stream.write( (classpath + "\n").getBytes());
+			stream.flush();
 			System.out.println(classpath);
 		}
 		
