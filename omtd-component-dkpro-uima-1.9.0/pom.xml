@@ -27,7 +27,7 @@
 		<uimafit.version>2.2.0</uimafit.version>
 		 -->
 
-		<start-class>eu.openminted.workflows.dkpro.PipelineCommandLineRunner</start-class>
+		<start-class>eu.openminted.workflows.dkpro.executor.PipelineCommandLineRunner</start-class>
 
 	</properties>
 
@@ -73,11 +73,13 @@
 		</dependency>
 		
 		<!--  just for testing. -->
+		<!-- 
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
         	<artifactId>de.tudarmstadt.ukp.dkpro.core.io.pdf-asl</artifactId>
 			<version>1.8.0</version>
 		</dependency>
+		 -->
 		
 	</dependencies>
 
@@ -92,7 +94,8 @@
 							<goal>repackage</goal>
 						</goals>
 						<configuration>
-							<classifier>exec</classifier>
+							<!-- <classifier>exec</classifier>  -->
+							<layout>ZIP</layout>
 							<!-- <mainClass>${start-class}</mainClass> <layout>ZIP</layout> -->
 						</configuration>
 					</execution>

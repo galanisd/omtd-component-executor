@@ -25,12 +25,14 @@ public class UIMAFitRunner {
 		
 		// The pipeline should have a reader.
 		CollectionReader reader = null;
+		
+		// The pipeline should have anaysis engines.
 		AnalysisEngine [] engines = null;
 		
 		// An uknown class.		
 		Class<?> klass = Class.forName(className);
 		
-		// Check if it is a UIMA Reader.
+		// Check if the uknown class klass is a UIMA Reader.
 		Class<? extends CollectionReader> classThatExtendsCollectionReader = getReader(klass);
 		
 		// If so, only read and write. (Read -> Write)
@@ -41,7 +43,7 @@ public class UIMAFitRunner {
 			engines = new AnalysisEngine[1];
 			engines[0] = writerEngine;
 	
-		}else{// otherwise Read -> Process -> Write
+		}else{// Otherwise: Read -> Process -> Write
 			reader = CollectionReaderFactory.createReader(XmiReader.class, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir);
 			
 			AnalysisEngine componentEngine = createEngine(getComponent(klass));
