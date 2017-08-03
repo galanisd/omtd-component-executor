@@ -3,8 +3,40 @@ package eu.openminted.workflows.componentdependencies;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * @author ilsp
+ *
+ */
 public class DependenciesFetcherMain {
-
+	
+	private static String prepapeForSpringBootExecutor(String classpath){
+		
+		String listofJARSForSpringBoot = "";
+		String jars [] = classpath.split(":");
+		
+		System.out.println("length:" + jars.length);
+		for(int i = 0; i < jars.length; i++){
+			//System.out.println(jars[i]);
+			
+			File f = new File(jars[i]);
+			
+			if(!f.exists() || f.getName().startsWith("spring-")){
+				System.out.println("FIlTER" + jars[i]);
+			}else{
+				String jarNorm = "" + jars[i];
+				if( i == 0){
+					listofJARSForSpringBoot = jarNorm;	
+				}else{
+					listofJARSForSpringBoot = listofJARSForSpringBoot + "," + jarNorm;
+				}
+				
+			}
+		}
+		
+		return listofJARSForSpringBoot;
+	}
+	
+	// --
 	// Fetch
 	public static void main(String[] args) throws Exception {
 
@@ -15,47 +47,15 @@ public class DependenciesFetcherMain {
 		
 		for(int i = 0; i < coordinatesList.length; i++){
 
-			FileOutputStream stream = new FileOutputStream("target/classpath." + coordinatesList[i].replaceAll(":", "_"));
+			FileOutputStream stream = new FileOutputStream("../TDMClasspathLists/classpath." + coordinatesList[i].replaceAll(":", "_"));
 			
 			System.out.println(coordinatesList[i] + " \n\n\n");
 			//stream.write( (coordinatesList[i] + "\n").getBytes());
 			stream.flush();
 			String classpath = fetcher.resolveDependencies(coordinatesList[i]);
-			stream.write( (classpath + "\n").getBytes());
+			stream.write( (prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
 			stream.flush();
 			//System.out.println(classpath);
-			
-			
 		}
-
-		
-	}
-	
-	
-	private static String normalize(String classpath){
-		
-		String finalClasspath = "";
-		String jars [] = classpath.split(":");
-		
-		System.out.println("length:" + jars.length);
-		for(int i = 0; i < jars.length; i++){
-			//System.out.println(jars[i]);
-			
-			File f = new File(jars[i]);
-			
-			if(!f.exists()){
-				System.out.println("NOT EXISTS:" + jars[i]);
-			}else{
-				String jarNorm = "" + jars[i];
-				if( i == 0){
-					finalClasspath = jarNorm;	
-				}else{
-					finalClasspath = finalClasspath + ":" + jarNorm;
-				}
-				
-			}
-		}
-		
-		return finalClasspath;
 	}
 }

@@ -29,10 +29,16 @@ public class DependenciesFetcher {
 
 	private RepositorySystem repoSystem;
 	private RepositorySystemSession session;
+	private String rootRepo;
 	
 	public DependenciesFetcher(){
+		this("../TDMlocalRepo");
+	}
+	
+	public DependenciesFetcher(String rootRepo){
+		this.rootRepo = rootRepo;
 		repoSystem = newRepositorySystem();
-		session = newSession(repoSystem);
+		session = newSession(repoSystem, rootRepo);
 	}
 	
 	public String resolveDependencies(String coordinates) throws Exception {
@@ -66,10 +72,10 @@ public class DependenciesFetcher {
 		return locator.getService(RepositorySystem.class);
 	}
 
-	private static RepositorySystemSession newSession(RepositorySystem system) {
+	private static RepositorySystemSession newSession(RepositorySystem system, String rootRepo) {
 		DefaultRepositorySystemSession session = MavenRepositorySystemUtils.newSession();
 
-		LocalRepository localRepo = new LocalRepository("target/local-repo");
+		LocalRepository localRepo = new LocalRepository(rootRepo);
 		session.setLocalRepositoryManager(system.newLocalRepositoryManager(session, localRepo));
 
 		return session;
