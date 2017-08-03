@@ -1,14 +1,10 @@
 package eu.openminted.workflows.dkpro.executor;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
 /**
  * @author galanisd
  *
@@ -18,6 +14,9 @@ public class PipelineCommandLineRunner implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(PipelineCommandLineRunner.class);
 
+	private final static String READER = "READER";
+	private final static String ENGINE = "ENGINE";
+	
 	// == === ==	
 	public static void main(String[] args) throws Exception {
 
@@ -30,7 +29,17 @@ public class PipelineCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-				
-	}
+		//String className = args[0]; 
+		//String inputDir = args[1];
+		//String outputDir = args[2];				
+			
+		String className = "de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader";
+		String inputDir = "C:/Users/galanisd/Desktop/Dimitris/EclipseWorkspaces/ILSPMars/omtd-workflows-executor/testInput/";
+		String outputDir = "C:/Users/galanisd/Desktop/Dimitris/EclipseWorkspaces/ILSPMars/omtd-workflows-executor/testOutput/";
+		
+		UIMAFitRunner runner = new UIMAFitRunner();
+		runner.uimaFitRun(className, inputDir, outputDir);
+	}	
 }
+
 
