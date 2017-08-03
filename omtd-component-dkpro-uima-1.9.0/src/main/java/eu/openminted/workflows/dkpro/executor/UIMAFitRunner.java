@@ -38,7 +38,8 @@ public class UIMAFitRunner {
 		// If so, only read and write. (Read -> Write)
 		if(classThatExtendsCollectionReader != null){	
 			//reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir);			
-			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.pdf");
+			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
+					ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.pdf");//, ResourceCollectionReaderBase.PARAM_LANGUAGE, "en");
 
 			engines = new AnalysisEngine[1];
 			engines[0] = writerEngine;
