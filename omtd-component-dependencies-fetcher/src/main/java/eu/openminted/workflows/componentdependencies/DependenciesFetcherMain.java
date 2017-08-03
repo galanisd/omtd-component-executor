@@ -21,11 +21,11 @@ public class DependenciesFetcherMain {
 			//stream.write( (coordinatesList[i] + "\n").getBytes());
 			stream.flush();
 			String classpath = fetcher.resolveDependencies(coordinatesList[i]);
-			stream.write( (normalize(classpath) + "\n").getBytes());
+			stream.write( (classpath + "\n").getBytes());
 			stream.flush();
-			System.out.println(classpath);
+			//System.out.println(classpath);
 			
-			normalize(classpath);
+			
 		}
 
 		
@@ -35,20 +35,22 @@ public class DependenciesFetcherMain {
 	private static String normalize(String classpath){
 		
 		String finalClasspath = "";
-		String jars [] = classpath.split(";");
+		String jars [] = classpath.split(":");
+		
+		System.out.println("length:" + jars.length);
 		for(int i = 0; i < jars.length; i++){
 			//System.out.println(jars[i]);
 			
 			File f = new File(jars[i]);
 			
 			if(!f.exists()){
-				System.out.println(jars[i]);
+				System.out.println("NOT EXISTS:" + jars[i]);
 			}else{
-				String jarNorm = "file:///" + jars[i].replaceAll("\\\\", "/");
+				String jarNorm = "" + jars[i];
 				if( i == 0){
 					finalClasspath = jarNorm;	
 				}else{
-					finalClasspath = finalClasspath + ";" + jarNorm;
+					finalClasspath = finalClasspath + ":" + jarNorm;
 				}
 				
 			}

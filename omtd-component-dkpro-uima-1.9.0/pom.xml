@@ -38,11 +38,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+
 		<!-- /Spring Boot -->
 
 		<!-- UIMA and UIMAFit dependencies -->
@@ -73,13 +69,13 @@
 		</dependency>
 		
 		<!--  just for testing. -->
-		<!-- 
+		
 		<dependency>
 			<groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
         	<artifactId>de.tudarmstadt.ukp.dkpro.core.io.pdf-asl</artifactId>
 			<version>1.8.0</version>
 		</dependency>
-		 -->
+		
 		
 	</dependencies>
 
@@ -94,7 +90,7 @@
 							<goal>repackage</goal>
 						</goals>
 						<configuration>
-							<!-- <classifier>exec</classifier>  -->
+							<classifier>exec</classifier>
 							<layout>ZIP</layout>
 							<!-- <mainClass>${start-class}</mainClass> <layout>ZIP</layout> -->
 						</configuration>
