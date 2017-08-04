@@ -4,8 +4,6 @@
 /.project
 */target
 
-/testOutput2/
-/testOutput3/
-/testOutput4/
+/testOutput*/
 /bin/
 /TDMlocalRepo/
