@@ -96,9 +96,10 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 		//		"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.arktools-gpl:1.8.0",
 		//		"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl:1.8.0" };
 		
-		String[] myArgs = { "../../TDMClasspathLists/", "../../TDMlocalRepo/", "../../TDMCoordinatesList.txt"};
+		//String[] myArgs = { "../../TDMClasspathLists/", "../../TDMlocalRepo/", "../../TDMCoordinatesList.txt"};
+		//app.run(myArgs);
 		
-		app.run(myArgs);
+		app.run(args);
 		log.info("DONE!");
 	}
 	
