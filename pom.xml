@@ -18,7 +18,7 @@
 
 	<modules>
 		<module>./omtd-component-dependencies-fetcher</module>
-		<module>./omtd-component-dkpro-uima-1.9.0</module>
+		<module>./omtd-component-dkpro-1.8.0-uima-2.8.1</module>
 	</modules>
   
 </project>

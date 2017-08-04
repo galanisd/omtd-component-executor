@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.openminted</groupId>
-	<artifactId>omtd-component-dkpro-uima-1.9.0</artifactId>
+	<artifactId>omtd-component-dkpro-1.8.0-uima-2.8.1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>omtd-component-dkpro-uima-1.9.0</name>
+	<name>omtd-component-dkpro-1.8.0-uima-2.8.1</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
