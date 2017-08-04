@@ -45,7 +45,8 @@ public class UIMAFitRunner {
 			engines[0] = writerEngine;
 	
 		}else{// Otherwise: Read -> Process -> Write
-			reader = CollectionReaderFactory.createReader(XmiReader.class, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir);
+			reader = CollectionReaderFactory.createReader(XmiReader.class, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
+					ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.xmi");
 			
 			AnalysisEngine componentEngine = createEngine(getComponent(klass));
 					

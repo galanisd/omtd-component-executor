@@ -1,4 +1,4 @@
-clear
+
 
 coordinates=$1
 className=$2
