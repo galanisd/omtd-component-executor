@@ -31,9 +31,9 @@ public class DependenciesFetcher {
 	private RepositorySystemSession session;
 	private String rootRepo;
 	
-	public DependenciesFetcher(){
-		this("../TDMlocalRepo");
-	}
+	//public DependenciesFetcher(){
+	//	this("../TDMlocalRepo");
+	//}
 	
 	public DependenciesFetcher(String rootRepo){
 		this.rootRepo = rootRepo;

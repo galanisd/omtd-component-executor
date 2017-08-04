@@ -6,8 +6,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
  * @author ilsp
@@ -48,23 +52,26 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		String dirWithJARLists = args[0];
 		String repo = args[1];
+		ArrayList<String> coordinatesList = getCoordinatesList(args[2]);
 		
 		DependenciesFetcher fetcher = new DependenciesFetcher(repo);
 
-		for (int i = 2; i < args.length; i++) {
-
-			File dir = new File(dirWithJARLists);
-			if(!dir.exists()){
-				dir.mkdirs();
-			}
+		File dir = new File(dirWithJARLists);
+		if(!dir.exists()){
+			dir.mkdirs();
+		}
+		
+		// For each 
+		for (int i = 0; i < coordinatesList.size(); i++) {	
 			
+			String coordinates = coordinatesList.get(i);
 			FileOutputStream stream = new FileOutputStream(
-					dirWithJARLists + "classpath." + args[i].replaceAll(":", "_"));
+					dirWithJARLists + "classpath." + coordinates.replaceAll(":", "_"));
 
-			System.out.println(args[i] + " \n\n\n");
+			System.out.println(coordinatesList.get(i) + " \n\n\n");
 			// stream.write( (coordinatesList[i] + "\n").getBytes());
 			stream.flush();
-			String classpath = fetcher.resolveDependencies(args[i]);
+			String classpath = fetcher.resolveDependencies(coordinates);
 			stream.write((prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
 			stream.flush();
 			// System.out.println(classpath);
@@ -83,11 +90,34 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 		// "org.apache.maven:maven-profile:2.2.1", "uk.ac.gate:gate-core:8.4.1",
 		// "uk.ac.gate:gate-core:8.0",
 		// "de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.io.pdf-asl:1.8.0"};
-		String[] myArgs = { "../../TDMClasspathLists/", "../../TDMlocalRepo/", "de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.io.pdf-asl:1.8.0",
-				"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.opennlp-asl:1.8.0",
-				"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.arktools-gpl:1.8.0",
-				"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl:1.8.0" };
+		
+		//String[] myArgs = { "../../TDMClasspathLists/", "../../TDMlocalRepo/", "de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.io.pdf-asl:1.8.0",
+		//		"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.opennlp-asl:1.8.0",
+		//		"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.arktools-gpl:1.8.0",
+		//		"de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl:1.8.0" };
+		
+		String[] myArgs = { "../../TDMClasspathLists/", "../../TDMlocalRepo/", "../../TDMCoordinatesList.txt"};
+		
 		app.run(myArgs);
 		log.info("DONE!");
 	}
+	
+	private ArrayList<String> getCoordinatesList(String file){
+		 
+		ArrayList<String> cList = new ArrayList<String>();
+		String thisLine = null;
+	
+		  try {
+		     BufferedReader br = new BufferedReader(new FileReader(new File(file)));
+		     
+		     while ((thisLine = br.readLine()) != null) {
+		    	cList.add(thisLine);
+		        log.info(thisLine);
+		     }       
+		  } catch(Exception e) {
+		     e.printStackTrace();
+		  }
+	      
+	      return cList;
+	   }
 }
