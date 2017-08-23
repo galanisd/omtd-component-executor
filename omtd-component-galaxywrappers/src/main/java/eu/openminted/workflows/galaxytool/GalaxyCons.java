@@ -8,6 +8,8 @@ public class GalaxyCons {
 	public static final String requirements = "requirements";
 	public static final String container = "container";
 	public static final String command = "command";
+	public static final String inputs = "inputs";
+	public static final String outputs = "outputs";
 	
 	// attributes
 	public static final String toolName = "name";

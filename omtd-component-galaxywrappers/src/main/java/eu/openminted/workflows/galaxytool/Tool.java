@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = GalaxyCons.tool)
-@XmlType(propOrder={"description", "requirements", "command"})
+@XmlType(propOrder={"description", "requirements", "command", "inputs", "outputs"})
 public class Tool {
 	
 	private String id;
@@ -18,7 +18,11 @@ public class Tool {
 	
 	private Requirements requirements;
 
-	private String command;
+	private String command;	
+	
+	private Inputs inputs;
+	private Outputs outputs;
+	
 	
 	public Requirements getRequirements() {
 		return requirements;
@@ -72,6 +76,24 @@ public class Tool {
 	@XmlElement(name = GalaxyCons.command)
 	public void setCommand(String command) {
 		this.command = command;
+	}
+
+	public Inputs getInputs() {
+		return inputs;
+	}
+
+	@XmlElement(name = GalaxyCons.inputs)
+	public void setInputs(Inputs inputs) {
+		this.inputs = inputs;
+	}
+
+	public Outputs getOutputs() {
+		return outputs;
+	}
+
+	@XmlElement(name = GalaxyCons.outputs)
+	public void setOutputs(Outputs outputs) {
+		this.outputs = outputs;
 	}
 	
 	

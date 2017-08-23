@@ -8,6 +8,8 @@ import eu.openminted.registry.domain.Component;
 import eu.openminted.registry.domain.ComponentInfo;
 import eu.openminted.registry.domain.Description;
 import eu.openminted.workflows.galaxytool.Container;
+import eu.openminted.workflows.galaxytool.Inputs;
+import eu.openminted.workflows.galaxytool.Outputs;
 import eu.openminted.workflows.galaxytool.Requirements;
 import eu.openminted.workflows.galaxytool.Tool;
 
@@ -79,6 +81,12 @@ public class GalaxyWrapperGenerator {
 			tool.setRequirements(requirements);
 			
 			tool.setCommand("to be completed");
+			
+			Inputs inputs = new Inputs();
+			Outputs outputs = new Outputs();
+			
+			tool.setInputs(inputs);
+			tool.setOutputs(outputs);
 			
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
 			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath);
