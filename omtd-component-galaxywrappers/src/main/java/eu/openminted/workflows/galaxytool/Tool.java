@@ -46,7 +46,7 @@ public class Tool {
 		return id;
 	}
 
-	@XmlAttribute(name = GalaxyCons.toolID)
+	@XmlAttribute(name = GalaxyCons.id)
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -55,7 +55,7 @@ public class Tool {
 		return name;
 	}
 
-	@XmlAttribute(name = GalaxyCons.toolName)
+	@XmlAttribute(name = GalaxyCons.name)
 	public void setName(String name) {
 		this.name = name;
 	}

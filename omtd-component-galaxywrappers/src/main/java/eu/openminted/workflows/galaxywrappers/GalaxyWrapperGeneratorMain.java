@@ -17,6 +17,7 @@ public class GalaxyWrapperGeneratorMain {
 		for(int i = 0; i < componentFiles.length; i++){
 			File componentFile = componentFiles[i];
 			
+			System.out.println(componentFiles[i].getAbsolutePath() + " processing...\n" );
 			String generatedXML = generator.generate(componentFile);			
 			System.out.println(componentFiles[i].getAbsolutePath() + "\n" + generatedXML);
 		}

@@ -10,10 +10,15 @@ public class GalaxyCons {
 	public static final String command = "command";
 	public static final String inputs = "inputs";
 	public static final String outputs = "outputs";
+	public static final String param = "param";
 	
 	// attributes
-	public static final String toolName = "name";
-	public static final String toolID = "id";
+	public static final String name = "name";
+	public static final String id = "id";
 	public static final String toolVersion = "version";
 	public static final String type = "type";
+	public static final String label = "label";
+	public static final String format = "format";
+	public static final String multiple = "format";
+	public static final String visible = "visible";
 }
