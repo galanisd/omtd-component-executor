@@ -8,6 +8,21 @@ public class Param {
 	private String type;
 	private String label;
 	
+	private String value;
+	
+	private String description;
+	
+	public String getDescription() {
+		return description;
+	}
+
+	@XmlAttribute(name = GalaxyCons.description)
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	private String optional;
+	
 	
 	public String getName() {
 		return name;
@@ -34,4 +49,24 @@ public class Param {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+
+	public String getOptional() {
+		return optional;
+	}
+
+	@XmlAttribute(name = GalaxyCons.optional)
+	public void setOptional(String optional) {
+		this.optional = optional;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	@XmlAttribute(name = GalaxyCons.value)
+	public void setValue(String value) {
+		this.value = value;
+	}
+	
+	
 }

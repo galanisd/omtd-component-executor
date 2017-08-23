@@ -21,4 +21,6 @@ public class GalaxyCons {
 	public static final String format = "format";
 	public static final String multiple = "format";
 	public static final String visible = "visible";
+	public static final String optional = "optional";	
+	public static final String value = "value";
 }

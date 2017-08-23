@@ -51,7 +51,7 @@ public class GalaxyWrapperGenerator {
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();			
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
 			
-			// ** Create the tool
+			// ** Create the tool.
 			Tool tool = new Tool();
 			
 			// Get tool desc.
@@ -70,13 +70,13 @@ public class GalaxyWrapperGenerator {
 			// Get tool version.
 			String version = componentInfo.getVersionInfo().getVersion();
 			
-			// Configure wrapper description
+			// Configure wrapper description.
 			tool.setDescription(desc);			
 			tool.setId(id);
 			tool.setName(name);
 			tool.setVersion(version);
 
-			// Configure wrapper requirements
+			// Configure wrapper requirements.
 			Requirements requirements = new Requirements();
 			Container container = new Container();
 			container.setType("docker");
@@ -86,6 +86,7 @@ public class GalaxyWrapperGenerator {
 			
 			tool.setCommand("to be completed");
 			
+			// Configure wrapper inputs/outputs.
 			Inputs inputs = new Inputs();
 			Outputs outputs = new Outputs();
 			
@@ -98,6 +99,7 @@ public class GalaxyWrapperGenerator {
 			tool.setInputs(inputs);
 			tool.setOutputs(outputs);
 			
+			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
 			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath);
 			
@@ -117,10 +119,20 @@ public class GalaxyWrapperGenerator {
 		List<ParameterInfo> parametersInfos = info.getParameterInfos();
 		
 		for(ParameterInfo paramInfo : parametersInfos){
-			Param param = new Param();
+			Param galaxyParam = new Param();
 			
-			param.setName(paramInfo.getParameterName());
-			params.add(param);
+			galaxyParam.setName(paramInfo.getParameterName());
+			galaxyParam.setLabel(paramInfo.getParameterLabel());
+			galaxyParam.setDescription(paramInfo.getParameterDescription());
+			galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
+			
+			// set default.
+			if(paramInfo.getDefaultValue() != null && paramInfo.getDefaultValue().size() > 0){
+				galaxyParam.setValue(paramInfo.getDefaultValue().get(0));
+			}
+			
+			//param.setOptional(paramInfo.);
+			params.add(galaxyParam);
 		}
 		
 		
