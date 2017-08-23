@@ -1,21 +1,77 @@
 package eu.openminted.workflows.galaxytool;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
 
 @XmlRootElement(name = GalaxyCons.tool)
+@XmlType(propOrder={"description", "requirements", "command"})
 public class Tool {
 	
-	@XmlElement(name = GalaxyCons.description)
-	public String description;
+	private String id;
+	private String name;
+	private String version;
+	
+	private String description;
+	
+	private Requirements requirements;
+
+	private String command;
+	
+	public Requirements getRequirements() {
+		return requirements;
+	}
+
+	@XmlElement(name = GalaxyCons.requirements)
+	public void setRequirements(Requirements requirements) {
+		this.requirements = requirements;
+	}
 
 	public String getDescription() {
 		return description;
 	}
-
 	
+	@XmlElement(name = GalaxyCons.description)
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public String getId() {
+		return id;
+	}
+
+	@XmlAttribute(name = GalaxyCons.toolID)
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@XmlAttribute(name = GalaxyCons.toolName)
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	@XmlAttribute(name = GalaxyCons.toolVersion)
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public String getCommand() {
+		return command;
+	}
+
+	@XmlElement(name = GalaxyCons.command)
+	public void setCommand(String command) {
+		this.command = command;
 	}
 	
 	

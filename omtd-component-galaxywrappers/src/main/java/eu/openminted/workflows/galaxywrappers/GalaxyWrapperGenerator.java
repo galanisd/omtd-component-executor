@@ -1,17 +1,14 @@
 package eu.openminted.workflows.galaxywrappers;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.logging.Logger;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import eu.openminted.registry.domain.Component;
 import eu.openminted.registry.domain.ComponentInfo;
 import eu.openminted.registry.domain.Description;
+import eu.openminted.workflows.galaxytool.Container;
+import eu.openminted.workflows.galaxytool.Requirements;
 import eu.openminted.workflows.galaxytool.Tool;
 
 /**
@@ -22,24 +19,20 @@ public class GalaxyWrapperGenerator {
 
 	private static final Logger log = Logger.getLogger(GalaxyWrapperGenerator.class.getName());
 
-	OMTDSHAREParser omtdshareParser;
+	private OMTDSHAREParser omtdshareParser;
+	private GalaxyToolWrapperWriter galaxyToolWrapperWriter;
 	
-	private Marshaller jaxbMarshaller;
-	private JAXBContext jaxbContext;
 	private File outDirHandler;
 	
-	public GalaxyWrapperGenerator(String outDir){		
-		try{
-			omtdshareParser = new OMTDSHAREParser();
-			jaxbContext	 = JAXBContext.newInstance(Tool.class);
-			jaxbMarshaller = jaxbContext.createMarshaller();
-			
-			outDirHandler = new File(outDir);
+	public GalaxyWrapperGenerator(String outDir){			
+		omtdshareParser = new OMTDSHAREParser();
+		galaxyToolWrapperWriter = new GalaxyToolWrapperWriter();
+		
+		// Create wrappers output dir if not exists. 
+		outDirHandler = new File(outDir);
+		if(!outDirHandler.exists()){
 			outDirHandler.mkdirs();
-		}catch(Exception e){
-			//log
-			e.printStackTrace();
-		}	
+		}
 	}
 	
 	public String generate(File omtdShareFile){
@@ -48,22 +41,47 @@ public class GalaxyWrapperGenerator {
 			// Parse omtd-share file.			
 			Component componentMeta = omtdshareParser.parse(omtdShareFile);
 
-			// Get Info
+			// Get info
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();			
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
 			
+			// ** Create the tool
+			Tool tool = new Tool();
+			
+			// Get tool desc.
 			String desc  = "";
 			if(descriptions != null && descriptions.size() > 0){				
 				desc = descriptions.get(0).getValue();
 			}else{
 				desc = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			}
+
+			// Get id.
+			String id = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
 			
-			Tool tool = new Tool();
-			tool.setDescription(desc);
+			String name = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
+					
+			// Get tool version.
+			String version = componentInfo.getVersionInfo().getVersion();
 			
-			FileOutputStream out = new FileOutputStream(outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml");
-			jaxbMarshaller.marshal(tool, out);
+			// Configure wrapper description
+			tool.setDescription(desc);			
+			tool.setId(id);
+			tool.setName(name);
+			tool.setVersion(version);
+
+			// Configure wrapper requirements
+			Requirements requirements = new Requirements();
+			Container container = new Container();
+			container.setType("docker");
+			container.setValue("omtd-simple-workflows-docker");
+			requirements.setContainer(container);
+			tool.setRequirements(requirements);
+			
+			tool.setCommand("to be completed");
+			
+			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
+			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath);
 		}catch(Exception e){
 			e.printStackTrace();
 			log.info(e.getMessage());
