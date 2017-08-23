@@ -8,9 +8,12 @@ public class Param {
 	private String type;
 	private String label;
 	
-	private String value;
+	private String value;	
+	private String description;	
+	private String optional;
 	
-	private String description;
+	private String format; 
+	private String multiple;
 	
 	public String getDescription() {
 		return description;
@@ -21,9 +24,6 @@ public class Param {
 		this.description = description;
 	}
 
-	private String optional;
-	
-	
 	public String getName() {
 		return name;
 	}
@@ -66,6 +66,24 @@ public class Param {
 	@XmlAttribute(name = GalaxyCons.value)
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	@XmlAttribute(name = GalaxyCons.format)
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public String getMultiple() {
+		return multiple;
+	}
+
+	@XmlAttribute(name = GalaxyCons.multiple)
+	public void setMultiple(String multiple) {
+		this.multiple = multiple;
 	}
 	
 	

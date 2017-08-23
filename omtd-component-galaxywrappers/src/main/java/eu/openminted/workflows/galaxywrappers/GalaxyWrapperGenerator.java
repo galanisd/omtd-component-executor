@@ -10,7 +10,10 @@ import eu.openminted.registry.domain.ComponentInfo;
 import eu.openminted.registry.domain.Description;
 import eu.openminted.registry.domain.ParameterInfo;
 import eu.openminted.registry.domain.ProcessingResourceInfo;
+import eu.openminted.workflows.galaxytool.Collection;
 import eu.openminted.workflows.galaxytool.Container;
+import eu.openminted.workflows.galaxytool.DiscoverDatasets;
+import eu.openminted.workflows.galaxytool.GalaxyCons;
 import eu.openminted.workflows.galaxytool.Inputs;
 import eu.openminted.workflows.galaxytool.Outputs;
 import eu.openminted.workflows.galaxytool.Param;
@@ -41,8 +44,7 @@ public class GalaxyWrapperGenerator {
 		}
 	}
 	
-	public String generate(File omtdShareFile){
-		String xmlFile = "";
+	public void generate(File omtdShareFile){
 		try{
 			// Parse omtd-share file.			
 			Component componentMeta = omtdshareParser.parse(omtdShareFile);
@@ -91,12 +93,34 @@ public class GalaxyWrapperGenerator {
 			Outputs outputs = new Outputs();
 			
 			ProcessingResourceInfo  info = componentInfo.getInputContentResourceInfo();
-			inputs.setParams(extractParams(info));
 			
-			info = componentInfo.getOutputResourceInfo();
-			outputs.setParams(extractParams(info));
-			 
+			ArrayList<Param> inputParams = extractInputParams(info);
+			Param dataGalaxyParam = new Param();
+			dataGalaxyParam.setType("data");
+			dataGalaxyParam.setName(name + "_InputFiles");
+			dataGalaxyParam.setLabel(name + "_InputFiles");
+			dataGalaxyParam.setFormat("uknown");
+			dataGalaxyParam.setMultiple("true");
+			inputParams.add(dataGalaxyParam);
+			
+			inputs.setParams(inputParams);
 			tool.setInputs(inputs);
+			
+			DiscoverDatasets dd = new DiscoverDatasets();
+			dd.setDirectory("out");
+			dd.setPattern("__designation__");
+			dd.setFormat("uknown");
+			dd.setVisible("false");
+			Collection collection = new Collection();
+			collection.setDiscoverDatasets(dd);
+			collection.setName("output");
+			collection.setType("list");
+			collection.setLabel(name + "_output");
+			outputs.setCollection(collection);
+			//info = componentInfo.getOutputResourceInfo();
+			//outputs.setParams(extractInputParams(info));
+			 
+			
 			tool.setOutputs(outputs);
 			
 			// Serialize wrapper object to a file.
@@ -107,15 +131,13 @@ public class GalaxyWrapperGenerator {
 		}catch(Exception e){
 			e.printStackTrace();
 			log.info(e.getMessage());
-			return "ERROR";
 		}
-		
-		return xmlFile;
+	
 	}
 	
-	private ArrayList<Param> extractParams(ProcessingResourceInfo info){
-		ArrayList<Param> params = new ArrayList<Param>();
+	private ArrayList<Param> extractInputParams(ProcessingResourceInfo info){
 		
+		ArrayList<Param> params = new ArrayList<Param>();		
 		List<ParameterInfo> parametersInfos = info.getParameterInfos();
 		
 		for(ParameterInfo paramInfo : parametersInfos){
@@ -126,16 +148,22 @@ public class GalaxyWrapperGenerator {
 			galaxyParam.setDescription(paramInfo.getParameterDescription());
 			galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
 			
-			// set default.
+			// Set default value.
 			if(paramInfo.getDefaultValue() != null && paramInfo.getDefaultValue().size() > 0){
 				galaxyParam.setValue(paramInfo.getDefaultValue().get(0));
 			}
+
+			// https://docs.galaxyproject.org/en/master/dev/schema.html
+			// Use only "text" for now.
+			galaxyParam.setType(GalaxyCons.text);
 			
-			//param.setOptional(paramInfo.);
+			// Add it to the list.
 			params.add(galaxyParam);
-		}
-		
+		}		
 		
 		return params;
 	}
+	
+	
+
 }

@@ -1,5 +1,9 @@
 package eu.openminted.workflows.galaxytool;
 
+/**
+ * @author galanisd
+ *
+ */
 public class GalaxyCons {
 
 	// elements
@@ -11,16 +15,24 @@ public class GalaxyCons {
 	public static final String inputs = "inputs";
 	public static final String outputs = "outputs";
 	public static final String param = "param";
+	public static final String discover_datasets = "discover_datasets";
+	public static final String collection = "collection";
+	
 	
 	// attributes
 	public static final String name = "name";
 	public static final String id = "id";
-	public static final String toolVersion = "version";
+	public static final String version = "version";
 	public static final String type = "type";
 	public static final String label = "label";
 	public static final String format = "format";
-	public static final String multiple = "format";
+	public static final String multiple = "multiple";
 	public static final String visible = "visible";
 	public static final String optional = "optional";	
 	public static final String value = "value";
+	public static final String pattern = "pattern";
+	public static final String directory = "directory";
+	
+	// values
+	public static final String text = "text";
 }

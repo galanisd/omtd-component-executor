@@ -64,7 +64,7 @@ public class Tool {
 		return version;
 	}
 
-	@XmlAttribute(name = GalaxyCons.toolVersion)
+	@XmlAttribute(name = GalaxyCons.version)
 	public void setVersion(String version) {
 		this.version = version;
 	}
