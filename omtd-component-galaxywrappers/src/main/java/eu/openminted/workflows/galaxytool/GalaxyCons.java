@@ -17,6 +17,7 @@ public class GalaxyCons {
 	public static final String param = "param";
 	public static final String discover_datasets = "discover_datasets";
 	public static final String collection = "collection";
+	public static final String section = "section";
 	
 	
 	// attributes
@@ -32,6 +33,7 @@ public class GalaxyCons {
 	public static final String value = "value";
 	public static final String pattern = "pattern";
 	public static final String directory = "directory";
+	public static final String file = "file";
 	
 	// values
 	public static final String text = "text";

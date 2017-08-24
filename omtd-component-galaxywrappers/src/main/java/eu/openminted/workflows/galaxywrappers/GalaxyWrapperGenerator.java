@@ -44,7 +44,7 @@ public class GalaxyWrapperGenerator {
 		}
 	}
 	
-	public void generate(File omtdShareFile){
+	public Tool generate(File omtdShareFile){
 		try{
 			// Parse omtd-share file.			
 			Component componentMeta = omtdshareParser.parse(omtdShareFile);
@@ -69,6 +69,7 @@ public class GalaxyWrapperGenerator {
 			
 			String name = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 					
+			name = name.substring(name.lastIndexOf(".") + 1);
 			// Get tool version.
 			String version = componentInfo.getVersionInfo().getVersion();
 			
@@ -127,10 +128,11 @@ public class GalaxyWrapperGenerator {
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
 			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath);
 			
-			
+			return tool;
 		}catch(Exception e){
 			e.printStackTrace();
 			log.info(e.getMessage());
+			return null;
 		}
 	
 	}
