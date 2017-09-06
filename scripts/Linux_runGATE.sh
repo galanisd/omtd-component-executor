@@ -79,7 +79,10 @@ while (itInputFiles.hasNext()) {
 		app.execute();
 
 		// build the output filename
-		File outputFile = new File(output,inputFile.getName()+"."+exporter.getDefaultExtension());
+		File outputFile = new File(output, input.toURI().relativize(inputFile.toURI()).toString()+"."+exporter.getDefaultExtension());
+
+		// make sure the parent directory tree exists
+		outputFile.getParentFile().mkdirs();
 
 		// export the processed document
 		exporter.export(doc, outputFile);
@@ -90,6 +93,3 @@ while (itInputFiles.hasNext()) {
 		Factory.deleteResource(doc);
 	}
 }
-
-
-
