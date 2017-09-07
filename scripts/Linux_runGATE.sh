@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 @GrabResolver(name='gate-snapshots', root='http://repo.gate.ac.uk/content/groups/public/')
-@Grab('uk.ac.gate:gate-core:8.5-SNAPSHOT')
+@Grab(group='uk.ac.gate', module='gate-core', version='8.5-SNAPSHOT', changing=true)
 import gate.*;
 import gate.creole.*;
 import gate.util.persistence.PersistenceManager;
