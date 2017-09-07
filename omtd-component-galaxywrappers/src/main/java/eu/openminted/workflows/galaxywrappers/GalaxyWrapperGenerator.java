@@ -83,7 +83,7 @@ public class GalaxyWrapperGenerator {
 			Requirements requirements = new Requirements();
 			Container container = new Container();
 			container.setType("docker");
-			container.setValue("omtd-workflows-executor");
+			container.setValue("snf-765691.vm.okeanos.grnet.gr/openminted/omtd-workflows-executor");
 			requirements.setContainer(container);
 			tool.setRequirements(requirements);
 			

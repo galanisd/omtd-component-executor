@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>workflows-executor</name>
+  <name>omtd-workflows-executor</name>
   <url>http://maven.apache.org</url>
 
 	<properties>
@@ -20,6 +20,6 @@
 		<module>./omtd-component-dependencies-fetcher</module>
 		<module>./omtd-component-dkpro-1.8.0-uima-2.8.1</module>
     	<module>./omtd-component-galaxywrappers</module>
-  </modules>
+    </modules>
   
 </project>

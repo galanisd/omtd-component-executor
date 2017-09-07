@@ -13,7 +13,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install xmlstarlet
-RUN apt-get -y install xmlstarlet
+# RUN apt-get -y install xmlstarlet
 
 # Install omtd-workflows-executor. 
 # -- -- --- - -- -- -- --- - -- 
