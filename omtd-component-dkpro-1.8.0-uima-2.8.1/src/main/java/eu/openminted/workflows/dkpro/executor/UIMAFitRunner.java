@@ -39,8 +39,8 @@ public class UIMAFitRunner {
 		if(classThatExtendsCollectionReader != null){	
 			//reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir);			
 			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
-					ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.pdf",
-					ResourceCollectionReaderBase.PARAM_LANGUAGE, "en"); // TO-CHECK.
+					ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.pdf", // hardwired: TO-BE-CHANGED
+					ResourceCollectionReaderBase.PARAM_LANGUAGE, "en"); // hardwired: TO-BE-CHANGED
 
 			engines = new AnalysisEngine[1];
 			engines[0] = writerEngine;
