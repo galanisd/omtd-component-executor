@@ -24,6 +24,11 @@ COPY . /opt/omtd-workflows-executor/
 # Set working dir. 
 WORKDIR /opt/omtd-workflows-executor/scripts/
 
+# Create repo dir
+RUN mkdir /opt/TDMlocalRepo/
+# Fetch Dependencies 
+RUN bash FetchDependencies.sh ../TDMCoordinatesList.txt ../TDMClasspathLists/ /opt/TDMlocalRepo/   
+
 # -- -- --- - -- -- -- --- - -- 
 
 
