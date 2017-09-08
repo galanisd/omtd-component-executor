@@ -22,7 +22,7 @@ public class Param {
 		return collection_type;
 	}
 
-	@XmlAttribute(name = GalaxyCons.description)
+	@XmlAttribute(name = GalaxyCons.collection_type)
 	public void setCollection_type(String collection_type) {
 		this.collection_type = collection_type;
 	}

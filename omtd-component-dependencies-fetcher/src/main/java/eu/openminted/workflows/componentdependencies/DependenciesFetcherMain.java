@@ -50,9 +50,13 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		String dirWithJARLists = args[0];
-		String repo = args[1];
-		ArrayList<String> coordinatesList = getCoordinatesList(args[2]);
+
+		// input
+		ArrayList<String> coordinatesList = getCoordinatesList(args[0]);
+		
+		// outputs
+		String dirWithJARLists = args[1];
+		String repo = args[2];
 		
 		DependenciesFetcher fetcher = new DependenciesFetcher(repo);
 
