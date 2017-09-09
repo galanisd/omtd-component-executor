@@ -33,6 +33,9 @@ public class GalaxyWrapperGenerator {
 
 	private File outDirHandler;
 
+	private Component componentMeta;
+	private String componentID;
+	
 	public GalaxyWrapperGenerator(String outDir) {
 		omtdshareParser = new OMTDSHAREParser();
 		galaxyToolWrapperWriter = new GalaxyToolWrapperWriter();
@@ -44,10 +47,26 @@ public class GalaxyWrapperGenerator {
 		}
 	}
 
+	
+	public Component getComponentMeta() {
+		return componentMeta;
+	}
+
+	
+	public String getComponentID() {
+		return componentID;
+	}
+
+
+	public void setComponentID(String componentID) {
+		this.componentID = componentID;
+	}
+
+
 	public Tool generate(File omtdShareFile) {
 		try {
 			// Parse omtd-share file.
-			Component componentMeta = omtdshareParser.parse(omtdShareFile);
+			componentMeta = omtdshareParser.parse(omtdShareFile);
 
 			// Get info
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
@@ -65,17 +84,17 @@ public class GalaxyWrapperGenerator {
 			}
 
 			// Get id.
-			String id = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
+			componentID = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
 
-			String name = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
+			String fullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 
-			name = name.substring(name.lastIndexOf(".") + 1);
+			String name = fullName.substring(fullName.lastIndexOf(".") + 1);
 			// Get tool version.
 			String version = componentInfo.getVersionInfo().getVersion();
 
 			// Configure wrapper description.
 			tool.setDescription(desc);
-			tool.setId(id);
+			tool.setId(componentID);
 			tool.setName(name);
 			tool.setVersion(version);
 
@@ -103,7 +122,10 @@ public class GalaxyWrapperGenerator {
 			tool.setInputs(inputs);
 
 			// tool.setCommand("to be completed");
-			tool.setCommand(buildExecutionCommand(dataGalaxyParam.getName()));
+			String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
+			
+			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
+			tool.setCommand(GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, fullName));
 
 			DiscoverDatasets dd = new DiscoverDatasets();
 			dd.setDirectory("out");
@@ -150,18 +172,22 @@ public class GalaxyWrapperGenerator {
 		return dataGalaxyParam;
 	}
 
-	private String buildExecutionCommand(String inputDirVar) {
-		StringBuilder command = new StringBuilder();
-		command.append("\n");
-		command.append("mkdir tmp;\n");
-		command.append("#for $file in $" + inputDirVar + "\n");
-		command.append("\t");
-		command.append("cp $file tmp/$file.element_identifier;\n");
-		command.append("#end for\n");
-		command.append("Linux_runDKPro.sh tmp $output.job_working_directory/working/out/");
-
-		return command.toString();
+	public static String getCoordinatesFromResourceIdentifier(String resourceID){
+		String coordinates = "ERROR";
+		if(resourceID.startsWith("mvn:")){
+			
+			int end = resourceID.indexOf("#");
+			coordinates = resourceID.substring("mvn:".length(), end);
+		}
+		
+		return coordinates;
 	}
+	
+	public static String normalizeCoordinates(String coordinates){
+		return coordinates.replaceAll(":", "_");
+	}
+	
+
 
 	/**
 	 * Creates the input parameter for a Galaxy tool.
