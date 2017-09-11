@@ -78,6 +78,8 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 			String classpath = fetcher.resolveDependencies(coordinates);
 			stream.write((prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
 			stream.flush();
+			
+			System.out.println("\n\n\n");
 			// System.out.println(classpath);
 		}	 
 	}

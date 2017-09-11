@@ -2,15 +2,20 @@ package eu.openminted.workflows.galaxywrappers;
 
 public class GalaxyToolExecutionCommand {
 
+	public final static String UIMA = "UIMA";
+	public final static String GATE = "GATE";
+	public final static String ALVIS = "Alvis";
+	
 	public static String buildExecutionCommand(String framework, String inputDirVar, String coordinates, String componentID){
 		
-		if(framework.equals("UIMA")){
-			System.out.println("UIMA");
+		if(framework.equals(UIMA)){
+			System.out.println(UIMA);
 			return buildExecutionCommandUIMA(inputDirVar, coordinates, componentID);
-		}else if(framework.equals("GATE")){
+		}else if(framework.equals(GATE)){
 			return "TO BE COMPLETED";
-		}
-		else{
+		}else if(framework.equals(ALVIS)){
+			return "TO BE COMPLETED";
+		}else{
 			return "NO COMMAND AVAILABLE";
 		}
 	}
