@@ -47,7 +47,8 @@ public class DependenciesFetcher {
 		RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/")
 				.build();
 
-		RemoteRepository zoid = new RemoteRepository.Builder("zoid", null, "http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/")
+		// JUST FOR TESTING!
+		RemoteRepository zoid = new RemoteRepository.Builder("zoid", "default", "http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/")
 				.build();
 
 		CollectRequest collectRequest = new CollectRequest();

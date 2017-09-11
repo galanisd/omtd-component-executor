@@ -73,11 +73,14 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 					dirWithJARLists + "classpath." + coordinates.replaceAll(":", "_"));
 
 			System.out.println(coordinatesList.get(i) + " \n\n\n");
-			// stream.write( (coordinatesList[i] + "\n").getBytes());
-			stream.flush();
-			String classpath = fetcher.resolveDependencies(coordinates);
-			stream.write((prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
-			stream.flush();
+			
+			try{
+				String classpath = fetcher.resolveDependencies(coordinates);
+				stream.write((prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
+				stream.flush();
+			}catch(Exception e){
+				System.out.println("FAILED TO RESOLVE DEPS FOR:" + coordinates);	
+			}
 			
 			System.out.println("\n\n\n");
 			// System.out.println(classpath);
