@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 coordinates=$1
 className=$2
