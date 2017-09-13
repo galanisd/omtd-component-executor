@@ -19,11 +19,10 @@ echo "-----"
 # Build project
 mvn clean install
 
-# TBA
 # Generate Galaxy Wrappers & TDMCoordinatesList  file from omtd-share descriptors
 echo "Generate galaxy wrappers and TDMCoordinatesList" 
 java -jar ./omtd-component-galaxywrappers/target/omtd-component-galaxywrappers-0.0.1-SNAPSHOT-exec.jar $DesciptorsFolderRoot $DesciptorsFolder $GalaxyID
-# Copy
+# Copy output coordinates to DMCoordinatesList.txt
 cat $DesciptorsFolderRoot$GalaxyID"coordinates.list" > TDMCoordinatesList.txt
 
 # Build image.
