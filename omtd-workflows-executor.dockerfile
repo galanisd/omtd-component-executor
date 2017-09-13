@@ -22,7 +22,7 @@ RUN mkdir /opt/omtd-workflows-executor/
 # Copy everything to target dir.
 COPY . /opt/omtd-workflows-executor/
 
-# Copy script
+# Copy executor script to /usr/bin/
 COPY ./scripts/Linux_runDKPro.sh /usr/bin/
 
 # Set working dir. 
@@ -30,7 +30,8 @@ WORKDIR /opt/omtd-workflows-executor/scripts/
 
 # Create repo dir
 RUN mkdir /opt/TDMlocalRepo/
-# Fetch Dependencies of coordinates list in ../TDMCoordinatesList.txt
+
+# Fetch Dependencies of coordinates listed in ../TDMCoordinatesList.txt
 # and store them to  /opt/TDMlocalRepo/. Also store the classpath of each component at ./TDMClasspathLists/    
 RUN bash FetchDependencies.sh ../TDMCoordinatesList.txt ../TDMClasspathLists/ /opt/TDMlocalRepo/   
 
