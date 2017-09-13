@@ -28,7 +28,7 @@ public class GalaxyToolExecutionCommand {
 		command.append("\t");
 		command.append("cp $file tmp/$file.element_identifier;\n");
 		command.append("#end for\n");
-		command.append("bash ./Linux_runDKPro.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
+		command.append("Linux_runDKPro.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
 
 		return command.toString();
 	}

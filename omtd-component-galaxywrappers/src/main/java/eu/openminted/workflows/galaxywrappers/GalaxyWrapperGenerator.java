@@ -130,7 +130,7 @@ public class GalaxyWrapperGenerator {
 			DiscoverDatasets dd = new DiscoverDatasets();
 			dd.setDirectory("out");
 			dd.setPattern("__designation__");
-			dd.setFormat("uknown");
+			dd.setFormat("pdf");
 			dd.setVisible("false");
 			Collection collection = new Collection();
 			collection.setDiscoverDatasets(dd);
@@ -162,10 +162,10 @@ public class GalaxyWrapperGenerator {
 		// dataGalaxyParam.setType("data");
 		dataGalaxyParam.setType("data_collection");
 		dataGalaxyParam.setCollection_type("list");
-
+		dataGalaxyParam.setFormat("pdf");
+		
 		dataGalaxyParam.setName(name + "_InputFiles");
 		dataGalaxyParam.setLabel(name + "_InputFiles");
-		dataGalaxyParam.setFormat("uknown");
 
 		// dataGalaxyParam.setMultiple("true");
 
