@@ -2,6 +2,6 @@
 
 maven="uk.ac.gate.plugins:annie:8.5-SNAPSHOT"
 classname=gate.creole.splitter.SentenceSplitter
-inD=../testInput/
-otD=../testOutput-annie/
+inD=../testOutput-gate-tokens/
+otD=../testOutput-gate-sentences/
 ../Linux_runGATE.sh $maven $classname $inD $otD
