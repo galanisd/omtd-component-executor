@@ -13,7 +13,7 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install xmlstarlet
-RUN apt-get -y install xmlstarlet
+# RUN apt-get -y install xmlstarlet
 
 # Install omtd-workflows-executor. 
 # -- -- --- - -- -- -- --- - -- 
@@ -21,8 +21,19 @@ RUN apt-get -y install xmlstarlet
 RUN mkdir /opt/omtd-workflows-executor/
 # Copy everything to target dir.
 COPY . /opt/omtd-workflows-executor/
+
+# Copy executor script to /usr/bin/
+COPY ./scripts/Linux_runDKPro.sh /usr/bin/
+
 # Set working dir. 
 WORKDIR /opt/omtd-workflows-executor/scripts/
+
+# Create repo dir
+RUN mkdir /opt/TDMlocalRepo/
+
+# Fetch Dependencies of coordinates listed in ../TDMCoordinatesList.txt
+# and store them to  /opt/TDMlocalRepo/. Also store the classpath of each component at ./TDMClasspathLists/    
+RUN bash FetchDependencies.sh ../TDMCoordinatesList.txt ../TDMClasspathLists/ /opt/TDMlocalRepo/   
 
 # -- -- --- - -- -- -- --- - -- 
 

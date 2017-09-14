@@ -43,12 +43,20 @@ public class DependenciesFetcher {
 	
 	public String resolveDependencies(String coordinates) throws Exception {
 		Dependency dependency = new Dependency(new DefaultArtifact(coordinates), "compile");
+		
 		RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/")
+				.build();
+
+		// JUST FOR TESTING!
+		RemoteRepository zoid = new RemoteRepository.Builder("zoid", "default", "http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/")
 				.build();
 
 		CollectRequest collectRequest = new CollectRequest();
 		collectRequest.setRoot(dependency);
+		
 		collectRequest.addRepository(central);
+		collectRequest.addRepository(zoid);
+		
 		DependencyNode node = repoSystem.collectDependencies(session, collectRequest).getRoot();
 
 		DependencyRequest dependencyRequest = new DependencyRequest();

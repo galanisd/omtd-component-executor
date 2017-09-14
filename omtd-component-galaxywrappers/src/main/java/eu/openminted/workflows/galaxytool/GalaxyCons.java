@@ -25,6 +25,7 @@ public class GalaxyCons {
 	public static final String id = "id";
 	public static final String version = "version";
 	public static final String type = "type";
+	public static final String collection_type = "collection_type";
 	public static final String label = "label";
 	public static final String format = "format";
 	public static final String multiple = "multiple";

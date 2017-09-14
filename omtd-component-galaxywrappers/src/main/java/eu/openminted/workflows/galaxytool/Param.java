@@ -15,6 +15,18 @@ public class Param {
 	private String format; 
 	private String multiple;
 	
+	private String collection_type;
+	
+	
+	public String getCollection_type() {
+		return collection_type;
+	}
+
+	@XmlAttribute(name = GalaxyCons.collection_type)
+	public void setCollection_type(String collection_type) {
+		this.collection_type = collection_type;
+	}
+
 	public String getDescription() {
 		return description;
 	}
