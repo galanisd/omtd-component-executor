@@ -27,19 +27,22 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		String root = args[0];
 		String omtdShareDescFolder = args[1];
 		String galaxyWrappersFolderInGalaxy = args[2];
-			
+		String dockerImage=args[3];
+		
 		// --- 
 		String omtdShareDescFolderAbsolute = root + omtdShareDescFolder;
 		String outPath = omtdShareDescFolderAbsolute + "_" + "wrappers/"; 	
 		String coordinatesPath = root + galaxyWrappersFolderInGalaxy + "coordinates.list";
 		
 		GalaxyWrapperGenerator galaxyWrapperGenerator = new GalaxyWrapperGenerator(outPath);
+		
+		galaxyWrapperGenerator.setDockerImage(dockerImage);
 		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy);
 		FileOutputStream coordinatesFOS = new FileOutputStream(coordinatesPath); 
 		
 		File omtdsFilesDir = new File(omtdShareDescFolderAbsolute + "/");
 		
-		System.out.println("descriptors:" + omtdsFilesDir.getAbsolutePath());
+		System.out.println("descriptor:" + omtdsFilesDir.getAbsolutePath());
 		File [] componentFiles = omtdsFilesDir.listFiles();
 		
 		for(int i = 0; i < componentFiles.length; i++){
@@ -70,18 +73,18 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		app.setWebEnvironment(false);
 		// app.setBannerMode(Banner.Mode.OFF);
 		
-		String root = "/home/ilsp/Desktop/OMTDTemp/";		
-		String omtdShareDescFolder = "omtds-dkpro-core-1.9.0-SNAPSHOT";			
-		String galaxyWrappersFolderInGalaxy = "omtdDKPro";
+		//String root = "/home/ilsp/Desktop/OMTDTemp/";		
+		//String omtdShareDescFolder = "omtds-dkpro-core-1.9.0-SNAPSHOT";			
+		//String galaxyWrappersFolderInGalaxy = "omtdDKPro";
 		
 		//String root = "/home/ilsp/Desktop/OMTDTemp/";		
 		//String omtdShareDescFolder = "annie-descriptors";			
 		//String galaxyWrappersFolderInGalaxy = "omtdGATE";
 		
-		String[] myArgs = {root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy};
-		app.run(myArgs);
+		//String[] myArgs = {root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy};
+		//app.run(myArgs);
 		
-		//app.run(args);
+		app.run(args);
 		log.info("DONE!");
 	}
 }

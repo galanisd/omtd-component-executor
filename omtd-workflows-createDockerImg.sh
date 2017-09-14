@@ -21,7 +21,7 @@ mvn clean install
 
 # Generate Galaxy Wrappers & TDMCoordinatesList  file from omtd-share descriptors
 echo "Generate galaxy wrappers and TDMCoordinatesList" 
-java -jar ./omtd-component-galaxywrappers/target/omtd-component-galaxywrappers-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID
+java -jar ./omtd-component-galaxywrappers/target/omtd-component-galaxywrappers-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerImgTag
 # Copy output coordinates to DMCoordinatesList.txt
 cat $OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list" > TDMCoordinatesList.txt
 

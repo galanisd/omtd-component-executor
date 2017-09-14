@@ -35,6 +35,7 @@ public class GalaxyWrapperGenerator {
 
 	private Component componentMeta;
 	private String componentID;
+	private String dockerImage;
 	
 	public GalaxyWrapperGenerator(String outDir) {
 		omtdshareParser = new OMTDSHAREParser();
@@ -48,6 +49,16 @@ public class GalaxyWrapperGenerator {
 	}
 
 	
+	public String getDockerImage() {
+		return dockerImage;
+	}
+
+
+	public void setDockerImage(String dockerImage) {
+		this.dockerImage = dockerImage;
+	}
+
+
 	public Component getComponentMeta() {
 		return componentMeta;
 	}
@@ -102,7 +113,8 @@ public class GalaxyWrapperGenerator {
 			Requirements requirements = new Requirements();
 			Container container = new Container();
 			container.setType("docker");
-			container.setValue("snf-765691.vm.okeanos.grnet.gr/openminted/omtd-workflows-executor");
+			System.out.println("dockerImage:" + dockerImage);
+			container.setValue(dockerImage);
 			requirements.setContainer(container);
 			tool.setRequirements(requirements);
 
