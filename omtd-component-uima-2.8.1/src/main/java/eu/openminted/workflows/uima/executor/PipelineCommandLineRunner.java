@@ -1,4 +1,4 @@
-package eu.openminted.workflows.dkpro.executor;
+package eu.openminted.workflows.uima.executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

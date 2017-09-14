@@ -1,4 +1,4 @@
-package eu.openminted.workflows.dkpro.executor;
+package eu.openminted.workflows.uima.executor;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 
