@@ -3,4 +3,4 @@ className=de.tudarmstadt.ukp.dkpro.core.arktools.ArktweetTokenizer
 inD=../testOutput_de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader/
 otD=../testOutput_$className/
 
-bash ./Linux_runDKPro.sh $coordinates $className $inD $otD
+bash ../Linux_runDKPro.sh $coordinates $className $inD $otD

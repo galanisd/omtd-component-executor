@@ -2,8 +2,8 @@
 
 clear
 DockerRegistyHOST=$1
-DesciptorsFolderRoot=$2
-DesciptorsFolder=$3
+OMTDSHAREDescriptorsFolderRoot=$2
+OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
 
 DockerImg="omtd-workflows-executor"
@@ -21,9 +21,9 @@ mvn clean install
 
 # Generate Galaxy Wrappers & TDMCoordinatesList  file from omtd-share descriptors
 echo "Generate galaxy wrappers and TDMCoordinatesList" 
-java -jar ./omtd-component-galaxywrappers/target/omtd-component-galaxywrappers-0.0.1-SNAPSHOT-exec.jar $DesciptorsFolderRoot $DesciptorsFolder $GalaxyID
+java -jar ./omtd-component-galaxywrappers/target/omtd-component-galaxywrappers-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID
 # Copy output coordinates to DMCoordinatesList.txt
-cat $DesciptorsFolderRoot$GalaxyID"coordinates.list" > TDMCoordinatesList.txt
+cat $OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list" > TDMCoordinatesList.txt
 
 # Build image.
 echo "-- -- Build image" 
