@@ -3,4 +3,4 @@ className=de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader
 inD=../testInput/
 otD=../testOutput_$className/
 
-bash ../Linux_runDKPro.sh $coordinates $className $inD $otD
+bash ../Linux_runUIMA.sh $coordinates $className $inD $otD
