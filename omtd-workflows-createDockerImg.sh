@@ -27,15 +27,15 @@ cat $OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list" > TDMCoordinatesL
 
 # Build image.
 echo "-- -- Build image" 
-docker build -f $Dockerfile -t $DockerImg .
+sudo docker build -f $Dockerfile -t $DockerImg .
 
 # Tag the image.
 echo "-- -- Tag image" 
-docker tag -f $DockerImg $DockerImgTag
+sudo docker tag -f $DockerImg $DockerImgTag
 
 # Push it to Registry.
 echo "-- -- Push image"
-docker push $DockerImgTag
+sudo docker push $DockerImgTag
 
 # TBA: Now that image is pushed copy wrappers to target machine/dir
 # so that everything appears in Galaxy UI. 
