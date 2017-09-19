@@ -6,10 +6,10 @@
 
 
 	<groupId>eu.openminted</groupId>
-	<artifactId>omtd-component-galaxywrappers</artifactId>
+	<artifactId>omtd-component-galaxy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>omtd-component-galaxywrappers</name>
+	<name>omtd-component-galaxy</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -23,7 +23,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<start-class>eu.openminted.workflows.galaxywrappers.GalaxyWrapperGeneratorMain</start-class>
+		<start-class>eu.openminted.workflows.galaxy.GalaxyWrapperGeneratorMain</start-class>
 	</properties>
 
 	<repositories>

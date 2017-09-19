@@ -79,7 +79,8 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 				stream.write((prepapeForSpringBootExecutor(classpath) + "\n").getBytes());
 				stream.flush();
 			}catch(Exception e){
-				System.out.println("FAILED TO RESOLVE DEPS FOR:" + coordinates);	
+				System.out.println("FAILED TO RESOLVE DEPS FOR:" + coordinates + "\n" + e.getMessage());	
+				
 			}
 			
 			System.out.println("\n\n\n");

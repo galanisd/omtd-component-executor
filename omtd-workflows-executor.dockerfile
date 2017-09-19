@@ -23,7 +23,7 @@ RUN mkdir /opt/omtd-workflows-executor/
 COPY . /opt/omtd-workflows-executor/
 
 # Copy executor script to /usr/bin/
-COPY ./scripts/Linux_runDKPro.sh /usr/bin/
+COPY ./scripts/Linux_runUIMA.sh /usr/bin/
 
 # Set working dir. 
 WORKDIR /opt/omtd-workflows-executor/scripts/

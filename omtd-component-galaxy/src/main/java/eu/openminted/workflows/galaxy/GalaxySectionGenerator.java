@@ -1,4 +1,4 @@
-package eu.openminted.workflows.galaxywrappers;
+package eu.openminted.workflows.galaxy;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

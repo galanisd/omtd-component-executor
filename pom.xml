@@ -19,7 +19,7 @@
 	<modules>
 		<module>./omtd-component-dependencies-fetcher</module>
 		<module>./omtd-component-uima-2.8.1</module>
-    	<module>./omtd-component-galaxywrappers</module>
+    	<module>./omtd-component-galaxy</module>
     </modules>
   
 </project>

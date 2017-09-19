@@ -1,4 +1,4 @@
-package eu.openminted.workflows.galaxywrappers;
+package eu.openminted.workflows.galaxy;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 
 import eu.openminted.workflows.galaxytool.Tool;
+import eu.openminted.workflows.galaxywrappers.GalaxyWrapperGenerator;
 
 
 public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
