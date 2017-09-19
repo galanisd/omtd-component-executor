@@ -113,7 +113,7 @@ public class GalaxyWrapperGenerator {
 			Requirements requirements = new Requirements();
 			Container container = new Container();
 			container.setType("docker");
-			System.out.println("dockerImage:" + dockerImage);
+			System.out.println("Assigned docker image:" + dockerImage);
 			container.setValue(dockerImage);
 			requirements.setContainer(container);
 			tool.setRequirements(requirements);

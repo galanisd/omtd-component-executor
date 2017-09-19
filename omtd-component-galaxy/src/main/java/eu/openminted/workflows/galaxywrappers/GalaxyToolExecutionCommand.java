@@ -8,8 +8,10 @@ public class GalaxyToolExecutionCommand {
 	
 	public static String buildExecutionCommand(String framework, String inputDirVar, String coordinates, String componentID){
 		
+		System.out.println("Framework:" + UIMA);
+		
 		if(framework.equals(UIMA)){
-			System.out.println(UIMA);
+			//System.out.println(UIMA);
 			return buildExecutionCommandUIMA(inputDirVar, coordinates, componentID);
 		}else if(framework.equals(GATE)){
 			return "TO BE COMPLETED";
@@ -28,7 +30,7 @@ public class GalaxyToolExecutionCommand {
 		command.append("\t");
 		command.append("cp $file tmp/$file.element_identifier;\n");
 		command.append("#end for\n");
-		command.append("Linux_runDKPro.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
+		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
 
 		return command.toString();
 	}
