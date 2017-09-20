@@ -7,7 +7,7 @@ TRG=$2
 echo $TRG
 
 # Get timestamp
-current_time=$(date "+%Y.%m.%d-%H.%M.%S")
+current_time=$(date "+%Y.%m.%d-%H.%M.%S-%3N")
 echo "Current Time : $current_time"
 
 # Clear TRG dir
