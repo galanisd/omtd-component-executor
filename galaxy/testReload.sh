@@ -14,6 +14,7 @@ sudo rm -rf $TMP/*
 # Select subset from a dir and copy to TMP
 find $POOL -type f | shuf -n $NUMOFFILES | sort | sudo xargs cp -t $TMP
 
+# reload TRG directory
 ./reload.sh $TMP $TRG
 
 ls -l omtdDKPro 
