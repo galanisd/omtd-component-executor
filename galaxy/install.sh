@@ -1,5 +1,7 @@
 #!/bin/bash
 
-ln -s $(pwd)/reload.sh /srv/galaxy/tools/reload.sh 
-ln -s $(pwd)/testReload.sh /srv/galaxy/tools/testReload.sh
+galaxyToolsDir=/srv/galaxy/tools/
+
+ln -s $(pwd)/reload.sh $galaxyToolsDir"reload.sh" 
+ln -s $(pwd)/testReload.sh $galaxyToolsDir"testReload.sh"
 
