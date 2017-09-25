@@ -5,12 +5,13 @@ DockerRegistyHOST=$1
 OMTDSHAREDescriptorsFolderRoot=$2
 OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
+DockerID=$5
 
 #
 DockerImg="omtd-component-executor"
 Dockerfile="./omtd-component-executor.dockerfile"
 
-DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
+DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}-${DockerID}"
 
 echo "-----"
 echo "Dockerfile:"$Dockerfile 
