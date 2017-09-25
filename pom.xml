@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>eu.openminted</groupId>
-  <artifactId>omtd-workflows-executor</artifactId>
+  <artifactId>omtd-component-executor</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>omtd-workflows-executor</name>
+  <name>omtd-component-executor</name>
   <url>http://maven.apache.org</url>
 
 	<properties>
