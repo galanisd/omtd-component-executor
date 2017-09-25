@@ -204,20 +204,27 @@ public class GalaxyWrapperGenerator {
 		// Set default value.
 		
 		if (paramInfo.getDefaultValue() != null && paramInfo.getDefaultValue().size() > 0) {
-			String parameterType = paramInfo.getParameterType().value();
+			
 			String defaultValue = paramInfo.getDefaultValue().get(0);
 			
-			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
-				galaxyParam.setValue(defaultValue);
-			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
-				galaxyParam.setChecked(defaultValue);
-			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
-				galaxyParam.setValue(defaultValue);
-			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
-				galaxyParam.setValue(defaultValue);
+			if(paramInfo.getParameterType() != null){
+				String parameterType = paramInfo.getParameterType().value();	
+				
+				if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
+					galaxyParam.setValue(defaultValue);
+				}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
+					galaxyParam.setChecked(defaultValue);
+				}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
+					galaxyParam.setValue(defaultValue);
+				}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
+					galaxyParam.setValue(defaultValue);
+				}else{
+					System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
+					galaxyParam.setValue(defaultValue);
+				}				
 			}else{
-				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
-			}		
+				galaxyParam.setValue(defaultValue);
+			}
 			
 		}
 	}
@@ -225,23 +232,29 @@ public class GalaxyWrapperGenerator {
 	// Map OMTD-SHARE
 	// https://docs.galaxyproject.org/en/master/dev/schema.html#id29
 	public void setParameterType(ParameterInfo paramInfo, Param galaxyParam){
-		String parameterType = paramInfo.getParameterType().value();
 		
-		if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
-			galaxyParam.setType(GalaxyCons.text);
-		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
-			galaxyParam.setType(GalaxyCons.BooleanT);
-			System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
-		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
-			galaxyParam.setType(GalaxyCons.integerT);
-			System.out.println("integer:" + paramInfo.getParameterName());
-		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
-			galaxyParam.setType(GalaxyCons.FloatT);
-			System.out.println("float:" + paramInfo.getParameterName());
+		if(paramInfo.getParameterType() != null){
+			
+			String parameterType = paramInfo.getParameterType().value();
+			
+			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
+				galaxyParam.setType(GalaxyCons.text);
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
+				galaxyParam.setType(GalaxyCons.BooleanT);
+				System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
+				galaxyParam.setType(GalaxyCons.integerT);
+				System.out.println("integer:" + paramInfo.getParameterName());
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
+				galaxyParam.setType(GalaxyCons.FloatT);
+				System.out.println("float:" + paramInfo.getParameterName());
+			}else{
+				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
+				galaxyParam.setType(GalaxyCons.text);
+			}	
 		}else{
-			System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
 			galaxyParam.setType(GalaxyCons.text);
-		}		
+		}
 	}
 	
 	/**

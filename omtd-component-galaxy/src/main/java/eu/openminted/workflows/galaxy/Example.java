@@ -5,7 +5,7 @@ public class Example {
 	public static void main(String args[]) {
 		GalaxyWrapperGeneratorMain main = new GalaxyWrapperGeneratorMain();
 		main.main(exampleArgsDKPRO());
-		//main.main(exampleConfGATE());
+		main.main(exampleArgsGATE());
 
 	}
 
