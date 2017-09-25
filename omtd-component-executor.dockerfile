@@ -15,18 +15,18 @@ ENV PATH $JAVA_HOME/bin:$PATH
 # Install xmlstarlet
 # RUN apt-get -y install xmlstarlet
 
-# Install omtd-workflows-executor. 
+# Install omtd-component-executor. 
 # -- -- --- - -- -- -- --- - -- 
 # Create target dir.
-RUN mkdir /opt/omtd-workflows-executor/
+RUN mkdir /opt/omtd-component-executor/
 # Copy everything to target dir.
-COPY . /opt/omtd-workflows-executor/
+COPY . /opt/omtd-component-executor/
 
 # Copy executor script to /usr/bin/
 COPY ./scripts/Linux_runUIMA.sh /usr/bin/
 
 # Set working dir. 
-WORKDIR /opt/omtd-workflows-executor/scripts/
+WORKDIR /opt/omtd-component-executor/scripts/
 
 # Create repo dir
 RUN mkdir /opt/TDMlocalRepo/

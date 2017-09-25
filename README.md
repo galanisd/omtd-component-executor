@@ -1,1 +1,1 @@
-# omtd-workflows-executor
+# omtd-component-executor

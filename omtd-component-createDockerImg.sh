@@ -6,8 +6,10 @@ OMTDSHAREDescriptorsFolderRoot=$2
 OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
 
-DockerImg="omtd-workflows-executor"
-Dockerfile="./omtd-workflows-executor.dockerfile"
+#
+DockerImg="omtd-component-executor"
+Dockerfile="./omtd-component-executor.dockerfile"
+
 DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
 
 echo "-----"

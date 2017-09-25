@@ -1,7 +1,7 @@
 #!/bin/bash
 
-rootFolder=/opt/omtd-workflows-executor
-#rootFolder=/home/ilsp/Desktop/DG/OMTD/omtd-workflows-executor
+rootFolder=/opt/omtd-component-executor
+#rootFolder=/home/ilsp/Desktop/DG/OMTD/omtd-component-executor
 
 coordinates=$1
 className=$2
