@@ -5,13 +5,14 @@ DockerRegistyHOST=$1
 OMTDSHAREDescriptorsFolderRoot=$2
 OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
-DockerID=$5
+ComponentID=$5
+ComponentVersion=$6
 
 #
-DockerImg="omtd-component-executor"
+DockerImg="omtd-component-executor-"${ComponentID}":"${ComponentVersion}
 Dockerfile="./omtd-component-executor.dockerfile"
 
-DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}-${DockerID}"
+DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
 
 echo "-----"
 echo "Dockerfile:"$Dockerfile 
@@ -37,7 +38,7 @@ echo "-- -- Tag image"
 sudo docker tag -f $DockerImg $DockerImgTag
 
 # Push it to Registry.
-echo "-- -- Push image"
+echo "-- -- Push image:"$DockerImgTag
 sudo docker push $DockerImgTag
 
 # TBA: Now that image is pushed copy wrappers to target machine/dir
