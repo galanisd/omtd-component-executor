@@ -74,18 +74,8 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		app.setWebEnvironment(false);
 		// app.setBannerMode(Banner.Mode.OFF);
 		
-		//String root = "/home/ilsp/Desktop/OMTDTemp/";		
-		//String omtdShareDescFolder = "omtds-dkpro-core-1.9.0-SNAPSHOT";			
-		//String galaxyWrappersFolderInGalaxy = "omtdDKPro";
-		
-		//String root = "/home/ilsp/Desktop/OMTDTemp/";		
-		//String omtdShareDescFolder = "annie-descriptors";			
-		//String galaxyWrappersFolderInGalaxy = "omtdGATE";
-		
-		//String[] myArgs = {root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy};
-		//app.run(myArgs);
-		
 		app.run(args);
 		log.info("DONE!");
 	}
+
 }

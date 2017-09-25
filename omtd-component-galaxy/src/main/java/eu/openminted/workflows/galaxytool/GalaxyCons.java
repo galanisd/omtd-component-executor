@@ -35,6 +35,7 @@ public class GalaxyCons {
 	public static final String pattern = "pattern";
 	public static final String directory = "directory";
 	public static final String file = "file";
+	public static final String help = "help";
 	
 	// values
 	public static final String text = "text";

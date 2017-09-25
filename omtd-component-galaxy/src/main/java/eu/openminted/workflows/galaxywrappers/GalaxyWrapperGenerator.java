@@ -216,7 +216,7 @@ public class GalaxyWrapperGenerator {
 
 			galaxyParam.setName(paramInfo.getParameterName());
 			galaxyParam.setLabel(paramInfo.getParameterLabel());
-			galaxyParam.setDescription(paramInfo.getParameterDescription());
+			galaxyParam.setHelp(paramInfo.getParameterDescription());
 			galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
 
 			// Set default value.

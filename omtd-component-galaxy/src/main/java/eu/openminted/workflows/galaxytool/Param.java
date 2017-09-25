@@ -9,7 +9,7 @@ public class Param {
 	private String label;
 	
 	private String value;	
-	private String description;	
+	private String help;	
 	private String optional;
 	
 	private String format; 
@@ -27,13 +27,13 @@ public class Param {
 		this.collection_type = collection_type;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getHelp() {
+		return help;
 	}
 
-	@XmlAttribute(name = GalaxyCons.description)
-	public void setDescription(String description) {
-		this.description = description;
+	@XmlAttribute(name = GalaxyCons.help)
+	public void setHelp(String help) {
+		this.help = help;
 	}
 
 	public String getName() {
