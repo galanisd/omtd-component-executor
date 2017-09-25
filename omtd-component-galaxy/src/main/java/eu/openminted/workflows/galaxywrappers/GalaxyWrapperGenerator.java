@@ -9,6 +9,7 @@ import eu.openminted.registry.domain.Component;
 import eu.openminted.registry.domain.ComponentInfo;
 import eu.openminted.registry.domain.Description;
 import eu.openminted.registry.domain.ParameterInfo;
+import eu.openminted.registry.domain.ParameterTypeEnum;
 import eu.openminted.registry.domain.ProcessingResourceInfo;
 import eu.openminted.workflows.galaxytool.Collection;
 import eu.openminted.workflows.galaxytool.Container;
@@ -199,8 +200,50 @@ public class GalaxyWrapperGenerator {
 		return coordinates.replaceAll(":", "_");
 	}
 	
+	public void setDefaultValue(ParameterInfo paramInfo, Param galaxyParam){
+		// Set default value.
+		
+		if (paramInfo.getDefaultValue() != null && paramInfo.getDefaultValue().size() > 0) {
+			String parameterType = paramInfo.getParameterType().value();
+			String defaultValue = paramInfo.getDefaultValue().get(0);
+			
+			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
+				galaxyParam.setValue(defaultValue);
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
+				galaxyParam.setChecked(defaultValue);
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
+				galaxyParam.setValue(defaultValue);
+			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
+				galaxyParam.setValue(defaultValue);
+			}else{
+				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
+			}		
+			
+		}
+	}
 
-
+	// Map OMTD-SHARE
+	// https://docs.galaxyproject.org/en/master/dev/schema.html#id29
+	public void setParameterType(ParameterInfo paramInfo, Param galaxyParam){
+		String parameterType = paramInfo.getParameterType().value();
+		
+		if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
+			galaxyParam.setType(GalaxyCons.text);
+		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
+			galaxyParam.setType(GalaxyCons.BooleanT);
+			System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
+		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
+			galaxyParam.setType(GalaxyCons.integerT);
+			System.out.println("integer:" + paramInfo.getParameterName());
+		}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
+			galaxyParam.setType(GalaxyCons.FloatT);
+			System.out.println("float:" + paramInfo.getParameterName());
+		}else{
+			System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
+			galaxyParam.setType(GalaxyCons.text);
+		}		
+	}
+	
 	/**
 	 * Creates the input parameter for a Galaxy tool.
 	 * @param info
@@ -220,13 +263,10 @@ public class GalaxyWrapperGenerator {
 			galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
 
 			// Set default value.
-			if (paramInfo.getDefaultValue() != null && paramInfo.getDefaultValue().size() > 0) {
-				galaxyParam.setValue(paramInfo.getDefaultValue().get(0));
-			}
+			setDefaultValue(paramInfo, galaxyParam);
 
-			// https://docs.galaxyproject.org/en/master/dev/schema.html
-			// Use only "text" for now.
-			galaxyParam.setType(GalaxyCons.text);
+			// Set type 
+			setParameterType(paramInfo, galaxyParam);
 
 			// Add it to the list.
 			params.add(galaxyParam);

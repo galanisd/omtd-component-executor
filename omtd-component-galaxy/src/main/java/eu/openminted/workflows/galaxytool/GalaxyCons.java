@@ -32,6 +32,7 @@ public class GalaxyCons {
 	public static final String visible = "visible";
 	public static final String optional = "optional";	
 	public static final String value = "value";
+	public static final String checked = "checked";
 	public static final String pattern = "pattern";
 	public static final String directory = "directory";
 	public static final String file = "file";
@@ -39,4 +40,8 @@ public class GalaxyCons {
 	
 	// values
 	public static final String text = "text";
+	public static final String integerT = "integer";
+	public static final String FloatT = "float";
+	public static final String BooleanT = "boolean";
+	
 }

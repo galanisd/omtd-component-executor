@@ -8,7 +8,8 @@ public class Param {
 	private String type;
 	private String label;
 	
-	private String value;	
+	private String value;
+	private String checked;
 	private String help;	
 	private String optional;
 	
@@ -96,6 +97,15 @@ public class Param {
 	@XmlAttribute(name = GalaxyCons.multiple)
 	public void setMultiple(String multiple) {
 		this.multiple = multiple;
+	}
+
+	public String getChecked() {
+		return checked;
+	}
+
+	@XmlAttribute(name = GalaxyCons.checked)
+	public void setChecked(String checked) {
+		this.checked = checked;
 	}
 	
 	
