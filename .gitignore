@@ -8,3 +8,6 @@
 /bin/
 /TDMlocalRepo/
 /TDMClasspathLists/
+/omtd-component-args/*.project
+/omtd-component-args/*.classpath
+/omtd-component-args/.settings
