@@ -134,11 +134,10 @@ public class GalaxyWrapperGenerator {
 			inputs.setParams(inputParams);
 			tool.setInputs(inputs);
 
-			// tool.setCommand("to be completed");
 			String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
 			
 			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
-			tool.setCommand(GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, fullName));
+			tool.setCommand(GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, fullName, listParameters(info)));
 
 			DiscoverDatasets dd = new DiscoverDatasets();
 			dd.setDirectory("out");
@@ -288,4 +287,16 @@ public class GalaxyWrapperGenerator {
 		return params;
 	}
 
+	private ArrayList<String> listParameters(ProcessingResourceInfo info) {
+
+		ArrayList<String> params = new ArrayList<String>();
+		List<ParameterInfo> parametersInfos = info.getParameterInfos();
+
+		for (ParameterInfo paramInfo : parametersInfos) {
+			// Add it to the list.
+			params.add(paramInfo.getParameterName());
+		}
+
+		return params;
+	}
 }
