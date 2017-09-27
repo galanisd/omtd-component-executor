@@ -26,9 +26,9 @@ public class UIMAFitRunner {
 	
 	public void uimaFitRun(ComponentArgs componentArgs) throws Exception{
 		
-		String className = componentArgs.getInput();
-		String inputDir = componentArgs.getOutput();
-		String outputDir = componentArgs.getClassName();
+		String className = componentArgs.getClassName();
+		String inputDir = componentArgs.getInput();
+		String outputDir = componentArgs.getOutput();
 		
 		// The pipeline should have a writer.
 		createOutputFolder(outputDir);		

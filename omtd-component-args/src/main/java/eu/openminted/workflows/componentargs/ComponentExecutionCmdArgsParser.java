@@ -76,6 +76,7 @@ public class ComponentExecutionCmdArgsParser {
 	
 	public ComponentArgs parse(String args[]){
 		
+		System.err.println("parsing...");
 		ComponentArgs cmdIN = new ComponentArgs();
 		
 		CommandLine givenCMD;

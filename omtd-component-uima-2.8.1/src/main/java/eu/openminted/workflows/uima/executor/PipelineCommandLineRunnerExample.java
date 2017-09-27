@@ -12,7 +12,7 @@ public class PipelineCommandLineRunnerExample {
 		String outputDir = "C:/Users/galanisd/Desktop/Dimitris/EclipseWorkspaces/ILSPMars/omtd-component-executor/testOutput/";
 		
 		SpringApplication app = new SpringApplication(PipelineCommandLineRunner.class);
-		String testArgs [] = {"-input", inputDir, "-output", outputDir, "-className" , className, "-Plang=en", "-Pmodel=stanford"};
+		String testArgs [] = {"-className" , className, "-input", inputDir, "-output", outputDir, "-Plang=en", "-Pmodel=stanford"};
 		app.run(testArgs);
 	}
 }
