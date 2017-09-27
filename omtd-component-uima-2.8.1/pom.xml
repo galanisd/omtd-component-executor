@@ -68,6 +68,13 @@
 			<version>1.8.0</version>
 		</dependency>
 		
+		<dependency>
+  			<groupId>eu.openminted</groupId>  
+  			<artifactId>omtd-component-args</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>		
+		</dependency>
+				
+		
 		<!--  just for testing. -->
 		<!-- 		
 		<dependency>

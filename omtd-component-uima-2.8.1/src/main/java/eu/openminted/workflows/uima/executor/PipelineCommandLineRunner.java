@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import eu.openminted.workflows.componentargs.ComponentArgs;
+import eu.openminted.workflows.componentargs.ComponentExecutionCmdArgsParser;
 /**
  * @author galanisd
  *
@@ -29,25 +32,14 @@ public class PipelineCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String className = args[0]; 
-		String inputDir = args[1];
-		String outputDir = args[2];				
-			
-		//String className = "de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader";
-		//String inputDir = "C:/Users/galanisd/Desktop/Dimitris/EclipseWorkspaces/ILSPMars/omtd-workflows-executor/testInput/";
-		//String outputDir = "C:/Users/galanisd/Desktop/Dimitris/EclipseWorkspaces/ILSPMars/omtd-workflows-executor/testOutput/";
 		
-		log.info("\n\n\n\n\nExecuting..");
-		log.info("========================");
-		log.info("className:" + className);
-		log.info("inputDir:" + inputDir);
-		log.info("outputDir:" + outputDir);
-		log.info("========================");
-		log.info("========================");
-		log.info("\n\n\n\n\n");
+		ComponentExecutionCmdArgsParser argsParser = new ComponentExecutionCmdArgsParser();
+		ComponentArgs componentArgs = argsParser.parse(args);
+		
+		log.info(componentArgs.print());
 		
 		UIMAFitRunner runner = new UIMAFitRunner();
-		runner.uimaFitRun(className, inputDir, outputDir);
+		//runner.uimaFitRun(componentArgs);
 	}	
 }
 

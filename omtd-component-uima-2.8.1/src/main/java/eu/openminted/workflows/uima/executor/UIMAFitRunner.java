@@ -13,10 +13,15 @@ import org.apache.uima.fit.pipeline.SimplePipeline;
 import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
+import eu.openminted.workflows.componentargs.ComponentArgs;
 
 public class UIMAFitRunner {
 	
-	public void uimaFitRun(String className, String inputDir, String outputDir) throws Exception{
+	public void uimaFitRun(ComponentArgs componentArgs) throws Exception{
+		
+		String className = componentArgs.getInput();
+		String inputDir = componentArgs.getOutput();
+		String outputDir = componentArgs.getClassName();
 		
 		// The pipeline should have a writer.
 		createOutputFolder(outputDir);		
