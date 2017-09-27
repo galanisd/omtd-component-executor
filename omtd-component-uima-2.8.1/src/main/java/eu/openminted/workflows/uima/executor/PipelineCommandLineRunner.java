@@ -39,7 +39,7 @@ public class PipelineCommandLineRunner implements CommandLineRunner {
 		log.info(componentArgs.print());
 		
 		UIMAFitRunner runner = new UIMAFitRunner();
-		//runner.uimaFitRun(componentArgs);
+		runner.uimaFitRun(componentArgs);
 	}	
 }
 
