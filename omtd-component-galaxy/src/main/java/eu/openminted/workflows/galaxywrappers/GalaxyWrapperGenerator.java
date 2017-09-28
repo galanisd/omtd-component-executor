@@ -95,19 +95,22 @@ public class GalaxyWrapperGenerator {
 				desc = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			}
 
-			// Get id.
+			// Get some required info from OMTD component meta
+			// Component ID.
 			componentID = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
-
-			String fullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
-
-			String name = fullName.substring(fullName.lastIndexOf(".") + 1);
-			// Get tool version.
+			// Component full name.
+			String componentFullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
+			// Framework used.
+			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
+			// Short name.
+			String componentShortName = getShortNameFromFullName(componentFullName);
+			// Component version.
 			String version = componentInfo.getVersionInfo().getVersion();
 
 			// Configure wrapper description.
 			tool.setDescription(desc);
 			tool.setId(componentID);
-			tool.setName(name);
+			tool.setName(componentShortName);
 			tool.setVersion(version);
 
 			// Configure wrapper requirements.
@@ -128,7 +131,7 @@ public class GalaxyWrapperGenerator {
 			// Create input params
 			ArrayList<Param> inputParams = createInputParams(info);
 			// Create&add the data input param
-			Param dataGalaxyParam = createDataInputParam(name);
+			Param dataGalaxyParam = createDataInputParam(componentShortName);
 			inputParams.add(dataGalaxyParam);
 
 			inputs.setParams(inputParams);
@@ -136,8 +139,8 @@ public class GalaxyWrapperGenerator {
 
 			String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
 			
-			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
-			tool.setCommand(GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, fullName, listParameters(info)));
+			String execCMD = GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, componentFullName, listParameters(info));
+			tool.setCommand(execCMD);
 
 			DiscoverDatasets dd = new DiscoverDatasets();
 			dd.setDirectory("out");
@@ -148,7 +151,7 @@ public class GalaxyWrapperGenerator {
 			collection.setDiscoverDatasets(dd);
 			collection.setName("output");
 			collection.setType("list");
-			collection.setLabel(name + "_output");
+			collection.setLabel(componentShortName + "_output");
 			outputs.setCollection(collection);
 			// info = componentInfo.getOutputResourceInfo();
 			// outputs.setParams(extractInputParams(info));
@@ -254,6 +257,12 @@ public class GalaxyWrapperGenerator {
 		}else{
 			galaxyParam.setType(GalaxyCons.text);
 		}
+	}
+	
+	private static String getShortNameFromFullName(String componentFullName){
+		// This works for java components
+		String shortName = componentFullName.substring(componentFullName.lastIndexOf(".") + 1);
+		return shortName;
 	}
 	
 	/**

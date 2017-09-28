@@ -28,7 +28,8 @@ public class GalaxyToolExecutionCommand {
 		
 		StringBuilder command = new StringBuilder();
 		
-		// 
+		// Copy input to a tmp dir. 
+		// TO-DO: check if this is required.
 		command.append("\n");
 		command.append("mkdir tmp;\n");
 		command.append("#for $file in $" + inputDirVar + "\n");
@@ -36,13 +37,17 @@ public class GalaxyToolExecutionCommand {
 		command.append("cp $file tmp/$file.element_identifier;\n");
 		command.append("#end for\n");
 		
-		// UIMA executor
+		// UIMA executor command
 		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
 
 		// Add parameters.
 		command.append(galaxyParemeters(parameters));
+		
+		// 
+		command.append("\n");
 		return command.toString();
 	}
+	
 	
 	public static String galaxyParemeters(ArrayList<String> parameters){
 		StringBuilder parametersStr = new StringBuilder();
@@ -53,7 +58,7 @@ public class GalaxyToolExecutionCommand {
 			
 			parametersStr.append(" \n" );
 			parametersStr.append("#if $"  + parameterName + "\n");
-			parametersStr.append("-" + parameterName + " $" + parameterName + "\n");
+			parametersStr.append("-P" + parameterName + "=" + "$" + parameterName + "\n");
 			parametersStr.append("#end if");
 		}
 
