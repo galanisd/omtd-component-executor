@@ -19,7 +19,6 @@ public class GalaxyCons {
 	public static final String collection = "collection";
 	public static final String section = "section";
 	
-	
 	// attributes
 	public static final String name = "name";
 	public static final String id = "id";
@@ -39,9 +38,9 @@ public class GalaxyCons {
 	public static final String help = "help";
 	
 	// values
-	public static final String text = "text";
+	public static final String textT = "text";
 	public static final String integerT = "integer";
-	public static final String FloatT = "float";
-	public static final String BooleanT = "boolean";
+	public static final String floatT = "float";
+	public static final String booleanT = "boolean";
 	
 }

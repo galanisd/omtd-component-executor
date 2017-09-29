@@ -83,28 +83,29 @@ public class GalaxyWrapperGenerator {
 			// Get info
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
+			ProcessingResourceInfo processingResourceInfo = componentInfo.getInputContentResourceInfo();
 
+			
 			// ** Create the tool.
 			Tool tool = new Tool();
 
-			// Get tool desc.
+			// Get some required info from OMTD component meta
+			// * Tool desc.
 			String desc = "";
 			if (descriptions != null && descriptions.size() > 0) {
 				desc = descriptions.get(0).getValue();
 			} else {
 				desc = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			}
-
-			// Get some required info from OMTD component meta
-			// Component ID.
+			// * Component ID.
 			componentID = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
-			// Component full name.
+			// * Component full name.
 			String componentFullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
-			// Framework used.
+			// * Framework used.
 			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
-			// Short name.
+			// * Short name.
 			String componentShortName = getShortNameFromFullName(componentFullName);
-			// Component version.
+			// * Component version.
 			String version = componentInfo.getVersionInfo().getVersion();
 
 			// Configure wrapper description.
@@ -126,22 +127,16 @@ public class GalaxyWrapperGenerator {
 			Inputs inputs = new Inputs();
 			Outputs outputs = new Outputs();
 
-			ProcessingResourceInfo info = componentInfo.getInputContentResourceInfo();
-
-			// Create input params
-			ArrayList<Param> inputParams = createInputParams(info);
-			// Create&add the data input param
+			// * Create input params
+			ArrayList<Param> inputParams = createInputParams(processingResourceInfo);
+			// * Create&add the data input param
 			Param dataGalaxyParam = createDataInputParam(componentShortName);
 			inputParams.add(dataGalaxyParam);
-
+			
 			inputs.setParams(inputParams);
 			tool.setInputs(inputs);
-
-			String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
 			
-			String execCMD = GalaxyToolExecutionCommand.buildExecutionCommand(framework, dataGalaxyParam.getName(), coord, componentFullName, listParameters(info));
-			tool.setCommand(execCMD);
-
+			// * Outputs
 			DiscoverDatasets dd = new DiscoverDatasets();
 			dd.setDirectory("out");
 			dd.setPattern("__designation__");
@@ -155,8 +150,10 @@ public class GalaxyWrapperGenerator {
 			outputs.setCollection(collection);
 			// info = componentInfo.getOutputResourceInfo();
 			// outputs.setParams(extractInputParams(info));
-
 			tool.setOutputs(outputs);
+
+			// Set command
+			setToolCommand(tool, framework, componentID, dataGalaxyParam.getName(), componentFullName, processingResourceInfo.getParameterInfos());
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
@@ -171,6 +168,16 @@ public class GalaxyWrapperGenerator {
 
 	}
 
+	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyParamName, String componentFullName, List<ParameterInfo> parametersInfos){
+		String execCMD = "";
+		// Works for java
+		String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
+		execCMD = GalaxyToolExecutionCommand.buildExecutionCommand(framework, galaxyParamName, coord, componentFullName, listParameters(parametersInfos));
+		// 
+		tool.setCommand(execCMD);	
+	}
+	
+	
 	private Param createDataInputParam(String name) {
 		Param dataGalaxyParam = new Param();
 
@@ -221,7 +228,7 @@ public class GalaxyWrapperGenerator {
 				}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
 					galaxyParam.setValue(defaultValue);
 				}else{
-					System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
+					System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.textT);
 					galaxyParam.setValue(defaultValue);
 				}				
 			}else{
@@ -240,22 +247,22 @@ public class GalaxyWrapperGenerator {
 			String parameterType = paramInfo.getParameterType().value();
 			
 			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
-				galaxyParam.setType(GalaxyCons.text);
+				galaxyParam.setType(GalaxyCons.textT);
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
-				galaxyParam.setType(GalaxyCons.BooleanT);
+				galaxyParam.setType(GalaxyCons.booleanT);
 				System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
 				galaxyParam.setType(GalaxyCons.integerT);
 				System.out.println("integer:" + paramInfo.getParameterName());
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.FLOAT.value())){
-				galaxyParam.setType(GalaxyCons.FloatT);
+				galaxyParam.setType(GalaxyCons.floatT);
 				System.out.println("float:" + paramInfo.getParameterName());
 			}else{
-				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.text);
-				galaxyParam.setType(GalaxyCons.text);
+				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.textT);
+				galaxyParam.setType(GalaxyCons.textT);
 			}	
 		}else{
-			galaxyParam.setType(GalaxyCons.text);
+			galaxyParam.setType(GalaxyCons.textT);
 		}
 	}
 	
@@ -296,10 +303,9 @@ public class GalaxyWrapperGenerator {
 		return params;
 	}
 
-	private ArrayList<String> listParameters(ProcessingResourceInfo info) {
+	private ArrayList<String> listParameters(List<ParameterInfo> parametersInfos) {
 
 		ArrayList<String> params = new ArrayList<String>();
-		List<ParameterInfo> parametersInfos = info.getParameterInfos();
 
 		for (ParameterInfo paramInfo : parametersInfos) {
 			// Add it to the list.
