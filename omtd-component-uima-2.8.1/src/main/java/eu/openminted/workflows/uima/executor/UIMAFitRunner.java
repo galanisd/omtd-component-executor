@@ -144,6 +144,8 @@ public class UIMAFitRunner {
 			
 			params[i] = paramName;
 			params[i+1] = paramValue;
+			System.out.println("--:" + params[i]);
+			System.out.println("--:" + params[i+1]);
 		}
 		
 		return params;

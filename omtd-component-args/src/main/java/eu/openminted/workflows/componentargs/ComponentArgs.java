@@ -1,6 +1,7 @@
 package eu.openminted.workflows.componentargs;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class ComponentArgs {
@@ -47,13 +48,19 @@ public class ComponentArgs {
 		this.parameters = parameters;
 	}
 	
-	public String print(){					
+	public String dump(){					
 		StringBuilder sb = new StringBuilder();
 		sb.append("\n\n\n\n\nExecuting.." + "\n");
 		sb.append("========================" + "\n");
 		sb.append("className:" + className + "\n");
 		sb.append("inputDir:" + input + "\n");
 		sb.append("outputDir:" + output + "\n");
+		sb.append("**parameters\n");
+		Iterator<String> it = parameters.keySet().iterator();
+		while(it.hasNext()){
+			String paramName = it.next();
+			sb.append(paramName + ":" + parameters.get(paramName) + "\n");
+		}
 		sb.append("========================" + "\n");
 		sb.append("========================" + "\n");
 		sb.append("\n\n\n\n\n");

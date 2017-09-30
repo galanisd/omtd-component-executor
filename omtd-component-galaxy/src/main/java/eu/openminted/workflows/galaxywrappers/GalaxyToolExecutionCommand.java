@@ -2,32 +2,33 @@ package eu.openminted.workflows.galaxywrappers;
 
 import java.util.ArrayList;
 
+/**
+ * @author ilsp
+ *
+ */
 public class GalaxyToolExecutionCommand {
-
-	public final static String UIMA = "UIMA";
-	public final static String GATE = "GATE";
-	public final static String ALVIS = "Alvis";
 	
-	public static String buildExecutionCommand(String framework, String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters){
+	public static String buildCheetahCode(String framework, String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters){
 		
 		System.out.println("Framework:" + framework);
 		
-		if(framework.equals(UIMA)){
+		if(framework.equals(Framework.UIMA)){
 			//System.out.println(UIMA);
-			return buildExecutionCommandUIMA(inputDirVar, coordinates, componentID, parameters);
-		}else if(framework.equals(GATE)){
+			return buildCheetahCode(inputDirVar, coordinates, componentID, parameters);
+		}else if(framework.equals(Framework.GATE)){
 			return "TO BE COMPLETED";
-		}else if(framework.equals(ALVIS)){
+		}else if(framework.equals(Framework.ALVIS)){
 			return "TO BE COMPLETED";
 		}else{
 			return "NO COMMAND AVAILABLE";
 		}
 	}
 	
-	public static String buildExecutionCommandUIMA(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
+	private static String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
 		
 		StringBuilder command = new StringBuilder();
 		
+		//command.append("<![CDATA[");
 		// Copy input to a tmp dir. 
 		// TO-DO: check if this is required.
 		command.append("\n");
@@ -42,14 +43,13 @@ public class GalaxyToolExecutionCommand {
 
 		// Add parameters.
 		command.append(galaxyParemeters(parameters));
-		
 		// 
 		command.append("\n");
+		//command.append("]]>");
 		return command.toString();
 	}
 	
-	
-	public static String galaxyParemeters(ArrayList<String> parameters){
+	private static String galaxyParemeters(ArrayList<String> parameters){
 		StringBuilder parametersStr = new StringBuilder();
 	
 		for(int i = 0; i < parameters.size(); i++){
@@ -58,7 +58,7 @@ public class GalaxyToolExecutionCommand {
 			
 			parametersStr.append(" \n" );
 			parametersStr.append("#if $"  + parameterName + "\n");
-			parametersStr.append("-P" + parameterName + "=" + "$" + parameterName + "\n");
+			parametersStr.append("-P" + parameterName + "='" + "$" + parameterName + "'\n");
 			parametersStr.append("#end if");
 		}
 

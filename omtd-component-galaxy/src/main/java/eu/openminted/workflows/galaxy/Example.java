@@ -13,9 +13,11 @@ public class Example {
 		String root = "/home/ilsp/Desktop/OMTDTemp/";
 		String omtdShareDescFolder = "omtds-dkpro-core-1.9.0-SNAPSHOT";
 		String galaxyWrappersFolderInGalaxy = "omtdDKPro";
-		String dockerImage = "snf-765691.vm.okeanos.grnet.gr/openminted/omtd-workflows-executor";
-
-		String[] myArgs = { root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy, dockerImage};
+		String dockerImage = "snf-765691.vm.okeanos.grnet.gr/openminted/omtd-component-executor";
+		String ComponentID = "dkpro-core";
+		String ComponentVersion = "1.9.0-SNAPSHOT";
+				
+		String[] myArgs = { root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy, dockerImage + "-" +  ComponentID + ":" + ComponentVersion};
 		return myArgs;
 	}
 

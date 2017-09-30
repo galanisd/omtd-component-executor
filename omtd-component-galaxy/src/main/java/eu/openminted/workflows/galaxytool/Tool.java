@@ -4,7 +4,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
+
+//import org.eclipse.persistence.oxm.annotations.XmlCDATA;
 
 @XmlRootElement(name = GalaxyCons.tool)
 @XmlType(propOrder={"description", "requirements", "command", "inputs", "outputs"})
@@ -22,7 +23,6 @@ public class Tool {
 	
 	private Inputs inputs;
 	private Outputs outputs;
-	
 	
 	public Requirements getRequirements() {
 		return requirements;
@@ -69,11 +69,13 @@ public class Tool {
 		this.version = version;
 	}
 
+	//@XmlCDATA
 	public String getCommand() {
 		return command;
 	}
 
 	@XmlElement(name = GalaxyCons.command)
+	//@XmlCDATA
 	public void setCommand(String command) {
 		this.command = command;
 	}

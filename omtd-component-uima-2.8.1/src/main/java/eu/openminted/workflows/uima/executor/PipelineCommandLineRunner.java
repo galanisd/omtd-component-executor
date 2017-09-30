@@ -36,7 +36,7 @@ public class PipelineCommandLineRunner implements CommandLineRunner {
 		ComponentExecutionCmdArgsParser argsParser = new ComponentExecutionCmdArgsParser();
 		ComponentArgs componentArgs = argsParser.parse(args);
 		
-		log.info(componentArgs.print());
+		log.info(componentArgs.dump());
 		
 		UIMAFitRunner runner = new UIMAFitRunner();
 		runner.uimaFitRun(componentArgs);

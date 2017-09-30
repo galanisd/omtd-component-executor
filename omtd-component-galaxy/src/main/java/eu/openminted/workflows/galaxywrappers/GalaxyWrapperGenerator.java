@@ -172,7 +172,7 @@ public class GalaxyWrapperGenerator {
 		String execCMD = "";
 		// Works for java
 		String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
-		execCMD = GalaxyToolExecutionCommand.buildExecutionCommand(framework, galaxyParamName, coord, componentFullName, listParameters(parametersInfos));
+		execCMD = GalaxyToolExecutionCommand.buildCheetahCode(framework, galaxyParamName, coord, componentFullName, listParameters(parametersInfos));
 		// 
 		tool.setCommand(execCMD);	
 	}
@@ -282,9 +282,12 @@ public class GalaxyWrapperGenerator {
 		ArrayList<Param> params = new ArrayList<Param>();
 		List<ParameterInfo> parametersInfos = info.getParameterInfos();
 
+		//For each OMTD-SHARE parameter
 		for (ParameterInfo paramInfo : parametersInfos) {
+			// Create Galaxy param.
 			Param galaxyParam = new Param();
 
+			// Add some info
 			galaxyParam.setName(paramInfo.getParameterName());
 			galaxyParam.setLabel(paramInfo.getParameterLabel());
 			galaxyParam.setHelp(paramInfo.getParameterDescription());

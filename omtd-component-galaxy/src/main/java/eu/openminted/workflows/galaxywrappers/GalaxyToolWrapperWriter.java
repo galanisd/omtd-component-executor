@@ -16,6 +16,7 @@ public class GalaxyToolWrapperWriter {
 	
 	public GalaxyToolWrapperWriter(){
 		try{			
+			//System.setProperty("javax.xml.bind.context.factory", "org.eclipse.persistence.jaxb.JAXBContextFactory");
 			jaxbContext	 = JAXBContext.newInstance(Tool.class);
 			jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);		
