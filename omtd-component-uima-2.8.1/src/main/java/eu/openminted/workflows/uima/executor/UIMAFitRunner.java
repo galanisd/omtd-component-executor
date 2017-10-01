@@ -3,13 +3,19 @@ package eu.openminted.workflows.uima.executor;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.uima.analysis_component.AnalysisComponent;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.collection.CollectionReader;
+import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 
@@ -42,10 +48,10 @@ public class UIMAFitRunner {
 		AnalysisEngine [] engines = null;
 		
 		// An uknown class.		
-		Class<?> klass = Class.forName(className);
+		Class<?> uimaClass = Class.forName(className);
 		
 		// Check if the uknown class klass is a UIMA Reader.
-		Class<? extends CollectionReader> classThatExtendsCollectionReader = getReader(klass);
+		Class<? extends CollectionReader> classThatExtendsCollectionReader = getReader(uimaClass);
 		
 		// If so, only read and write. (Read -> Write)
 		if(classThatExtendsCollectionReader != null){	
@@ -57,7 +63,7 @@ public class UIMAFitRunner {
 			//			ResourceCollectionReaderBase.PARAM_LANGUAGE, "en"); // hardwired: TO-BE-CHANGED
 
 			// !!
-			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, getParamsForUIMA(componentArgs, true));					
+			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, getParamsForUIMA(uimaClass, componentArgs, true));					
 			
 			engines = new AnalysisEngine[1];
 			engines[0] = writerEngine;
@@ -73,7 +79,7 @@ public class UIMAFitRunner {
 			// AnalysisEngine componentEngine = createEngine(getComponent(klass));
 			
 			// !!
-			AnalysisEngine componentEngine = createEngine(getComponent(klass), getParamsForUIMA(componentArgs, false));
+			AnalysisEngine componentEngine = createEngine(getComponent(uimaClass), getParamsForUIMA(uimaClass, componentArgs, false));
 					
 			engines = new AnalysisEngine[2];			
 			engines[0] = componentEngine;
@@ -112,9 +118,9 @@ public class UIMAFitRunner {
 		return outputFolderFile;
 	}
 
-	public static Object[] getParamsForUIMA(ComponentArgs componentArgs, boolean includeInput){
+	public static Object[] getParamsForUIMA(Class<?> aClass, ComponentArgs componentArgs, boolean includeInput){
 				
-		Object[] nonInputParameters = getParamsForUIMA(componentArgs);
+		Object[] nonInputParameters = getParamsForUIMA(aClass, componentArgs);
 		
 		if(includeInput){							
 			// Input params	
@@ -123,7 +129,7 @@ public class UIMAFitRunner {
 			inputParam[0] = ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION;
 			inputParam[1] = componentArgs.getInput();
 			
-			Object[] allParameters = Stream.concat(Arrays.stream(inputParam), Arrays.stream(nonInputParameters)).toArray(String[]::new);
+			Object[] allParameters = Stream.concat(Arrays.stream(inputParam), Arrays.stream(nonInputParameters)).toArray(Object[]::new);
 			return allParameters;
 		}else{
 			return nonInputParameters;
@@ -131,7 +137,7 @@ public class UIMAFitRunner {
 				
 	}
 	
-	public static Object[] getParamsForUIMA(ComponentArgs componentArgs){
+	public static Object[] getParamsForUIMA(Class<?> aClass, ComponentArgs componentArgs){
 		int numOfUIMAParams = componentArgs.getParameters().size();
 		
 		// We need a 2 * numOfUIMAParams table for them. 
@@ -143,12 +149,47 @@ public class UIMAFitRunner {
 			String paramValue = componentArgs.getParameters().get(paramName);
 			
 			params[i] = paramName;
-			params[i+1] = paramValue;
+			//params[i+1] = paramValue;
+			setParamValue (aClass, paramName, paramValue, params, i + 1);
 			System.out.println("--:" + params[i]);
 			System.out.println("--:" + params[i+1]);
+
 		}
 		
 		return params;
 	}
+
+	public static void setParamValue (Class<?> aClass, String paramName, String paramValue, Object[] params, int pos){
+		List<Field> fields = getAllModelFields(aClass);
+		for(int i = 0; i < fields.size(); i++){
+			Field f = fields.get(i);
+			Annotation annotation = (Annotation)f.getAnnotation(ConfigurationParameter.class);
+			
+			if(annotation instanceof ConfigurationParameter){
+				ConfigurationParameter myAnnotation = (ConfigurationParameter) annotation;
+				
+				if(myAnnotation.name().equals(paramName)){
+					System.out.println("FOUND:" + myAnnotation.name());
+					
+					if(f.getType().isAssignableFrom(Integer.TYPE)){
+						params[pos] = Integer.parseInt(paramValue);
+					}else if(f.getType().isAssignableFrom(Boolean.TYPE)){
+						params[pos] = Boolean.parseBoolean(paramValue);
+					}else{
+						params[pos] = paramValue;
+					}
+
+				}
+			}
+		}
+	}
 	
+	public static List<Field> getAllModelFields(Class<?> aClass) {
+	    List<Field> fields = new ArrayList<>();
+	    do {
+	        Collections.addAll(fields, aClass.getDeclaredFields());
+	        aClass = aClass.getSuperclass();
+	    } while (aClass != null);
+	    return fields;
+	}
 }
