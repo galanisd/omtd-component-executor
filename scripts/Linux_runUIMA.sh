@@ -1,14 +1,21 @@
 #!/bin/bash
 
-rootFolder=/opt/omtd-component-executor
-#rootFolder=/home/ilsp/Desktop/DG/OMTD/omtd-component-executor
+componentExecutorInstallationDir=/opt/omtd-component-executor
+
+if [ -d "$componentExecutorInstallationDir" ]; then
+	echo "Using default installation dir $componentExecutorInstallationDir"
+else
+	componentExecutorInstallationDir=$(pwd)/../..
+	echo "Using dir $componentExecutorInstallationDir"
+fi
 
 coordinates=$1
 className=$2
 inDir=$3
 otDir=$4
 
-jarList=$(cat $rootFolder/TDMClasspathLists/"classpath."$coordinates)
+# Retrieve dependencies jar list.
+jarList=$(cat $componentExecutorInstallationDir/TDMClasspathLists/"classpath."$coordinates)
 
 uimaParams=""
 cnt=1
@@ -26,4 +33,4 @@ done
 echo $uimaParams
 
 #echo $jarList
-java -Xmx4096m -Dloader.path=$jarList -jar $rootFolder/omtd-component-uima-2.8.1/target/omtd-component-uima-2.8.1-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
+java -Xmx4096m -Dloader.path=$jarList -jar $componentExecutorInstallationDir/omtd-component-uima-2.8.1/target/omtd-component-uima-2.8.1-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
