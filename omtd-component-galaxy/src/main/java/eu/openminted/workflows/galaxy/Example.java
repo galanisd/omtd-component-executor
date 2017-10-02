@@ -26,8 +26,10 @@ public class Example {
 		String omtdShareDescFolder = "annie-descriptors";
 		String galaxyWrappersFolderInGalaxy = "omtdGATE";
 		String dockerImage = "snf-765691.vm.okeanos.grnet.gr/openminted/omtd-workflows-executor";
-		
-		String[] myArgs = { root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy, dockerImage};
+		String ComponentID = "gate";
+		String ComponentVersion = "1.8.0";
+				
+		String[] myArgs = { root, omtdShareDescFolder, galaxyWrappersFolderInGalaxy, dockerImage + "-" +  ComponentID + ":" + ComponentVersion};
 
 		return myArgs;
 	}

@@ -18,6 +18,9 @@ public class GalaxyCons {
 	public static final String discover_datasets = "discover_datasets";
 	public static final String collection = "collection";
 	public static final String section = "section";
+	public static final String sanitizer = "sanitizer";
+	public static final String valid = "valid";
+	public static final String add = "add";
 	
 	// attributes
 	public static final String name = "name";

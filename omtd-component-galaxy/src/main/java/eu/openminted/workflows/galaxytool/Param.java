@@ -1,6 +1,7 @@
 package eu.openminted.workflows.galaxytool;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 
 public class Param {
 
@@ -18,7 +19,19 @@ public class Param {
 	
 	private String collection_type;
 	
+	private Sanitizer sanitizer;
 	
+	// ====
+	
+	public Sanitizer getSanitizer() {
+		return sanitizer;
+	}
+
+	@XmlElement(name = GalaxyCons.sanitizer)
+	public void setSanitizer(Sanitizer sanitizer) {
+		this.sanitizer = sanitizer;
+	}
+
 	public String getCollection_type() {
 		return collection_type;
 	}
@@ -107,6 +120,5 @@ public class Param {
 	public void setChecked(String checked) {
 		this.checked = checked;
 	}
-	
 	
 }

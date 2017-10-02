@@ -11,6 +11,7 @@ import eu.openminted.registry.domain.Description;
 import eu.openminted.registry.domain.ParameterInfo;
 import eu.openminted.registry.domain.ParameterTypeEnum;
 import eu.openminted.registry.domain.ProcessingResourceInfo;
+import eu.openminted.workflows.galaxytool.Add;
 import eu.openminted.workflows.galaxytool.Collection;
 import eu.openminted.workflows.galaxytool.Container;
 import eu.openminted.workflows.galaxytool.DiscoverDatasets;
@@ -19,7 +20,9 @@ import eu.openminted.workflows.galaxytool.Inputs;
 import eu.openminted.workflows.galaxytool.Outputs;
 import eu.openminted.workflows.galaxytool.Param;
 import eu.openminted.workflows.galaxytool.Requirements;
+import eu.openminted.workflows.galaxytool.Sanitizer;
 import eu.openminted.workflows.galaxytool.Tool;
+import eu.openminted.workflows.galaxytool.Valid;
 
 /**
  * @author ilsp
@@ -248,6 +251,7 @@ public class GalaxyWrapperGenerator {
 			
 			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
 				galaxyParam.setType(GalaxyCons.textT);
+				galaxyParam.setSanitizer(createSanitizer());
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
 				galaxyParam.setType(GalaxyCons.booleanT);
 				System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
@@ -316,5 +320,25 @@ public class GalaxyWrapperGenerator {
 		}
 
 		return params;
+	}
+	
+	private Sanitizer createSanitizer(){
+		Sanitizer sanitizer = new Sanitizer();
+		
+		Valid valid = new Valid();
+				
+		String[] values = {"<" , ">", "[", "]"};		
+		
+		ArrayList<Add> list = new ArrayList<Add>();
+		for(int i = 0; i < values.length; i++){
+			Add add = new Add();
+			add.setValue(values[i]);
+			list.add(add);
+		}
+		valid.setAddList(list);
+		sanitizer.setValid(valid);
+		
+		return sanitizer;
+
 	}
 }
