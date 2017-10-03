@@ -3,4 +3,4 @@ className=de.tudarmstadt.ukp.dkpro.core.stanfordnlp.StanfordSegmenter
 inD=../testOutput_de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader/
 otD=../testOutput_$className/
 
-bash ../Linux_runUIMA.sh $coordinates $className $inD $otD
+bash ../Linux_runUIMA.sh $coordinates $className -input $inD -output $otD

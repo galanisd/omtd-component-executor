@@ -3,4 +3,6 @@ className=de.tudarmstadt.ukp.dkpro.core.io.pdf.PdfReader
 inD=../testInput/
 otD=../testOutput_$className/
 
-bash ../Linux_runUIMA.sh $coordinates $className $inD $otD -Ppatterns=[+]**/*.pdf -Planguage=en
+../Linux_runUIMA.sh $coordinates $className -input $inD -output $otD -PsubstitutionTableLocation='<built-in>' -PheadingType='<built-in>' -PparagraphType='<built-in>' -PstartPage='-1' -PendPage='-1' -Ppatterns='[+]**/*.pdf' -PuseDefaultExcludes='true' -Planguage='en' -PlogFreq='1'
+
+

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Decide where the UIMA executor is installed.
 componentExecutorInstallationDir=/opt/omtd-component-executor
 
 if [ -d "$componentExecutorInstallationDir" ]; then
@@ -9,28 +10,57 @@ else
 	echo "Using dir $componentExecutorInstallationDir"
 fi
 
+# We need the following to call the UIMA executor.
 coordinates=$1
 className=$2
-inDir=$3
-otDir=$4
+inDir=""
+otDir=""
+uimaParams=""
+
+# Parse arguments and fill.
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    -input)
+    inDir="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -output)
+    otDir="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -P*)
+    uimaParams=$uimaParams" "$2
+    shift # past argument
+    ;;
+    *)    # unknown option
+    shift # past argument
+    ;;
+esac
+done
+
+echo "inDir:"$inDir
+echo "otDir:"$otDir
+echo "uimaParams:"$uimaParams
 
 # Retrieve dependencies jar list.
 jarList=$(cat $componentExecutorInstallationDir/TDMClasspathLists/"classpath."$coordinates)
 
-uimaParams=""
-cnt=1
+#cnt=1
 
-for arg in "$@"
-do
-  echo "Arg #$cnt= $arg"
-  if [ "$cnt" -gt "4" ] 
-  then
-  	uimaParams=$uimaParams" "$arg
-  fi
-  let "cnt+=1"
-done
-
-echo $uimaParams
+#for arg in "$@"
+#do
+#  echo "Arg #$cnt= $arg"
+#  if [ "$cnt" -gt "4" ] 
+#  then
+#  	uimaParams=$uimaParams" "$arg
+#  fi
+#  let "cnt+=1"
+#done
 
 #echo $jarList
 java -Xmx4096m -Dloader.path=$jarList -jar $componentExecutorInstallationDir/omtd-component-uima-2.8.1/target/omtd-component-uima-2.8.1-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
