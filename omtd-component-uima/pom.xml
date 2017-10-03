@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.openminted</groupId>
-	<artifactId>omtd-component-uima-2.8.1</artifactId>
+	<artifactId>omtd-component-uima</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>omtd-component-uima-2.8.1</name>
+	<name>omtd-component-uima</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>

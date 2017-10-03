@@ -64,4 +64,4 @@ jarList=$(cat $componentExecutorInstallationDir/TDMClasspathLists/"classpath."$c
 
 #echo $jarList
 # Call executor which is a java Spring-Boot based executable. 
-java -Xmx4096m -Dloader.path=$jarList -jar $componentExecutorInstallationDir/omtd-component-uima-2.8.1/target/omtd-component-uima-2.8.1-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
+java -Xmx4096m -Dloader.path=$jarList -jar $componentExecutorInstallationDir/omtd-component-uima/target/omtd-component-uima-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
