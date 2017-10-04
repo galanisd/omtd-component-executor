@@ -76,7 +76,7 @@ public class ComponentExecutionCmdArgsParser {
 	
 	public ComponentArgs parse(String args[]){
 		
-		System.err.println("parsing...");
+		System.out.println("parsing...");
 		ComponentArgs cmdIN = new ComponentArgs();
 		
 		CommandLine givenCMD;
@@ -85,13 +85,13 @@ public class ComponentExecutionCmdArgsParser {
 	        givenCMD = parser.parse(options, args, false);
 	        
 	        cmdIN.setInput(givenCMD.getOptionValue(INPUT));
-	        System.err.println("input" + " " + cmdIN.getInput());
+	        System.out.println("input" + " " + cmdIN.getInput());
 	        
 	        cmdIN.setOutput(givenCMD.getOptionValue(OUTPUT));
-	        System.err.println("output" + " " + cmdIN.getOutput());
+	        System.out.println("output" + " " + cmdIN.getOutput());
 	        
 	        cmdIN.setClassName(givenCMD.getOptionValue(CLASSNAME));
-	        System.err.println("className" + " " + cmdIN.getClassName());
+	        System.out.println("className" + " " + cmdIN.getClassName());
 	        
 	        Set<String> set = givenCMD.getOptionProperties(PARAMETER).stringPropertyNames();
 	        
@@ -99,14 +99,14 @@ public class ComponentExecutionCmdArgsParser {
 	        while(it.hasNext()){
 	        	String propertyName = it.next();
 	        	String propertyValue = givenCMD.getOptionProperties(PARAMETER).getProperty(propertyName);	        
-	        	System.err.println(propertyName + " " + propertyValue );
+	        	System.out.println(propertyName + " " + propertyValue );
 	        	cmdIN.getParameters().put(propertyName, propertyValue);
 	        }
 	        
 	        return cmdIN;
 	    } catch (ParseException e) {
-	        System.err.println("Error parsing command line options");
-	        System.err.println(e.getMessage());
+	        System.out.println("Error parsing command line options");
+	        System.out.println(e.getMessage());
 	        return null;
 	    }
 	}

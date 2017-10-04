@@ -38,10 +38,10 @@ public class GalaxyToolExecutionCommand {
 		command.append("cp $file tmp/$file.element_identifier;\n");
 		command.append("#end for\n");
 		
-		// UIMA executor command
-		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " tmp $output.job_working_directory/working/out/");
-
-		// Add parameters.
+		// Build UIMA executor command
+		// * First command -input -output
+		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " -input tmp " + "-output $output.job_working_directory/working/out/");
+		// * Then add parameters.
 		command.append(galaxyParemeters(parameters));
 		// 
 		command.append("\n");
