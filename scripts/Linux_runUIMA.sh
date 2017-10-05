@@ -34,7 +34,7 @@ case $key in
     shift # past value
     ;;
     -P*)
-    uimaParams=$uimaParams" "$2
+    uimaParams=$uimaParams" "$1
     shift # past argument
     ;;
     *)    # unknown option
