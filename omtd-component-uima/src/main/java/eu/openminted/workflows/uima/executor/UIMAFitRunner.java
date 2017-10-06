@@ -44,7 +44,7 @@ public class UIMAFitRunner {
 		// The pipeline should have a reader.
 		CollectionReader reader = null;
 		
-		// The pipeline should have anaysis engines.
+		// The pipeline should have analysis engines.
 		AnalysisEngine [] engines = null;
 		
 		// An uknown class.		
@@ -56,12 +56,6 @@ public class UIMAFitRunner {
 		// If so, only read and write. (Read -> Write)
 		if(classThatExtendsCollectionReader != null){	
 			
-			// this works but some things are hardwired.
-			//reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, 
-			//			ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
-			//			ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.pdf", // hardwired: TO-BE-CHANGED
-			//			ResourceCollectionReaderBase.PARAM_LANGUAGE, "en"); // hardwired: TO-BE-CHANGED
-
 			// !!
 			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, getParamsForUIMA(uimaClass, componentArgs, true));					
 			
@@ -70,13 +64,9 @@ public class UIMAFitRunner {
 	
 		}else{// Otherwise: Read -> Process -> Write
 			
-			
 			reader = CollectionReaderFactory.createReader(XmiReader.class, 
 						ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
 						ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.xmi");
-			
-			// 	this works but some things are hardwired.
-			// AnalysisEngine componentEngine = createEngine(getComponent(klass));
 			
 			// !!
 			AnalysisEngine componentEngine = createEngine(getComponent(uimaClass), getParamsForUIMA(uimaClass, componentArgs, false));
