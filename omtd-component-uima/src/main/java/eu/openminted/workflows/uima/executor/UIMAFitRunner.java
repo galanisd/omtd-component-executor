@@ -19,6 +19,7 @@ import org.apache.uima.fit.descriptor.ConfigurationParameter;
 import org.apache.uima.fit.factory.CollectionReaderFactory;
 import org.apache.uima.fit.pipeline.SimplePipeline;
 
+import de.tudarmstadt.ukp.dkpro.core.api.io.JCasFileWriter_ImplBase;
 import de.tudarmstadt.ukp.dkpro.core.api.io.ResourceCollectionReaderBase;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
@@ -30,16 +31,20 @@ import eu.openminted.workflows.componentargs.ComponentArgs;
  */
 public class UIMAFitRunner {
 	
+	private AnalysisEngine createDefaultWriterEngine(String outputDir) throws Exception{
+		// The pipeline should have a writer.
+		createOutputFolder(outputDir);		
+		AnalysisEngine defaultWriterEngine = createEngine(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputDir,
+				XmiWriter.PARAM_OVERWRITE, Boolean.TRUE);
+		
+		return defaultWriterEngine;
+	}
+	
 	public void uimaFitRun(ComponentArgs componentArgs) throws Exception{
 		
 		String className = componentArgs.getClassName();
 		String inputDir = componentArgs.getInput();
-		String outputDir = componentArgs.getOutput();
-		
-		// The pipeline should have a writer.
-		createOutputFolder(outputDir);		
-		AnalysisEngine writerEngine = createEngine(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputDir,
-				XmiWriter.PARAM_OVERWRITE, Boolean.TRUE);
+		String outputDir = componentArgs.getOutput();	
 		
 		// The pipeline should have a reader.
 		CollectionReader reader = null;
@@ -53,27 +58,33 @@ public class UIMAFitRunner {
 		// Check if the uknown class klass is a UIMA Reader.
 		Class<? extends CollectionReader> classThatExtendsCollectionReader = getReader(uimaClass);
 		
-		// If so, only read and write. (Read -> Write)
+		// If so, read and write. (Read -> Write)
 		if(classThatExtendsCollectionReader != null){	
 			
 			// !!
 			reader = CollectionReaderFactory.createReader(classThatExtendsCollectionReader, getParamsForUIMA(uimaClass, componentArgs, true));					
 			
 			engines = new AnalysisEngine[1];
-			engines[0] = writerEngine;
+			engines[0] = createDefaultWriterEngine(outputDir);
 	
-		}else{// Otherwise: Read -> Process -> Write
+		}else{
 			
+			// read XMIs
 			reader = CollectionReaderFactory.createReader(XmiReader.class, 
-						ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
-						ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.xmi");
-			
-			// !!
+					ResourceCollectionReaderBase.PARAM_SOURCE_LOCATION, inputDir, 
+					ResourceCollectionReaderBase.PARAM_PATTERNS, "[+]**/*.xmi");
 			AnalysisEngine componentEngine = createEngine(getComponent(uimaClass), getParamsForUIMA(uimaClass, componentArgs, false));
-					
-			engines = new AnalysisEngine[2];			
-			engines[0] = componentEngine;
-			engines[1] = writerEngine;
+
+			if(getWriter(uimaClass)  != null){ // Read -> Write
+				engines = new AnalysisEngine[1];
+				engines[0] = componentEngine;
+			}
+			else{
+				// Otherwise: Read -> Process -> Write				
+				engines = new AnalysisEngine[2];			
+				engines[0] = componentEngine;
+				engines[1] = createDefaultWriterEngine(outputDir);
+			}
 		}
 			
 		SimplePipeline.runPipeline(reader, engines);
@@ -97,6 +108,16 @@ public class UIMAFitRunner {
 			return null;
 		}
 	}
+
+	public Class<? extends JCasFileWriter_ImplBase> getWriter(Class<?> klass){
+		try{
+			Class<? extends JCasFileWriter_ImplBase> classThatExtendsWriter = klass.asSubclass(JCasFileWriter_ImplBase.class);
+			return classThatExtendsWriter;
+		}catch(ClassCastException e){
+			return null;
+		}
+	}
+	
 	//XmiReader.class
 	private File createOutputFolder(String outputFolder){
 		File outputFolderFile = new File(outputFolder);

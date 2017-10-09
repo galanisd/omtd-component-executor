@@ -22,7 +22,7 @@ RUN mkdir /opt/omtd-component-executor/
 # Copy everything to target dir.
 COPY . /opt/omtd-component-executor/
 
-# Copy executor script to /usr/bin/
+# Copy UIMA executor script to /usr/bin/
 COPY ./scripts/Linux_runUIMA.sh /usr/bin/
 
 # Set working dir. 

@@ -40,6 +40,7 @@ public class GalaxyWrapperGenerator {
 	private Component componentMeta;
 	private String componentID;
 	private String dockerImage;
+	private String framework;
 	
 	public GalaxyWrapperGenerator(String outDir) {
 		omtdshareParser = new OMTDSHAREParser();
@@ -51,7 +52,6 @@ public class GalaxyWrapperGenerator {
 			outDirHandler.mkdirs();
 		}
 	}
-
 	
 	public String getDockerImage() {
 		return dockerImage;
@@ -87,7 +87,6 @@ public class GalaxyWrapperGenerator {
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
 			ProcessingResourceInfo processingResourceInfo = componentInfo.getInputContentResourceInfo();
-
 			
 			// ** Create the tool.
 			Tool tool = new Tool();
@@ -105,7 +104,7 @@ public class GalaxyWrapperGenerator {
 			// * Component full name.
 			String componentFullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			// * Framework used.
-			String framework  = componentInfo.getComponentCreationInfo().getFramework().value();
+			framework  = componentInfo.getComponentCreationInfo().getFramework().value();
 			// * Short name.
 			String componentShortName = getShortNameFromFullName(componentFullName);
 			// * Component version.
@@ -173,10 +172,13 @@ public class GalaxyWrapperGenerator {
 
 	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyParamName, String componentFullName, List<ParameterInfo> parametersInfos){
 		String execCMD = "";
+		
 		// Works for java
 		String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
-		execCMD = GalaxyToolExecutionCommand.buildCheetahCode(framework, galaxyParamName, coord, componentFullName, listParameters(parametersInfos));
-		// 
+		
+		//
+		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
+		execCMD = gtec.buildCheetahCode(galaxyParamName, coord, componentFullName, listParameters(parametersInfos)); 
 		tool.setCommand(execCMD);	
 	}
 	

@@ -8,13 +8,21 @@ import java.util.ArrayList;
  */
 public class GalaxyToolExecutionCommand {
 	
-	public static String buildCheetahCode(String framework, String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters){
+	private String framework;
+	private String inDir;
+	private String otDir;
+	
+	public GalaxyToolExecutionCommand(String framework){
+		this.framework = framework;
+	}
+	
+	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters){
 		
 		System.out.println("Framework:" + framework);
 		
 		if(framework.equals(Framework.UIMA)){
 			//System.out.println(UIMA);
-			return buildCheetahCode(inputDirVar, coordinates, componentID, parameters);
+			return buildCheetahCodeUIMA(inputDirVar, coordinates, componentID, parameters);
 		}else if(framework.equals(Framework.GATE)){
 			return "TO BE COMPLETED";
 		}else if(framework.equals(Framework.ALVIS)){
@@ -24,7 +32,7 @@ public class GalaxyToolExecutionCommand {
 		}
 	}
 	
-	private static String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
+	private String buildCheetahCodeUIMA(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
 		
 		StringBuilder command = new StringBuilder();
 		
@@ -40,7 +48,9 @@ public class GalaxyToolExecutionCommand {
 		
 		// Build UIMA executor command
 		// * First command -input -output
-		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " -input tmp " + "-output $output.job_working_directory/working/out/");
+		
+		otDir = "$output.job_working_directory/working/out/";
+		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " -input tmp " + "-output " + otDir);
 		// * Then add parameters.
 		command.append(galaxyParemeters(parameters));
 		// 
@@ -49,7 +59,7 @@ public class GalaxyToolExecutionCommand {
 		return command.toString();
 	}
 	
-	private static String galaxyParemeters(ArrayList<String> parameters){
+	private String galaxyParemeters(ArrayList<String> parameters){
 		StringBuilder parametersStr = new StringBuilder();
 	
 		for(int i = 0; i < parameters.size(); i++){
@@ -58,11 +68,26 @@ public class GalaxyToolExecutionCommand {
 			
 			parametersStr.append(" \n" );
 			parametersStr.append("#if $"  + parameterName + "\n");
-			parametersStr.append("-P" + parameterName + "='" + "$" + parameterName + "'\n");
+			
+			String paramValue = getParamValue(parameterName);
+			parametersStr.append("-P" + parameterName + "='" +  paramValue + "'\n");
 			parametersStr.append("#end if");
 		}
 
 		return parametersStr.toString();
+	}
 	
+	private String getParamValue(String parameterName){
+		
+		String value = "$" + parameterName;
+		if(framework.equals(Framework.UIMA)){
+			if(parameterName.equals("targetLocation")){
+				value = this.otDir + value;
+			}
+		}else{
+			
+		}
+		
+		return value;
 	}
 }
