@@ -253,7 +253,7 @@ public class GalaxyWrapperGenerator {
 			
 			if(parameterType.equalsIgnoreCase(ParameterTypeEnum.STRING.value())){
 				galaxyParam.setType(GalaxyCons.textT);
-				galaxyParam.setSanitizer(createSanitizer());
+				galaxyParam.setSanitizer(createSanitizerWithAllAllowed());
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
 				galaxyParam.setType(GalaxyCons.booleanT);
 				System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
@@ -324,7 +324,7 @@ public class GalaxyWrapperGenerator {
 		return params;
 	}
 	
-	private Sanitizer createSanitizer(){
+	private Sanitizer createSanitizerWithAllowedValues(){
 		Sanitizer sanitizer = new Sanitizer();
 		
 		Valid valid = new Valid();
@@ -343,4 +343,14 @@ public class GalaxyWrapperGenerator {
 		return sanitizer;
 
 	}
+	
+	private Sanitizer createSanitizerWithAllAllowed(){
+		Sanitizer sanitizer = new Sanitizer();
+		
+		sanitizer.setSanitize("False");
+		
+		return sanitizer;
+
+	}
+	
 }
