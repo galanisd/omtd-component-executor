@@ -7,10 +7,10 @@ OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
 ComponentID=$5
 ComponentVersion=$6
+Dockerfile=$7
 
-#
+# Docker image name.
 DockerImg="omtd-component-executor-"${ComponentID}":"${ComponentVersion}
-Dockerfile="./omtd-component-executor.dockerfile"
 
 DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
 

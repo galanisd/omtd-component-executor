@@ -10,10 +10,10 @@ import gate.creole.*;
 import gate.util.persistence.PersistenceManager;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.TrueFileFilter
+import org.apache.commons.io.filefilter.TrueFileFilter;
 
 //Initialise GATE: must be done before you try and use any part of GATE
-Gate.init()
+Gate.init();
 
 // Assumes three command line arguments:
 //    Maven coordinates of the plugin to load initially
@@ -24,6 +24,11 @@ Gate.init()
 // Get a handle on the Maven based plugin we need to load to run this component
 String[] coordinates = args[0].split(":");
 Plugin plugin = new Plugin.Maven(coordinates[0],coordinates[1],coordinates[2]);
+
+println coordinates[0];
+println coordinates[1];
+println coordinates[2];
+
 
 // load the plugin into GATE...
 Gate.getCreoleRegister().registerPlugin(plugin);
