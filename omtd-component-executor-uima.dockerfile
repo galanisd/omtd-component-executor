@@ -33,7 +33,7 @@ RUN mkdir /opt/TDMlocalRepo/
 
 # Fetch Dependencies of coordinates listed in ../TDMCoordinatesList.txt
 # and store them to  /opt/TDMlocalRepo/. Also store the classpath of each component at ./TDMClasspathLists/    
-#RUN bash FetchDependencies.sh ../TDMCoordinatesList.txt ../TDMClasspathLists/ /opt/TDMlocalRepo/   
+RUN bash FetchDependencies.sh ../TDMCoordinatesList.txt ../TDMClasspathLists/ /opt/TDMlocalRepo/   
 
 # -- -- --- - -- -- -- --- - -- 
 
