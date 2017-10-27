@@ -106,7 +106,7 @@ public class GalaxyWrapperGenerator {
 			// * Framework used.
 			framework  = componentInfo.getComponentCreationInfo().getFramework().value();
 			// * Short name.
-			String componentShortName = getShortNameFromFullName(componentFullName);
+			String componentShortName = Utils.getShortNameFromComponentID(componentID);
 			// * Component version.
 			String version = componentInfo.getVersionInfo().getVersion();
 
@@ -155,7 +155,7 @@ public class GalaxyWrapperGenerator {
 			tool.setOutputs(outputs);
 
 			// Set command
-			setToolCommand(tool, framework, componentID, dataGalaxyParam.getName(), componentFullName, processingResourceInfo.getParameterInfos());
+			setToolCommand(tool, framework, componentID, dataGalaxyParam.getName(), componentID, processingResourceInfo.getParameterInfos());
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
@@ -174,11 +174,11 @@ public class GalaxyWrapperGenerator {
 		String execCMD = "";
 		
 		// Works for java
-		String coord = normalizeCoordinates(getCoordinatesFromResourceIdentifier(componentID));
+		String coord = getCoordinatesFromResourceIdentifier(componentID);
 		
 		//
 		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
-		execCMD = gtec.buildCheetahCode(galaxyParamName, coord, componentFullName, listParameters(parametersInfos)); 
+		execCMD = gtec.buildCheetahCode(galaxyParamName, coord, componentID, listParameters(parametersInfos)); 
 		tool.setCommand(execCMD);	
 	}
 	
@@ -199,20 +199,17 @@ public class GalaxyWrapperGenerator {
 		return dataGalaxyParam;
 	}
 
-	public static String getCoordinatesFromResourceIdentifier(String resourceID){
+	public static String getCoordinatesFromResourceIdentifier(String compID){
 		String coordinates = "ERROR";
-		if(resourceID.startsWith("mvn:")){
+		if(compID.startsWith("mvn:")){
 			
-			int end = resourceID.indexOf("#");
-			coordinates = resourceID.substring("mvn:".length(), end);
+			int end = compID.indexOf("#");
+			coordinates = compID.substring("mvn:".length(), end);
 		}
 		
 		return coordinates;
 	}
 	
-	public static String normalizeCoordinates(String coordinates){
-		return coordinates.replaceAll(":", "_");
-	}
 	
 	public void setDefaultValue(ParameterInfo paramInfo, Param galaxyParam){
 		// Set default value.
@@ -272,11 +269,7 @@ public class GalaxyWrapperGenerator {
 		}
 	}
 	
-	private static String getShortNameFromFullName(String componentFullName){
-		// This works for java components
-		String shortName = componentFullName.substring(componentFullName.lastIndexOf(".") + 1);
-		return shortName;
-	}
+
 	
 	/**
 	 * Creates the input parameter for a Galaxy tool.

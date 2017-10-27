@@ -22,9 +22,9 @@ public class GalaxyToolExecutionCommand {
 		
 		if(framework.equals(Framework.UIMA)){
 			//System.out.println(UIMA);
-			return buildCheetahCodeUIMA(inputDirVar, coordinates, componentID, parameters);
+			return buildCheetahCodeUIMA(inputDirVar, Utils.normalizeCoordinates(coordinates), componentID, parameters);
 		}else if(framework.equals(Framework.GATE)){
-			return "TO BE COMPLETED";
+			return buildCheetahCodeGATE(inputDirVar, coordinates, componentID, parameters);
 		}else if(framework.equals(Framework.ALVIS)){
 			return "TO BE COMPLETED";
 		}else{
@@ -33,30 +33,50 @@ public class GalaxyToolExecutionCommand {
 	}
 	
 	private String buildCheetahCodeUIMA(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
-		
 		StringBuilder command = new StringBuilder();
-		
 		//command.append("<![CDATA[");
 		// Copy input to a tmp dir. 
 		// TO-DO: check if this is required.
+		prepareTMP(inputDirVar, command);
+		otDir = "$output.job_working_directory/working/out/";
+		
+		// Build UIMA executor command
+		// * First: command -input -output
+		command.append("Linux_runUIMA.sh " + coordinates + " " + Utils.getClassNameFromComponentID(componentID) + " -input tmp " + "-output " + otDir);
+		// * Then: add parameters.
+		command.append(galaxyParemeters(parameters));
+		// * Change line.
+		command.append("\n");
+		//command.append("]]>");
+		return command.toString();
+	}
+	
+	private String buildCheetahCodeGATE(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters) {
+		StringBuilder command = new StringBuilder();
+		//command.append("<![CDATA[");
+		// Copy input to a tmp dir. 
+		// TO-DO: check if this is required.
+		prepareTMP(inputDirVar, command);
+		otDir = "$output.job_working_directory/working/out/";
+		
+		// Build UIMA executor command
+		// * First: command -input -output
+		command.append("Linux_runGATE.sh " + coordinates + " " + Utils.getClassNameFromComponentID(componentID) + " tmp" + " " + otDir);
+		// * Then: add parameters.
+		//command.append(galaxyParemeters(parameters));
+		// * Change line.
+		command.append("\n");
+		//command.append("]]>");
+		return command.toString();
+	}
+	
+	private void prepareTMP(String inputDirVar, StringBuilder command){
 		command.append("\n");
 		command.append("mkdir tmp;\n");
 		command.append("#for $file in $" + inputDirVar + "\n");
 		command.append("\t");
 		command.append("cp $file tmp/$file.element_identifier;\n");
 		command.append("#end for\n");
-		
-		// Build UIMA executor command
-		// * First command -input -output
-		
-		otDir = "$output.job_working_directory/working/out/";
-		command.append("Linux_runUIMA.sh " + coordinates + " " + componentID + " -input tmp " + "-output " + otDir);
-		// * Then add parameters.
-		command.append(galaxyParemeters(parameters));
-		// 
-		command.append("\n");
-		//command.append("]]>");
-		return command.toString();
 	}
 	
 	private String galaxyParemeters(ArrayList<String> parameters){
@@ -76,6 +96,8 @@ public class GalaxyToolExecutionCommand {
 
 		return parametersStr.toString();
 	}
+	
+
 	
 	private String getParamValue(String parameterName){
 		
