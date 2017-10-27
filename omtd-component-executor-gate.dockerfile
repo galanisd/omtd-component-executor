@@ -12,6 +12,16 @@ RUN (echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV PATH $JAVA_HOME/bin:$PATH
 
+# Install Groovy.
+RUN apt-get update && apt-get install -y \
+curl \
+unzip \
+zip
+
+RUN curl -s get.sdkman.io | bash
+RUN /bin/bash -c  "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install groovy"
+#RUN /bin/bash -l -c "sdk install groovy" 
+
 # Install omtd-component-executor. 
 # -- -- --- - -- -- -- --- - -- 
 # Create target dir.
@@ -20,7 +30,7 @@ RUN mkdir /opt/omtd-component-executor/
 COPY . /opt/omtd-component-executor/
 
 # Copy GATE executor script to /usr/bin/
-COPY ./scripts/Linux_runGATEScript.sh /usr/bin/
+COPY ./scripts/Linux_runGATE.sh /usr/bin/
 
 # Set working dir. 
 WORKDIR /opt/omtd-component-executor/scripts/

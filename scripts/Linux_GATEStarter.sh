@@ -1,7 +1,9 @@
-#!/usr/bin/env groovy
+//#!/usr/bin/env groovy
 
 // example command line that will run the ANNIE tokeniser over all documents in the input folder and store the results in output
 //    groovy runGATE.sh "uk.ac.gate.plugins:annie:8.5-SNAPSHOT" gate.creole.tokeniser.DefaultTokeniser input output
+
+println 'GATE Executor...'
 
 @GrabResolver(name='gate-snapshots', root='http://repo.gate.ac.uk/content/groups/public/')
 @Grab(group='uk.ac.gate', module='gate-core', version='8.5-SNAPSHOT', changing=true)
@@ -12,8 +14,10 @@ import gate.util.persistence.PersistenceManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
+println 'Started GATE Initilization'
 //Initialise GATE: must be done before you try and use any part of GATE
 Gate.init();
+println 'GATE was initialized'
 
 // Assumes three command line arguments:
 //    Maven coordinates of the plugin to load initially
@@ -30,9 +34,11 @@ println coordinates[1];
 println coordinates[2];
 println args[1];
 
-
+println 'Starting Plugin Registration.'
 // load the plugin into GATE...
 Gate.getCreoleRegister().registerPlugin(plugin);
+
+println 'Start processing'
 
 File input = new File(args[2]);
 File output = new File(args[3]);
@@ -89,3 +95,6 @@ while (itInputFiles.hasNext()) {
 		Factory.deleteResource(doc);
 	}
 }
+
+println "Finished"
+

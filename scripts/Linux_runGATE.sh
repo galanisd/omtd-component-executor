@@ -13,4 +13,4 @@ else
 fi
 
 # Run Executor.
-$componentExecutorInstallationDir/scripts/Linux_GATEStarter.sh $@
+groovy $componentExecutorInstallationDir/scripts/Linux_GATEStarter.sh $@
