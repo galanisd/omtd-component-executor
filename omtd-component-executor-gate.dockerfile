@@ -22,6 +22,8 @@ RUN curl -s get.sdkman.io | bash
 RUN /bin/bash -c  "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install groovy"
 #RUN /bin/bash -l -c "sdk install groovy" 
 
+ENV PATH $PATH:/root/.sdkman/candidates/groovy/current/bin
+
 # Install omtd-component-executor. 
 # -- -- --- - -- -- -- --- - -- 
 # Create target dir.

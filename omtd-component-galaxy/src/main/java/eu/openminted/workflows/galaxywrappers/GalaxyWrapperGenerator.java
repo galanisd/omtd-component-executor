@@ -132,8 +132,8 @@ public class GalaxyWrapperGenerator {
 			// * Create input params
 			ArrayList<Param> inputParams = createInputParams(processingResourceInfo);
 			// * Create&add the data input param
-			Param dataGalaxyParam = createDataInputParam(componentShortName);
-			inputParams.add(dataGalaxyParam);
+			Param dataInputGalaxyParam = createDataInputParam(componentShortName);
+			inputParams.add(dataInputGalaxyParam);
 			
 			inputs.setParams(inputParams);
 			tool.setInputs(inputs);
@@ -155,7 +155,7 @@ public class GalaxyWrapperGenerator {
 			tool.setOutputs(outputs);
 
 			// Set command
-			setToolCommand(tool, framework, componentID, dataGalaxyParam.getName(), componentID, processingResourceInfo.getParameterInfos());
+			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), processingResourceInfo.getParameterInfos());
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
@@ -170,7 +170,7 @@ public class GalaxyWrapperGenerator {
 
 	}
 
-	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyParamName, String componentFullName, List<ParameterInfo> parametersInfos){
+	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyDataInputParamName, List<ParameterInfo> parametersInfos){
 		String execCMD = "";
 		
 		// Works for java
@@ -178,7 +178,7 @@ public class GalaxyWrapperGenerator {
 		
 		//
 		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
-		execCMD = gtec.buildCheetahCode(galaxyParamName, coord, componentID, listParameters(parametersInfos)); 
+		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos)); 
 		tool.setCommand(execCMD);	
 	}
 	
@@ -334,16 +334,12 @@ public class GalaxyWrapperGenerator {
 		sanitizer.setValid(valid);
 		
 		return sanitizer;
-
 	}
 	
 	private Sanitizer createSanitizerWithAllAllowed(){
 		Sanitizer sanitizer = new Sanitizer();
-		
 		sanitizer.setSanitize("False");
 		
 		return sanitizer;
-
 	}
-	
 }
