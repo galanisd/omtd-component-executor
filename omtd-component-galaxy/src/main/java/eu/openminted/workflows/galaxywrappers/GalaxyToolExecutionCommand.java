@@ -59,7 +59,7 @@ public class GalaxyToolExecutionCommand {
 		prepareTMP(inputDirVar, command);
 		otDir = "$output.job_working_directory/working/out/";
 		
-		// Build UIMA executor command
+		// Build GATE executor command
 		// * First: command -input -output
 		command.append("Linux_runGATE.sh " + coordinates + " " + Utils.getClassNameFromComponentID(componentID) + " tmp" + " " + otDir);
 		// * Then: add parameters.

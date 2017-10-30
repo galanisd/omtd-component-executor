@@ -7,6 +7,7 @@
 /testOutput*/
 /bin/
 /TDMlocalRepo/
+TDMlocalRepo/*
 /TDMClasspathLists/
 /omtd-component-args/*.project
 /omtd-component-args/*.classpath

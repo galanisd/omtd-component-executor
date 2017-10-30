@@ -8,4 +8,30 @@ DockerFile="omtd-component-executor-uima.dockerfile"
 ComponentID="dkpro-core"
 ComponentVersion="1.9.0-SNAPSHOT"
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+locRepo=/opt/TDMlocalRepo/
+templocRepo=TDMlocalRepo
+
+# If local repo does not exist
+# download jars and create
+# ./TDMCoordinatesList.txt and ./TDMClasspathLists/
+if [ ! -d "$locRepo" ]; then
+	echo "Fetch deps to $locRepo" 
+	mkdir $locRepo
+	./FetchDependencies.sh ./TDMCoordinatesList.txt ./TDMClasspathLists/ $locRepo   
+else
+	echo "$locRepo already exists"
+fi
+
+# Copy repo here 
+if [ ! -d "$templocRepo" ]; then
+	echo "-- -- Copy here"
+	cp -R $locRepo .
+fi
+
+# Build image.
 ./omtd-component-createDockerImg.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion $DockerFile
+
+# Remove repo.
+rm -rf $templocRepo
