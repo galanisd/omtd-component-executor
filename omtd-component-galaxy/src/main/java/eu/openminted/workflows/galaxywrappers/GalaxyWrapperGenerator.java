@@ -154,6 +154,9 @@ public class GalaxyWrapperGenerator {
 			// outputs.setParams(extractInputParams(info));
 			tool.setOutputs(outputs);
 
+			if(processingResourceInfo == null){
+				processingResourceInfo = new ProcessingResourceInfo(); 
+			}
 			// Set command
 			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), processingResourceInfo.getParameterInfos());
 
@@ -176,7 +179,7 @@ public class GalaxyWrapperGenerator {
 		// Works for java
 		String coord = getCoordinatesFromResourceIdentifier(componentID);
 		
-		//
+		// "Glue" for calling a Galaxy tool.
 		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
 		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos)); 
 		tool.setCommand(execCMD);	
@@ -273,35 +276,38 @@ public class GalaxyWrapperGenerator {
 	
 	/**
 	 * Creates the input parameter for a Galaxy tool.
-	 * @param info
+	 * @param processingResourceInfo
 	 * @return the list of parameters.
 	 */
-	private ArrayList<Param> createInputParams(ProcessingResourceInfo info) {
+	private ArrayList<Param> createInputParams(ProcessingResourceInfo processingResourceInfo) {
 
 		ArrayList<Param> params = new ArrayList<Param>();
-		List<ParameterInfo> parametersInfos = info.getParameterInfos();
-
-		//For each OMTD-SHARE parameter
-		for (ParameterInfo paramInfo : parametersInfos) {
-			// Create Galaxy param.
-			Param galaxyParam = new Param();
-
-			// Add some info
-			galaxyParam.setName(paramInfo.getParameterName());
-			galaxyParam.setLabel(paramInfo.getParameterLabel());
-			galaxyParam.setHelp(paramInfo.getParameterDescription());
-			galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
-
-			// Set default value.
-			setDefaultValue(paramInfo, galaxyParam);
-
-			// Set type 
-			setParameterType(paramInfo, galaxyParam);
-
-			// Add it to the list.
-			params.add(galaxyParam);
+		
+		if(processingResourceInfo != null){
+			List<ParameterInfo> parametersInfos = processingResourceInfo.getParameterInfos();
+	
+			//For each OMTD-SHARE parameter
+			for (ParameterInfo paramInfo : parametersInfos) {
+				// Create Galaxy param.
+				Param galaxyParam = new Param();
+	
+				// Add some info
+				galaxyParam.setName(paramInfo.getParameterName());
+				galaxyParam.setLabel(paramInfo.getParameterLabel());
+				galaxyParam.setHelp(paramInfo.getParameterDescription());
+				galaxyParam.setOptional(String.valueOf(paramInfo.isOptional()));
+	
+				// Set default value.
+				setDefaultValue(paramInfo, galaxyParam);
+	
+				// Set type 
+				setParameterType(paramInfo, galaxyParam);
+	
+				// Add it to the list.
+				params.add(galaxyParam);
+			}
 		}
-
+		
 		return params;
 	}
 
