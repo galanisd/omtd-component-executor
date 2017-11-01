@@ -40,11 +40,15 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		galaxyWrapperGenerator.setDockerImage(dockerImage);
 		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy);
 		FileOutputStream coordinatesFOS = new FileOutputStream(coordinatesPath); 
+		FileOutputStream jobConf = new FileOutputStream(root + "jobConf"); 
+
 		
 		File omtdsFilesDir = new File(omtdShareDescFolderAbsolute + "/");
 		
-		System.out.println("descriptor:" + omtdsFilesDir.getAbsolutePath());
+		
+		System.out.println("descriptor:" + omtdsFilesDir.getAbsolutePath() );
 		File [] componentFiles = omtdsFilesDir.listFiles();
+		System.out.println("|component files| = " + componentFiles.length);
 		
 		for(int i = 0; i < componentFiles.length; i++){
 			File componentFile = componentFiles[i];
@@ -56,6 +60,10 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 			
 			coordinatesFOS.write((coordinates + "\n").getBytes());
 			coordinatesFOS.flush();
+			
+			String jobConfEntry = "<tool id=\"" + componentID + "\" destination=\"chronos_dest\"/>" + "\n";
+			jobConf.write(jobConfEntry.getBytes());
+			jobConf.flush();
 			System.out.println(componentFiles[i].getAbsolutePath() + " ... was processed");
 			
 			
@@ -64,6 +72,7 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		
 		galaxySectionGenerator.write(root + "section.xml");		
 		coordinatesFOS.close();
+		jobConf.close();
 	}
 	
 	// ---
