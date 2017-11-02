@@ -29,7 +29,9 @@ COPY ./scripts/Linux_runUIMA.sh /usr/bin/
 WORKDIR /opt/omtd-component-executor/scripts/
 
 # Create repo dir
-RUN mv /opt/omtd-component-executor/TDMlocalRepo/ /opt/
+#RUN mv /opt/omtd-component-executor/TDMlocalRepo/ /opt/
+#RUN mkdir /opt/TDMlocalRepo/
+RUN /bin/bash -c "ln -s /opt/omtd-component-executor/TDMlocalRepo/ /opt/"
 
 # Fetch Dependencies of coordinates listed in ../TDMCoordinatesList.txt
 # and store them to  /opt/TDMlocalRepo/. Also store the classpath of each component at ./TDMClasspathLists/    

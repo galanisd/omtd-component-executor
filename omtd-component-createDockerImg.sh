@@ -39,7 +39,7 @@ sudo docker tag -f $DockerImg $DockerImgTag
 
 # Push it to Registry.
 echo "-- -- Push image:"$DockerImgTag
-#sudo docker push $DockerImgTag
+sudo docker push $DockerImgTag
 
 # TBA: Now that image is pushed copy wrappers to target machine/dir
 # so that everything appears in Galaxy UI. 

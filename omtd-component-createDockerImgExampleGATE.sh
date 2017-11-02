@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OMTDSHAREDescriptorsFolderRoot="/home/ilsp/Desktop/OMTDTemp/"
-OMTDSHAREDescriptorsFolder="annie-omtds"
+OMTDSHAREDescriptorsFolder="GATE_annie-omtds"
 DockerRegistyHOST="snf-1301.ok-kno.grnetcloud.net"
 GalaxyID="omtdGATE"
 DockerFile="omtd-component-executor-gate.dockerfile"

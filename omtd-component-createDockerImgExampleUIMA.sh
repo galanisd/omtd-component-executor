@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OMTDSHAREDescriptorsFolderRoot="/home/ilsp/Desktop/OMTDTemp/"
-OMTDSHAREDescriptorsFolder="omtds-dkpro-core-1.9.0-SNAPSHOT"
+OMTDSHAREDescriptorsFolder="DKPro_omtds-dkpro-core-1.9.0-SNAPSHOT-20170925-1"
 DockerRegistyHOST="snf-1301.ok-kno.grnetcloud.net"
 GalaxyID="omtdDKPro"
 DockerFile="omtd-component-executor-uima.dockerfile"
@@ -24,9 +24,10 @@ else
 	echo "$locRepo already exists"
 fi
 
-# Copy repo here 
+# Copy repo here.
+# This is required so that the localRepo is included in docker image.
 if [ ! -d "$templocRepo" ]; then
-	echo "-- -- Copy here"
+	echo "-- -- Copy $locRepo to $(pwd)" 
 	cp -R $locRepo .
 fi
 
