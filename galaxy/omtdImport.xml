@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tool version="1.0.0" name="omtdImporter" id="omtdImporter">
+    <description>OMTD Importer</description>
+    <command>
+    cd  /root/omtd-installations/omtd-store/scripts/;
+    bash LinuxStartOMTDStoreClient.sh url http://83.212.101.85:8090 downloadArch $omtdStoreCorpusID /root/omtd-installations/$omtdStoreCorpusID".zip";
+    cd /root/omtd-installations/;
+    unzip $omtdStoreCorpusID".zip";
+    find $omtdStoreCorpusID"/fulltext/" > out.txt;
+    mkdir $output.job_working_directory/working/out/;
+    find $omtdStoreCorpusID"/fulltext/" -type f | xargs cp -t $output.job_working_directory/working/out/;
+    </command>
+    <inputs>
+        <param type="text" optional="false" name="omtdStoreCorpusID" label="omtdStoreCorpusID" help="Corpus ID">
+            <sanitizer sanitize="False"/>
+        </param>
+    </inputs>
+    <outputs>
+        <collection type="list" name="output" label="importer_output">
+            <discover_datasets visible="false" pattern="__designation__" format="pdf" directory="out"/>
+        </collection>
+    </outputs>
+</tool>
+
