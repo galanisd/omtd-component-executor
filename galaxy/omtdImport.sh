@@ -19,5 +19,6 @@ unzip $omtdStoreCorpusID".zip";
 find $omtdStoreCorpusID"/fulltext/" > out.txt;
 #mkdir -p $outDir;
 find $omtdStoreCorpusID"/fulltext/" -type f | xargs cp -t $outDir;
+rm -rf $workDir;
 
 
