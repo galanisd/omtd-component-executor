@@ -21,14 +21,11 @@ public class GalaxyToolExecutionCommand {
 		System.out.println("Framework:" + framework);
 		
 		if(framework.equals(Framework.UIMA)){
-			//System.out.println(UIMA);
 			return buildCheetahCodeUIMA(inputDirVar, Utils.normalizeCoordinates(coordinates), componentID, parameters);
 		}else if(framework.equals(Framework.GATE)){
 			return buildCheetahCodeGATE(inputDirVar, coordinates, componentID, parameters);
-		}else if(framework.equals(Framework.ALVIS)){
-			return "TO BE COMPLETED";
-		}else{
-			return "NO COMMAND AVAILABLE";
+		}else { // Docker
+			return "NO COMMAND AVAILABLE FOR NOW";
 		}
 	}
 	
@@ -63,7 +60,7 @@ public class GalaxyToolExecutionCommand {
 		// * First: command -input -output
 		command.append("Linux_runGATE.sh " + coordinates + " " + Utils.getClassNameFromComponentID(componentID) + " tmp" + " " + otDir);
 		// * Then: add parameters.
-		//command.append(galaxyParemeters(parameters));
+		command.append(galaxyParemeters(parameters));
 		// * Change line.
 		command.append("\n");
 		//command.append("]]>");

@@ -266,6 +266,8 @@ public class GalaxyWrapperGenerator {
 			}else{
 				System.out.println("UKNOWN PARAMETER TYPE:" + parameterType + "use default: " + GalaxyCons.textT);
 				galaxyParam.setType(GalaxyCons.textT);
+				galaxyParam.setSanitizer(createSanitizerWithAllAllowed());
+
 			}	
 		}else{
 			galaxyParam.setType(GalaxyCons.textT);
