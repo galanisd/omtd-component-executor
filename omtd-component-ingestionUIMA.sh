@@ -1,16 +1,20 @@
 #!/bin/bash
 
-OMTDSHAREDescriptorsFolderRoot="/home/ilsp/Desktop/OMTDTemp/"
-OMTDSHAREDescriptorsFolder="DKPro_omtds-dkpro-core-1.9.0-SNAPSHOT-20170925-1"
-DockerRegistyHOST="snf-1301.ok-kno.grnetcloud.net"
-GalaxyID="omtdDKPro"
-DockerFile="omtd-component-executor-uima.dockerfile"
-ComponentID="dkpro-core"
-ComponentVersion="1.9.0-SNAPSHOT"
+dir=$(pwd)/
+echo -e $dir$1
+echo "Reading config...." >&2
+. $dir$1
+echo -e "Started.." $dir$1
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 locRepo=/opt/TDMlocalRepo/
+
+echo "RemoveCache:$RemoveCache"
+if [ $RemoveCache == "yes" ]; then
+	rm -rf $locRepo
+fi
+
 templocRepo=TDMlocalRepo
 
 # If local repo does not exist
@@ -32,7 +36,7 @@ if [ ! -d "$templocRepo" ]; then
 fi
 
 # Build image.
-./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion $DockerFile
+./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion $DockerFile yes
 
 # Remove repo.
 rm -rf $templocRepo

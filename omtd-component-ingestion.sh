@@ -32,20 +32,20 @@ echo "Generate galaxy wrappers and TDMCoordinatesList"
 java -jar ./omtd-component-galaxy/target/omtd-component-galaxy-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerImgTag
 
 # If needed copy coordinates file.
-if[ -f $GeneratedCoordinatesList]; then
-	GeneratedCoordinatesList=$OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list"
+GeneratedCoordinatesList=$OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list"
+if [ -f $GeneratedCoordinatesList ]; then
 	# Copy output coordinates to TDMCoordinatesList.txt
 	cat $GeneratedCoordinatesList > TDMCoordinatesList.txt
 fi
 
 # If dockerfile is provided
-if[ $Dockerfile -ne "none" ]; then
+if [ $Dockerfile != "none" ]; then
 	# Build image.
 	echo "-- -- Build image" 
 	sudo docker build -f $Dockerfile -t $DockerImg .
 fi
 
-if[ $Push -eq "yes" ]; then
+if [ $Push == "yes" ]; then
 	# Tag the image.
 	echo "-- -- Tag image" 
 	sudo docker tag -f $DockerImg $DockerImgTag
