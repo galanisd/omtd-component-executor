@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 dir=$(pwd)/
 echo -e $dir$1
 echo "Reading config...." >&2
@@ -9,4 +8,4 @@ echo -e "Started.." $dir$1
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion none
+./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion none no $DockerImgTag

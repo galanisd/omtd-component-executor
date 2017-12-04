@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 dir=$(pwd)/
 echo -e $dir$1
 echo "Reading config...." >&2

@@ -2,7 +2,7 @@
 
 clear
 
-# Parameters
+# -- Script parameters
 DockerRegistyHOST=$1
 OMTDSHAREDescriptorsFolderRoot=$2
 OMTDSHAREDescriptorsFolder=$3
@@ -11,25 +11,39 @@ ComponentID=$5
 ComponentVersion=$6
 Dockerfile=$7
 Push=$8
+DockerImg="NOTPROVIDED"
+DockerImgTag="NOTPROVIDED"
+# -- 
 
-# Docker image name.
-DockerImg="omtd-component-executor-"${ComponentID}":"${ComponentVersion}
-
-DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
-
-echo "-----"
-echo "Dockerfile:"$Dockerfile 
-echo "DockerImg:"$DockerImg
-echo "Docker	ImgTag:"$DockerImgTag
-echo "-----"
-
-# Build project
+# Before everything build project.
 mvn clean install
 
-# Generate Galaxy Wrappers & TDMCoordinatesList file 
-# (only for Maven-based components) from omtd-share descriptors
+# If dockerfile is provided
+# then build DockerImg, DockerImgTag values.
+if [ $Dockerfile != "none" ]; then
+	# Docker image name.
+	DockerImg="omtd-component-executor-"${ComponentID}":"${ComponentVersion}
+	# Docker image tag.
+	DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
+
+	echo "-----"
+	echo "Dockerfile:"$Dockerfile 
+	echo "DockerImg:"$DockerImg
+else
+	DockerImg=""
+	DockerImgTag=$9
+fi
+
+echo "DockerImgTag:"$DockerImgTag
+echo "-----"
+
+# Generate 
+# * Galaxy Wrappers 
+# * TDMCoordinatesList file (only for Maven-based components)
+# from omtd-share descriptors
+suffix=".wrapper."$ComponentID"."$ComponentVersion".xml"
 echo "Generate galaxy wrappers and TDMCoordinatesList" 
-java -jar ./omtd-component-galaxy/target/omtd-component-galaxy-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerImgTag
+java -jar ./omtd-component-galaxy/target/omtd-component-galaxy-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerImgTag $suffix
 
 # If needed copy coordinates file.
 GeneratedCoordinatesList=$OMTDSHAREDescriptorsFolderRoot$GalaxyID"coordinates.list"
@@ -46,16 +60,17 @@ if [ $Dockerfile != "none" ]; then
 fi
 
 if [ $Push == "yes" ]; then
-	# Tag the image.
+	# Tag the image for OMTD docker registry.
 	echo "-- -- Tag image" 
 	sudo docker tag -f $DockerImg $DockerImgTag
 
-	# Push it to Registry.
+	# Push it to OMTD docker Registry.
 	echo "-- -- Push image:"$DockerImgTag
 	sudo docker push $DockerImgTag
 fi
 
-# TBA: Now that image is pushed copy wrappers to target machine/dir
+# TBA: Now that image is pushed and is available to docker registry 
+# copy wrappers to target machine/dir
 # so that everything appears in Galaxy UI. 
 echo "-- -- Copying wrappers"
 # ...
