@@ -78,7 +78,7 @@ public class GalaxyWrapperGenerator {
 	}
 
 
-	public Tool generate(File omtdShareFile) {
+	public Tool generate(File omtdShareFile, String suffix) {
 		try {
 			// Parse omtd-share file.
 			componentMeta = omtdshareParser.parse(omtdShareFile);
@@ -162,7 +162,7 @@ public class GalaxyWrapperGenerator {
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
-			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath);
+			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath + suffix);
 
 			return tool;
 		} catch (Exception e) {

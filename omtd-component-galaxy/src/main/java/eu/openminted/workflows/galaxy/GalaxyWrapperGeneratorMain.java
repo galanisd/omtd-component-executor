@@ -29,6 +29,7 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		String omtdShareDescFolder = args[1];
 		String galaxyWrappersFolderInGalaxy = args[2];
 		String dockerImage=args[3];
+		String suffix=args[4];
 		
 		// --- 
 		String omtdShareDescFolderAbsolute = root + omtdShareDescFolder;
@@ -54,7 +55,7 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 			File componentFile = componentFiles[i];
 			
 			System.out.println("\n" + componentFiles[i].getAbsolutePath() + " ...start processing..." );
-			Tool tool = galaxyWrapperGenerator.generate(componentFile);			
+			Tool tool = galaxyWrapperGenerator.generate(componentFile, suffix);			
 			String componentID = galaxyWrapperGenerator.getComponentID();
 			String coordinates = GalaxyWrapperGenerator.getCoordinatesFromResourceIdentifier(componentID);
 			

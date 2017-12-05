@@ -94,10 +94,7 @@ public class GalaxyToolExecutionCommand {
 		return parametersStr.toString();
 	}
 	
-
-	
 	private String getParamValue(String parameterName){
-		
 		String value = "$" + parameterName;
 		if(framework.equals(Framework.UIMA)){
 			if(parameterName.equals("targetLocation")){
