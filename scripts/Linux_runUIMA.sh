@@ -2,6 +2,7 @@
 
 # Decide where the UIMA executor is installed.
 componentExecutorInstallationDir=/opt/omtd-component-executor
+locRepo=/opt/TDMlocalRepo/
 
 if [ -d "$componentExecutorInstallationDir" ]; then
 	echo "Using default installation dir $componentExecutorInstallationDir"
@@ -43,25 +44,26 @@ case $key in
 esac
 done
 
+dir=$(pwd)
+if [ ! -d "$locRepo" ]; then
+	ocoord=${coordinates//_/:}
+	echo "ocoord:"$ocoord
+	echo $ocoord > $componentExecutorInstallationDir/TDMCoordinatesList.txt
+	cd $componentExecutorInstallationDir
+	bash FetchDependenciesUIMA.sh
+	cd $dir
+else
+	echo "$locRepo exists...no need to fetch deps."
+fi
+
+echo "coordinates:"$coordinates
 echo "inDir:"$inDir
 echo "otDir:"$otDir
 echo "uimaParams:"$uimaParams
 
 # Retrieve dependencies jar list.
 jarList=$(cat $componentExecutorInstallationDir/TDMClasspathLists/"classpath."$coordinates)
-
-#cnt=1
-
-#for arg in "$@"
-#do
-#  echo "Arg #$cnt= $arg"
-#  if [ "$cnt" -gt "4" ] 
-#  then
-#  	uimaParams=$uimaParams" "$arg
-#  fi
-#  let "cnt+=1"
-#done
-
 #echo $jarList
+
 # Call executor which is a java Spring-Boot based executable. 
 java -Xmx4096m -Dloader.path=$jarList -jar $componentExecutorInstallationDir/omtd-component-uima/target/omtd-component-uima-0.0.1-SNAPSHOT-exec.jar -className $className -input $inDir -output $otDir $uimaParams 
