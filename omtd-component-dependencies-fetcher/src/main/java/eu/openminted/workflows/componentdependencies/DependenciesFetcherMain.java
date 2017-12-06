@@ -69,9 +69,11 @@ public class DependenciesFetcherMain implements CommandLineRunner{
 		for (int i = 0; i < coordinatesList.size(); i++) {	
 			
 			String coordinates = coordinatesList.get(i);
-			FileOutputStream stream = new FileOutputStream(
-					dirWithJARLists + "classpath." + coordinates.replaceAll(":", "_"));
+			
+			String classPathListFileName = dirWithJARLists + "classpath." + coordinates.replaceAll(":", "_");
+			FileOutputStream stream = new FileOutputStream(classPathListFileName);
 
+			System.out.println("classPathListFileName:" + classPathListFileName);
 			System.out.println(coordinatesList.get(i) + " \n\n\n");
 			
 			try{

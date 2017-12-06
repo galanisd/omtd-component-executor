@@ -45,7 +45,7 @@ esac
 done
 
 dir=$(pwd)
-if [ ! -d "$locRepo" ]; then
+if [ ! -d "$componentExecutorInstallationDir/TDMlocalRepo" ]; then
 	ocoord=${coordinates//_/:}
 	echo "ocoord:"$ocoord
 	echo $ocoord > $componentExecutorInstallationDir/TDMCoordinatesList.txt

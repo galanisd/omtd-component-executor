@@ -10,9 +10,16 @@ GalaxyID=$4
 ComponentID=$5
 ComponentVersion=$6
 Dockerfile=$7
-Push=$8
+DockerID=$8
+DockerVersion=$9
+Push=${10}
 DockerImg="NOTPROVIDED"
 DockerImgTag="NOTPROVIDED"
+
+echo "args:"$@
+echo $DockerID
+echo $DockerVersion
+echo $Push
 # -- 
 
 # Before everything build project.
@@ -22,7 +29,7 @@ mvn clean install
 # then build DockerImg, DockerImgTag values.
 if [ $Dockerfile != "none" ]; then
 	# Docker image name.
-	DockerImg="omtd-component-executor-"${ComponentID}":"${ComponentVersion}
+	DockerImg="omtd-component-executor-"${DockerID}":"${DockerVersion}
 	# Docker image tag.
 	DockerImgTag="${DockerRegistyHOST}/openminted/${DockerImg}"
 
@@ -31,7 +38,7 @@ if [ $Dockerfile != "none" ]; then
 	echo "DockerImg:"$DockerImg
 else
 	DockerImg=""
-	DockerImgTag=$9
+	DockerImgTag=${11}
 fi
 
 echo "DockerImgTag:"$DockerImgTag
@@ -59,6 +66,7 @@ if [ $Dockerfile != "none" ]; then
 	sudo docker build -f $Dockerfile -t $DockerImg .
 fi
 
+echo "Push:"$Push
 if [ $Push == "yes" ]; then
 	# Tag the image for OMTD docker registry.
 	echo "-- -- Tag image" 
@@ -69,9 +77,11 @@ if [ $Push == "yes" ]; then
 	sudo docker push $DockerImgTag
 fi
 
-# TBA: Now that image is pushed and is available to docker registry 
+# Now that image is pushed and is available to docker registry 
 # copy wrappers to target machine/dir
 # so that everything appears in Galaxy UI. 
 echo "-- -- Copying wrappers"
-# ...
- 
+wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
+scp -r $wrappersDir/* user@snf-1289.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID
+scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
+

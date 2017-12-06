@@ -43,6 +43,7 @@ public class DependenciesFetcher {
 	
 	public String resolveDependencies(String coordinates) throws Exception {
 		Dependency dependency = new Dependency(new DefaultArtifact(coordinates), "compile");
+		//Dependency dependency = new Dependency(new DefaultArtifact(coordinates), "null");
 		
 		RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/")
 				.build();
