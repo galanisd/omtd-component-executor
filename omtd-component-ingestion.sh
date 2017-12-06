@@ -7,12 +7,12 @@ DockerRegistyHOST=$1
 OMTDSHAREDescriptorsFolderRoot=$2
 OMTDSHAREDescriptorsFolder=$3
 GalaxyID=$4
-ComponentID=$5
-ComponentVersion=$6
-Dockerfile=$7
-DockerID=$8
-DockerVersion=$9
-Push=${10}
+#ComponentID=$5
+#ComponentVersion=$6
+Dockerfile=$5
+DockerID=$6
+DockerVersion=$7
+Push=$8
 DockerImg="NOTPROVIDED"
 DockerImgTag="NOTPROVIDED"
 
@@ -38,7 +38,7 @@ if [ $Dockerfile != "none" ]; then
 	echo "DockerImg:"$DockerImg
 else
 	DockerImg=""
-	DockerImgTag=${11}
+	DockerImgTag=$9
 fi
 
 echo "DockerImgTag:"$DockerImgTag
@@ -48,7 +48,8 @@ echo "-----"
 # * Galaxy Wrappers 
 # * TDMCoordinatesList file (only for Maven-based components)
 # from omtd-share descriptors
-suffix=".wrapper."$ComponentID"."$ComponentVersion".xml"
+#suffix=".wrapper."$ComponentID"."$ComponentVersion".xml"
+suffix=".xml"
 echo "Generate galaxy wrappers and TDMCoordinatesList" 
 java -jar ./omtd-component-galaxy/target/omtd-component-galaxy-0.0.1-SNAPSHOT-exec.jar $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerImgTag $suffix
 

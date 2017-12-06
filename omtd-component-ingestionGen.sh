@@ -36,7 +36,8 @@ if [ $UseCache == "yes" ]; then
 fi
 
 # Ingest components.
-./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion $DockerFile $DockerID $DockerVersion $Push $DockerImgTag
+#./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $ComponentID $ComponentVersion $DockerFile $DockerID $DockerVersion $Push $DockerImgTag
+./omtd-component-ingestion.sh $DockerRegistyHOST $OMTDSHAREDescriptorsFolderRoot $OMTDSHAREDescriptorsFolder $GalaxyID $DockerFile $DockerID $DockerVersion $Push $DockerImgTag
 
 if [ $UseCache == "yes" ]; then
 	# Remove repo.
