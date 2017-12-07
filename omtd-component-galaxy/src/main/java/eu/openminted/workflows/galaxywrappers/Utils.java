@@ -24,4 +24,13 @@ public class Utils {
 	public static String getCommand(List<ComponentDistributionInfo> componentDistributionInfos){
 		return componentDistributionInfos.get(0).getCommand();
 	}
+	
+	public static String getImage(List<ComponentDistributionInfo> componentDistributionInfos){
+		
+		//for(int i = 0; i < componentDistributionInfos.size(); i++){
+		//	ComponentLoc loc = componentDistributionInfos.get(0).getComponentLoc();
+		//}
+		
+		return componentDistributionInfos.get(0).getComponentLoc().getDistributionURL();
+	}
 }
