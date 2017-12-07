@@ -30,29 +30,31 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {		
 		
+		// --- 
 		String root = args[0];
 		String omtdShareDescFolder = args[1];
 		String galaxyWrappersFolderInGalaxy = args[2];
 		String dockerImage=args[3];
 		String suffix=args[4];
-		
 		// --- 
 		String omtdShareDescFolderAbsolute = root + omtdShareDescFolder;
 		String outPath = omtdShareDescFolderAbsolute + wrappersFolderSuffix; 	
 		String coordinatesPath = root + galaxyWrappersFolderInGalaxy + mavenCoordinatesList;
 		
+		// --- 
 		GalaxyWrapperGenerator galaxyWrapperGenerator = new GalaxyWrapperGenerator(outPath);
-		
 		galaxyWrapperGenerator.setDockerImage(dockerImage);
 		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy);
 		FileOutputStream coordinatesFOS = new FileOutputStream(coordinatesPath); 
 		FileOutputStream jobConf = new FileOutputStream(root + jobConfFile); 
 		File omtdsFilesDir = new File(omtdShareDescFolderAbsolute + "/");
 		
+		// --- 
 		System.out.println("descriptor:" + omtdsFilesDir.getAbsolutePath() );
 		File [] componentFiles = omtdsFilesDir.listFiles();
 		System.out.println("|component files| = " + componentFiles.length);
 		
+		// for each file
 		for(int i = 0; i < componentFiles.length; i++){
 			File componentFile = componentFiles[i];
 			
@@ -77,6 +79,7 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		jobConf.close();
 	}
 	
+	// ---
 	// ---
 	public static void main(String args[]){
 		
