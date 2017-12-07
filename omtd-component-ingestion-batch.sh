@@ -1,11 +1,17 @@
 #!/bin/bash
 
-monitoredDir="/var/lib/docker/volumes/stack_registrydata/_data/"
-dir="ComponentsForGalaxy"
+# This scripts finds the OMTD-SHARE xml files in 
+# monitoredDir and copies them to the respective folders
+# depending on the component type; UIMA, GATE, Docker-based.
+# Then components are ingested to Galaxy. I.e., the respective Galaxy xml files
+# are generated and copied to the Galaxy server. 
 
-if [ ! -d "$dir" ]; then
-	mkdir $dir
-	cd $dir
+monitoredDir="/var/lib/docker/volumes/stack_registrydata/_data/"
+targetDir="ComponentsForGalaxy"
+
+if [ ! -d "$targetDir" ]; then
+	mkdir $targetDir
+	cd $targetDir
 	mkdir "UIMA"
 	mkdir "GATE"
 	mkdir "Docker"
@@ -16,14 +22,14 @@ do
 	echo $x
 	if grep -q 'framework>UIMA' "$x"; then
    		echo "UIMA"
-		cp $x $dir/UIMA/
+		cp $x $targetDir/UIMA/
  	elif grep -q 'framework>GATE' "$x";
 	then
 		echo "GATE" 
-		 cp $x $dir/GATE/
+		 cp $x $targetDir/GATE/
 	else
 		echo "Docker"
-		 cp $x $dir/Docker/
+		 cp $x $targetDir/Docker/
 	fi
 done
 
