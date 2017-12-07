@@ -1,6 +1,9 @@
 package eu.openminted.workflows.galaxywrappers;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import eu.openminted.registry.domain.ComponentDistributionInfo;
 
 /**
  * @author ilsp
@@ -16,7 +19,7 @@ public class GalaxyToolExecutionCommand {
 		this.framework = framework;
 	}
 	
-	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters){
+	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters, List<ComponentDistributionInfo> componentDistributionInfos){
 		
 		System.out.println("Framework:" + framework);
 		
@@ -25,7 +28,7 @@ public class GalaxyToolExecutionCommand {
 		}else if(framework.equals(Framework.GATE)){
 			return buildCheetahCodeGATE(inputDirVar, coordinates, componentID, parameters);
 		}else { // Docker
-			return "NO COMMAND AVAILABLE FOR NOW";
+			return buildCheetahCodeDocker(inputDirVar, componentID, parameters, componentDistributionInfos);
 		}
 	}
 	
@@ -59,6 +62,25 @@ public class GalaxyToolExecutionCommand {
 		// Build GATE executor command
 		// * First: command -input -output
 		command.append("Linux_runGATE.sh " + coordinates + " " + Utils.getClassNameFromComponentID(componentID) + " tmp" + " " + otDir);
+		// * Then: add parameters.
+		command.append(galaxyParemeters(parameters));
+		// * Change line.
+		command.append("\n");
+		//command.append("]]>");
+		return command.toString();
+	}
+
+	private String buildCheetahCodeDocker(String inputDirVar, String componentID, ArrayList<String> parameters, List<ComponentDistributionInfo> componentDistributionInfos) {
+		StringBuilder command = new StringBuilder();
+		//command.append("<![CDATA[");
+		// Copy input to a tmp dir. 
+		// TO-DO: check if this is required.
+		prepareTMP(inputDirVar, command);
+		otDir = "$output.job_working_directory/working/out/";
+		
+		// Build GATE executor command
+		// * First: command -input -output
+		command.append(Utils.getCommand(componentDistributionInfos));
 		// * Then: add parameters.
 		command.append(galaxyParemeters(parameters));
 		// * Change line.

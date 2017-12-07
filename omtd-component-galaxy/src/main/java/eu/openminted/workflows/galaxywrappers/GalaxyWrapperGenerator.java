@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import eu.openminted.registry.domain.Component;
+import eu.openminted.registry.domain.ComponentDistributionInfo;
 import eu.openminted.registry.domain.ComponentInfo;
 import eu.openminted.registry.domain.Description;
 import eu.openminted.registry.domain.ParameterInfo;
@@ -87,6 +88,7 @@ public class GalaxyWrapperGenerator {
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
 			ProcessingResourceInfo processingResourceInfo = componentInfo.getInputContentResourceInfo();
+			List<ComponentDistributionInfo> componentDistributionInfos = componentMeta.getComponentInfo().getDistributionInfos();
 			
 			// ** Create the tool.
 			Tool tool = new Tool();
@@ -158,7 +160,7 @@ public class GalaxyWrapperGenerator {
 				processingResourceInfo = new ProcessingResourceInfo(); 
 			}
 			// Set command
-			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), processingResourceInfo.getParameterInfos());
+			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), processingResourceInfo.getParameterInfos(), componentDistributionInfos);
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
@@ -173,7 +175,7 @@ public class GalaxyWrapperGenerator {
 
 	}
 
-	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyDataInputParamName, List<ParameterInfo> parametersInfos){
+	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyDataInputParamName, List<ParameterInfo> parametersInfos, List<ComponentDistributionInfo> componentDistributionInfos){
 		String execCMD = "";
 		
 		// Works for java
@@ -181,7 +183,7 @@ public class GalaxyWrapperGenerator {
 		
 		// "Glue" for calling a Galaxy tool.
 		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
-		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos)); 
+		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos), componentDistributionInfos); 
 		tool.setCommand(execCMD);	
 	}
 	
@@ -203,7 +205,7 @@ public class GalaxyWrapperGenerator {
 	}
 
 	public static String getCoordinatesFromResourceIdentifier(String compID){
-		String coordinates = "ERROR";
+		String coordinates = "MAVEN COORDINATES N/A ";
 		if(compID.startsWith("mvn:")){
 			
 			int end = compID.indexOf("#");

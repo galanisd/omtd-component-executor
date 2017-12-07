@@ -1,5 +1,9 @@
 package eu.openminted.workflows.galaxywrappers;
 
+import java.util.List;
+
+import eu.openminted.registry.domain.ComponentDistributionInfo;
+
 public class Utils {
 
 	public static String normalizeCoordinates(String coordinates){
@@ -16,5 +20,8 @@ public class Utils {
 		String shortName = componentID.substring(componentID.lastIndexOf("#") + 1);
 		return shortName;
 	}
-	
+
+	public static String getCommand(List<ComponentDistributionInfo> componentDistributionInfos){
+		return componentDistributionInfos.get(0).getCommand();
+	}
 }
