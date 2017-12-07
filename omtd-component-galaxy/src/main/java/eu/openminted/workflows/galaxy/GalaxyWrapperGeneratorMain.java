@@ -22,6 +22,11 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(GalaxyWrapperGeneratorMain.class);
 	
+	private static String wrappersFolderSuffix = "_" + "wrappers/";
+	private static String mavenCoordinatesList = "coordinates.list";
+	private static String jobConfFile = "jobConf";
+	private static String sectionFile = "section.xml";
+	
 	@Override
 	public void run(String... args) throws Exception {		
 		
@@ -33,19 +38,16 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		
 		// --- 
 		String omtdShareDescFolderAbsolute = root + omtdShareDescFolder;
-		String outPath = omtdShareDescFolderAbsolute + "_" + "wrappers/"; 	
-		String coordinatesPath = root + galaxyWrappersFolderInGalaxy + "coordinates.list";
+		String outPath = omtdShareDescFolderAbsolute + wrappersFolderSuffix; 	
+		String coordinatesPath = root + galaxyWrappersFolderInGalaxy + mavenCoordinatesList;
 		
 		GalaxyWrapperGenerator galaxyWrapperGenerator = new GalaxyWrapperGenerator(outPath);
 		
 		galaxyWrapperGenerator.setDockerImage(dockerImage);
 		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy);
 		FileOutputStream coordinatesFOS = new FileOutputStream(coordinatesPath); 
-		FileOutputStream jobConf = new FileOutputStream(root + "jobConf"); 
-
-		
+		FileOutputStream jobConf = new FileOutputStream(root + jobConfFile); 
 		File omtdsFilesDir = new File(omtdShareDescFolderAbsolute + "/");
-		
 		
 		System.out.println("descriptor:" + omtdsFilesDir.getAbsolutePath() );
 		File [] componentFiles = omtdsFilesDir.listFiles();
@@ -67,11 +69,10 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 			jobConf.flush();
 			System.out.println(componentFiles[i].getAbsolutePath() + " ... was processed");
 			
-			
 			galaxySectionGenerator.addTool(galaxyWrappersFolderInGalaxy + "/" + componentFile.getName() + ".xml");
 		}
 		
-		galaxySectionGenerator.write(root + "section.xml");		
+		galaxySectionGenerator.write(root + sectionFile);		
 		coordinatesFOS.close();
 		jobConf.close();
 	}
