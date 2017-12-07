@@ -33,6 +33,6 @@ do
 	fi
 done
 
-./omtd-component-ingestionGen.sh ingestion.docker.conf
-./omtd-component-ingestionGen.sh ingestion.GATE.conf
-./omtd-component-ingestionGen.sh ingestion.UIMA.conf
+./omtd-component-ingestionGen.sh ingestion-confs/ingestion.docker.conf
+./omtd-component-ingestionGen.sh ingestion-confs/ingestion.GATE.conf
+./omtd-component-ingestionGen.sh ingestion-confs/ingestion.UIMA.conf
