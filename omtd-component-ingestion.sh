@@ -84,5 +84,5 @@ fi
 echo "-- -- Copying wrappers"
 wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
 scp -r $wrappersDir/* user@snf-1289.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID
-scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
+#scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
 
