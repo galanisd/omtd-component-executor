@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Script for 
+# A. Generating Galaxy wrappers
+# B. Pushing the respective images to the specified Docker Registry (if required) 
+# C. Copying Galaxy wrappers to the respective Galaxy instances (specifically to tool directory).
+
 clear
 
 # -- Script parameters
@@ -79,10 +84,11 @@ if [ $Push == "yes" ]; then
 fi
 
 # Now that image is pushed and is available to docker registry 
-# copy wrappers to target machine/dir
-# so that everything appears in Galaxy UI. 
+# copy wrappers to target machine/dir so that everything appears in Galaxy UI. 
 echo "-- -- Copying wrappers"
 wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
+# Copying to Executor:
 scp -r $wrappersDir/* user@snf-1289.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID
+# Copying to Editor: The tools dirs of Editor and Executor are synced via NFS so copying to Editor is deactivated.
 #scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
 
