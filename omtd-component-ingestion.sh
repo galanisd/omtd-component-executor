@@ -32,6 +32,11 @@ echo $Push
 # Before everything build project.
 mvn clean install
 
+# Clean wrappers dir
+echo "Clean wrappers dir"
+wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
+rm $wrappersDir/*
+
 # If dockerfile is provided
 # then build DockerImg, DockerImgTag values.
 if [ $Dockerfile != "none" ]; then
@@ -90,9 +95,12 @@ fi
 # Now that image is pushed and is available to docker registry 
 # copy wrappers to target machine/dir so that everything appears in Galaxy UI. 
 echo "-- -- Copying wrappers"
-wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
+wrappersDest=root@$GalaxyExecutorLoc:/srv/galaxy/tools/$GalaxyID
+echo $wrappersDir
+echo $wrappersDest
+
 # Copying to Executor:
-scp -r $wrappersDir/* user@$GalaxyExecutorLoc:/srv/galaxy/tools/$GalaxyID
+scp -r $wrappersDir/* $wrappersDest
 # Copying to Editor: The tools dirs of Editor and Executor are synced via NFS so copying to Editor is deactivated.
 #scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
 
