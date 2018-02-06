@@ -20,6 +20,8 @@ DockerVersion=$7
 Push=$8
 DockerImg="NOTPROVIDED"
 DockerImgTag="NOTPROVIDED"
+GalaxyExecutorLoc=$9	
+
 
 echo "args:"$@
 echo $DockerID
@@ -42,8 +44,10 @@ if [ $Dockerfile != "none" ]; then
 	echo "Dockerfile:"$Dockerfile 
 	echo "DockerImg:"$DockerImg
 else
+	# DockerImg is not required
 	DockerImg=""
-	DockerImgTag=$9
+	# A DockerImgTag is provided.
+	DockerImgTag=${10}
 fi
 
 echo "DockerImgTag:"$DockerImgTag
@@ -88,7 +92,7 @@ fi
 echo "-- -- Copying wrappers"
 wrappersDir=$OMTDSHAREDescriptorsFolderRoot$OMTDSHAREDescriptorsFolder"_wrappers"
 # Copying to Executor:
-scp -r $wrappersDir/* user@snf-1289.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID
+scp -r $wrappersDir/* user@$GalaxyExecutorLoc:/srv/galaxy/tools/$GalaxyID
 # Copying to Editor: The tools dirs of Editor and Executor are synced via NFS so copying to Editor is deactivated.
 #scp -r $wrappersDir/* root@snf-1480.ok-kno.grnetcloud.net:/srv/galaxy/tools/$GalaxyID 
 
