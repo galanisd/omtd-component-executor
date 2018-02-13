@@ -9,7 +9,7 @@
 #monitoredDir="/var/lib/docker/volumes/stack_registrydata/_data/"
 #monitoredDir="/var/lib/docker/volumes/omtd_registrydata/_data/"
 
-monitoredDir="/home/user/omtd/omtd-component-executor/here/"
+monitoredDir="./here/"
 
 targetDir="ComponentsForGalaxy"
 
