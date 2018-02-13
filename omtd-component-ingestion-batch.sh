@@ -6,7 +6,11 @@
 # Then components are ingested to Galaxy. I.e., the respective Galaxy xml files
 # are generated and copied to the Galaxy server. 
 
-monitoredDir="/var/lib/docker/volumes/stack_registrydata/_data/"
+#monitoredDir="/var/lib/docker/volumes/stack_registrydata/_data/"
+#monitoredDir="/var/lib/docker/volumes/omtd_registrydata/_data/"
+
+monitoredDir="/home/user/omtd/omtd-component-executor/here/"
+
 targetDir="ComponentsForGalaxy"
 
 if [ ! -d "$targetDir" ]; then
@@ -19,7 +23,7 @@ fi
 
 for x in `find $monitoredDir -type f`
 do
-	echo $x
+	echo "file:"$x
 	if grep -q 'framework>UIMA' "$x"; then
    		echo "UIMA"
 		cp $x $targetDir/UIMA/
@@ -34,5 +38,5 @@ do
 done
 
 ./omtd-component-ingestionGen.sh ingestion-confs/omtdReg/ingestion.docker.conf
-./omtd-component-ingestionGen.sh ingestion-confs/omtdReg/ingestion.GATE.conf
-./omtd-component-ingestionGen.sh ingestion-confs/omtdReg/ingestion.UIMA.conf
+#./omtd-component-ingestionGen.sh ingestion-confs/omtdReg/ingestion.GATE.conf
+#./omtd-component-ingestionGen.sh ingestion-confs/omtdReg/ingestion.UIMA.conf
