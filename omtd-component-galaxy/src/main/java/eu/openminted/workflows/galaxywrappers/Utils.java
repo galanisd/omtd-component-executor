@@ -31,6 +31,7 @@ public class Utils {
 		//	ComponentLoc loc = componentDistributionInfos.get(0).getComponentLoc();
 		//}
 		
-		return componentDistributionInfos.get(0).getComponentLoc().getDistributionURL();
+		//return componentDistributionInfos.get(0).getComponentLoc().getDistributionURL();
+		return componentDistributionInfos.get(0).getDistributionLocation();
 	}
 }

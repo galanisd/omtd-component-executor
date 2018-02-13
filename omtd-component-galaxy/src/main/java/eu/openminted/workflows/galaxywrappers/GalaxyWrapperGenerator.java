@@ -88,6 +88,7 @@ public class GalaxyWrapperGenerator {
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
 			ProcessingResourceInfo processingResourceInfo = componentInfo.getInputContentResourceInfo();
+			
 			List<ComponentDistributionInfo> componentDistributionInfos = componentMeta.getComponentInfo().getDistributionInfos();
 			
 			// ** Create the tool.
@@ -142,7 +143,9 @@ public class GalaxyWrapperGenerator {
 			Outputs outputs = new Outputs();
 
 			// * Create input params
-			ArrayList<Param> inputParams = createInputParams(processingResourceInfo);
+			//ArrayList<Param> inputParams = createInputParams(processingResourceInfo);
+			ArrayList<Param> inputParams = createInputParams(componentInfo);
+			
 			// * Create&add the data input param
 			Param dataInputGalaxyParam = createDataInputParam(componentShortName);
 			inputParams.add(dataInputGalaxyParam);
@@ -170,7 +173,7 @@ public class GalaxyWrapperGenerator {
 				processingResourceInfo = new ProcessingResourceInfo(); 
 			}
 			// Set command
-			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), processingResourceInfo.getParameterInfos(), componentDistributionInfos);
+			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), componentInfo.getParameterInfos(), componentDistributionInfos);
 
 			// Serialize wrapper object to a file.
 			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
@@ -293,13 +296,15 @@ public class GalaxyWrapperGenerator {
 	 * @param processingResourceInfo
 	 * @return the list of parameters.
 	 */
-	private ArrayList<Param> createInputParams(ProcessingResourceInfo processingResourceInfo) {
-
+	//private ArrayList<Param> createInputParams(ProcessingResourceInfo processingResourceInfo) {
+	private ArrayList<Param> createInputParams(ComponentInfo componentInfo) {
+	
 		ArrayList<Param> params = new ArrayList<Param>();
 		
-		if(processingResourceInfo != null){
-			List<ParameterInfo> parametersInfos = processingResourceInfo.getParameterInfos();
-	
+		if(componentInfo != null){
+			//sList<ParameterInfo> parametersInfos = processingResourceInfo.getParameterInfos();
+			List<ParameterInfo> parametersInfos = componentInfo.getParameterInfos();
+			
 			//For each OMTD-SHARE parameter
 			for (ParameterInfo paramInfo : parametersInfos) {
 				// Create Galaxy param.
