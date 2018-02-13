@@ -109,7 +109,8 @@ public class GalaxyWrapperGenerator {
 			// * Framework used.
 			framework  = componentInfo.getComponentCreationInfo().getFramework().value();
 			// * Short name.
-			String componentShortName = Utils.getShortNameFromComponentID(componentID);
+			//String componentShortName = Utils.getShortNameFromComponentID(componentID);
+			String componentShortName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			// * Component version.
 			String version = componentInfo.getVersionInfo().getVersion();
 
