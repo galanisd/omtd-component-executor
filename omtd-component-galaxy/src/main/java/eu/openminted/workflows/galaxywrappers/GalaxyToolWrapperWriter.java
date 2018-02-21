@@ -2,6 +2,8 @@ package eu.openminted.workflows.galaxywrappers;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -26,13 +28,24 @@ public class GalaxyToolWrapperWriter {
 		}
 	}
 	
-	public void write(Tool tool, String galaxyWrapperPath){
+	public String serialize(Tool tool){
+		try {
+		    StringWriter sw = new StringWriter();
+			jaxbMarshaller.marshal(tool, sw);
+			return sw.toString();
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
+	public void write(Tool tool, String galaxyWrapperPath) throws Exception{
 		
 		try {
 			FileOutputStream out = new FileOutputStream(galaxyWrapperPath); 
-			jaxbMarshaller.marshal(tool, out);
-		} catch (JAXBException e) {
-			e.printStackTrace();
+			out.write(serialize(tool).getBytes());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

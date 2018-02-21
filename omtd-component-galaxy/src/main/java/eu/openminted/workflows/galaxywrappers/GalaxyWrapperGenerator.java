@@ -44,14 +44,23 @@ public class GalaxyWrapperGenerator {
 	private String framework;
 	
 	public GalaxyWrapperGenerator(String outDir) {
-		omtdshareParser = new OMTDSHAREParser();
-		galaxyToolWrapperWriter = new GalaxyToolWrapperWriter();
-
+		init();
+		
 		// Create wrappers output dir if not exists.
 		outDirHandler = new File(outDir);
 		if (!outDirHandler.exists()) {
 			outDirHandler.mkdirs();
 		}
+	}
+	
+	public GalaxyWrapperGenerator() {
+		init();
+		outDirHandler = null;
+	}
+	
+	private void init(){
+		omtdshareParser = new OMTDSHAREParser();
+		galaxyToolWrapperWriter = new GalaxyToolWrapperWriter();		
 	}
 	
 	public String getDockerImage() {
@@ -78,12 +87,27 @@ public class GalaxyWrapperGenerator {
 		this.componentID = componentID;
 	}
 
-
-	public Tool generate(File omtdShareFile, String suffix) {
-		try {
+	public Tool generate(File omtdShareFile, String suffix){		
+		try{
 			// Parse omtd-share file.
 			componentMeta = omtdshareParser.parse(omtdShareFile);
-
+			
+			Tool tool = generate(componentMeta);
+			// Serialize wrapper object to a file.
+			if(outDirHandler != null){
+				String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
+				galaxyToolWrapperWriter.write(tool, galaxyWrapperPath + suffix);
+			}
+			return tool;
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e.getMessage());
+			return null;
+		}
+	}
+	
+	public Tool generate(Component componentMeta) {
+		try {
 			// Get info
 			ComponentInfo componentInfo = componentMeta.getComponentInfo();
 			List<Description> descriptions = componentInfo.getIdentificationInfo().getDescriptions();
@@ -173,12 +197,9 @@ public class GalaxyWrapperGenerator {
 			if(processingResourceInfo == null){
 				processingResourceInfo = new ProcessingResourceInfo(); 
 			}
+			
 			// Set command
 			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), componentInfo.getParameterInfos(), componentDistributionInfos);
-
-			// Serialize wrapper object to a file.
-			String galaxyWrapperPath = outDirHandler.getAbsolutePath() + "/" + omtdShareFile.getName() + ".xml";
-			galaxyToolWrapperWriter.write(tool, galaxyWrapperPath + suffix);
 
 			return tool;
 		} catch (Exception e) {
