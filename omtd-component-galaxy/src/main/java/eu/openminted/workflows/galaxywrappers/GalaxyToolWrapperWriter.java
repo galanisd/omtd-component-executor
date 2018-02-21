@@ -45,7 +45,9 @@ public class GalaxyToolWrapperWriter {
 		
 		try {
 			FileOutputStream out = new FileOutputStream(galaxyWrapperPath); 
+			out.flush();
 			out.write(serialize(tool).getBytes());
+			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

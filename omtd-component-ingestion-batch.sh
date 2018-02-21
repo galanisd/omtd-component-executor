@@ -26,10 +26,10 @@ do
  	elif grep -q 'framework>GATE' "$x";
 	then
 		echo "GATE" 
-		 cp $x $targetDir/GATE/
+		cp $x $targetDir/GATE/
 	else
 		echo "Docker"
-		 cp $x $targetDir/Docker/
+		cp $x $targetDir/Docker/
 	fi
 done
 
