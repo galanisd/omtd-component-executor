@@ -16,6 +16,10 @@ import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiReader;
 import de.tudarmstadt.ukp.dkpro.core.io.xmi.XmiWriter;
 import eu.openminted.remoteexecution.client.RemoteComponent;
 
+/**
+ * @author ilsp
+ *
+ */
 public class WebServiceClient {
 
 	private String inputFolder;
@@ -25,6 +29,7 @@ public class WebServiceClient {
 	public WebServiceClient(String inputFolder, String outputFolder, String webServiceURL) {
 		this.inputFolder = inputFolder;
 		this.outputFolder = outputFolder;
+		this.webServiceURL = webServiceURL;
 	}
 
 	public void run() throws UIMAException, IOException {

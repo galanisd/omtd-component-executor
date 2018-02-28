@@ -21,6 +21,7 @@
 		<module>./omtd-component-dependencies-fetcher</module>
 		<module>./omtd-component-uima</module>
     	<module>./omtd-component-galaxy</module>
+    	<module>./omtd-component-webservice</module>
   </modules>
   
 </project>

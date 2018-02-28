@@ -52,7 +52,8 @@ public class ComponentExecutionCmdArgsParser {
 		Option className = Option.builder(CLASSNAME)
 				.hasArg(true)
 				//.argName("className")
-                .required(true)
+                //.required(true) --> change it to false...so that it can be used in all cases (web service).
+                .required(false)
                 .longOpt("className")
                 .desc(" the class name")
                 .build();
@@ -93,9 +94,9 @@ public class ComponentExecutionCmdArgsParser {
 	        cmdIN.setClassName(givenCMD.getOptionValue(CLASSNAME));
 	        System.out.println("className" + " " + cmdIN.getClassName());
 	        
-	        Set<String> set = givenCMD.getOptionProperties(PARAMETER).stringPropertyNames();
+	        Set<String> parametersSet = givenCMD.getOptionProperties(PARAMETER).stringPropertyNames();
 	        
-	        Iterator<String> it = set.iterator();
+	        Iterator<String> it = parametersSet.iterator();
 	        while(it.hasNext()){
 	        	String propertyName = it.next();
 	        	String propertyValue = givenCMD.getOptionProperties(PARAMETER).getProperty(propertyName);	        

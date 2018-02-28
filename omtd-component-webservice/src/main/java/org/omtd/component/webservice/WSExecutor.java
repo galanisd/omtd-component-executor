@@ -10,11 +10,15 @@ import eu.openminted.workflows.componentargs.ComponentExecutionCmdArgsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author ilsp
+ *
+ */
 @SpringBootApplication
 public class WSExecutor implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(WSExecutor.class);
-	private static final String URL = "wsurl";
+	private static final String WSURL = "wsurl";
 	
 	// == === ==	
 	public static void main(String[] args) throws Exception {
@@ -29,12 +33,13 @@ public class WSExecutor implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
+		// Parse arguments.
 		ComponentExecutionCmdArgsParser argsParser = new ComponentExecutionCmdArgsParser();
 		ComponentArgs componentArgs = argsParser.parse(args);
 		log.info(componentArgs.dump());
 		
 		// Get web service url.
-		String url = componentArgs.getParameters().get(URL);
+		String url = componentArgs.getParameters().get(WSURL);
 		WebServiceClient ws = new WebServiceClient(componentArgs.getInput(), componentArgs.getOutput(), url);
 		ws.run();
 	}
