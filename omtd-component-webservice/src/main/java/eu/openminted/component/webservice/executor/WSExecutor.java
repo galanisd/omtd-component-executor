@@ -1,9 +1,10 @@
-package org.omtd.component.webservice;
+package eu.openminted.component.webservice.executor;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import eu.openminted.component.webservice.WebServiceClient;
 import eu.openminted.workflows.componentargs.ComponentArgs;
 import eu.openminted.workflows.componentargs.ComponentExecutionCmdArgsParser;
 
@@ -24,7 +25,7 @@ public class WSExecutor implements CommandLineRunner {
 	public static void main(String[] args) throws Exception {
 
 		log.info("...");
-		SpringApplication app = new SpringApplication(WebServiceClient.class);
+		SpringApplication app = new SpringApplication(WSExecutor.class);
 		// app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 		log.info("DONE!");
@@ -37,9 +38,9 @@ public class WSExecutor implements CommandLineRunner {
 		ComponentExecutionCmdArgsParser argsParser = new ComponentExecutionCmdArgsParser();
 		ComponentArgs componentArgs = argsParser.parse(args);
 		log.info(componentArgs.dump());
-		
 		// Get web service url.
 		String url = componentArgs.getParameters().get(WSURL);
+		// Run!
 		WebServiceClient ws = new WebServiceClient(componentArgs.getInput(), componentArgs.getOutput(), url);
 		ws.run();
 	}
