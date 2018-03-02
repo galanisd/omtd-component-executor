@@ -32,6 +32,7 @@ public class GalaxyToolExecutionCommand {
 		}else if(Utils.isWebService(componentDistributionInfos)){
 			cheetahCode = buildCheetahCodeWS(inputDirVar, componentID, parameters);
 		}else{
+        	framework = componentMeta.getComponentInfo().getComponentCreationInfo().getFramework().value();
 			System.out.println("Framework:" + framework);
 			if(framework.equals(Framework.UIMA)){
 				cheetahCode =  buildCheetahCodeUIMA(inputDirVar, Utils.normalizeCoordinates(coordinates), componentID, parameters);
