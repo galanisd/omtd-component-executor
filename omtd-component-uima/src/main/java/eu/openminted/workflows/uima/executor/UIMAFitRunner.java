@@ -102,7 +102,7 @@ public class UIMAFitRunner {
 			}
 		}
 
-		// SimplePipeline.runPipeline(reader, engines);
+		//SimplePipeline.runPipeline(reader, engines);
 		runPipeline(reader, engines);
 
 	}

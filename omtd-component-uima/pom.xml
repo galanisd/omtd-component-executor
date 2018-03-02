@@ -21,11 +21,6 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<!-- 
-		<dkpro.core.version>1.9.0-SNAPSHOT</dkpro.core.version>
-		<uima.version>2.9.0</uima.version>
-		<uimafit.version>2.2.0</uimafit.version>
-		 -->
 
 		<start-class>eu.openminted.workflows.uima.executor.PipelineCommandLineRunner</start-class>
 
