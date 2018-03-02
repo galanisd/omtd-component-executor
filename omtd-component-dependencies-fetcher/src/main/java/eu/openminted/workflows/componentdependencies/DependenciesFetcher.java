@@ -58,11 +58,11 @@ public class DependenciesFetcher {
 		collectRequest.addRepository(central);
 		collectRequest.addRepository(zoid);
 		
+		
 		DependencyNode node = repoSystem.collectDependencies(session, collectRequest).getRoot();
 
 		DependencyRequest dependencyRequest = new DependencyRequest();
 		dependencyRequest.setRoot(node);
-
 		repoSystem.resolveDependencies(session, dependencyRequest);
 
 		PreorderNodeListGenerator nlg = new PreorderNodeListGenerator();
