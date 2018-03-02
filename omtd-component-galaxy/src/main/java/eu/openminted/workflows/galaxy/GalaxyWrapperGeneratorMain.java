@@ -2,6 +2,7 @@ package eu.openminted.workflows.galaxy;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 
 import eu.openminted.workflows.galaxytool.Tool;
 import eu.openminted.workflows.galaxywrappers.GalaxyWrapperGenerator;
+import eu.openminted.workflows.galaxywrappers.Utils;
 
 
 public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
@@ -29,6 +31,8 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {		
+		
+		System.out.println("len:" + args.length + "->" + Arrays.toString(args));
 		
 		// --- 
 		String root = args[0];
@@ -61,7 +65,7 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 			System.out.println("\n" + componentFiles[i].getAbsolutePath() + " ...start processing..." );
 			Tool tool = galaxyWrapperGenerator.generate(componentFile, suffix);			
 			String componentID = galaxyWrapperGenerator.getComponentID();
-			String coordinates = GalaxyWrapperGenerator.getCoordinatesFromResourceIdentifier(componentID);
+			String coordinates = Utils.getMVNCoordinatesFromResourceIdentifier(componentID);
 			
 			coordinatesFOS.write((coordinates + "\n").getBytes());
 			coordinatesFOS.flush();

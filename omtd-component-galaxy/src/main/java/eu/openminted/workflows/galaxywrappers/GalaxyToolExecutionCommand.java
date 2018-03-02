@@ -3,6 +3,7 @@ package eu.openminted.workflows.galaxywrappers;
 import java.util.ArrayList;
 import java.util.List;
 
+import eu.openminted.registry.domain.Component;
 import eu.openminted.registry.domain.ComponentDistributionInfo;
 
 /**
@@ -14,18 +15,22 @@ public class GalaxyToolExecutionCommand {
 	private String framework;
 	private String inDir;
 	private String otDir;
+	private List<ComponentDistributionInfo> componentDistributionInfos;
+	private Component componentMeta;
 	
-	public GalaxyToolExecutionCommand(String framework){
-		this.framework = framework;
+	public GalaxyToolExecutionCommand(){
 	}
 	
-	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters, List<ComponentDistributionInfo> componentDistributionInfos){
+	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters, Component componentMeta){
 		String cheetahCode = "";
 		
+		this.componentMeta = componentMeta;
+		componentDistributionInfos = componentMeta.getComponentInfo().getDistributionInfos();
+		
 		if(Utils.isDocker(componentDistributionInfos)){
-			cheetahCode = buildCheetahCodeDocker(inputDirVar, componentID, parameters, componentDistributionInfos);
+			cheetahCode = buildCheetahCodeDocker(inputDirVar, componentID, parameters);
 		}else if(Utils.isWebService(componentDistributionInfos)){
-			cheetahCode = buildCheetahCodeWS(inputDirVar, componentID, parameters, componentDistributionInfos);
+			cheetahCode = buildCheetahCodeWS(inputDirVar, componentID, parameters);
 		}else{
 			System.out.println("Framework:" + framework);
 			if(framework.equals(Framework.UIMA)){
@@ -78,7 +83,7 @@ public class GalaxyToolExecutionCommand {
 		return command.toString();
 	}
 
-	private String buildCheetahCodeDocker(String inputDirVar, String componentID, ArrayList<String> parameters, List<ComponentDistributionInfo> componentDistributionInfos) {
+	private String buildCheetahCodeDocker(String inputDirVar, String componentID, ArrayList<String> parameters) {
 		StringBuilder command = new StringBuilder();
 		//command.append("<![CDATA[");
 		// Copy input to a tmp dir. 
@@ -97,7 +102,7 @@ public class GalaxyToolExecutionCommand {
 		return command.toString();
 	}
 
-	private String buildCheetahCodeWS(String inputDirVar, String componentID, ArrayList<String> parameters, List<ComponentDistributionInfo> componentDistributionInfos) {
+	private String buildCheetahCodeWS(String inputDirVar, String componentID, ArrayList<String> parameters) {
 		StringBuilder command = new StringBuilder();
 		//command.append("<![CDATA[");
 		// Copy input to a tmp dir. 
@@ -107,7 +112,7 @@ public class GalaxyToolExecutionCommand {
 		
 		// Build WS executor command
 		// * First: command -input -output
-		command.append("Linux_runWS.sh " + " -input tmp " + "-output " + otDir + " -Pwsurl=" + Utils.getURL(componentDistributionInfos));
+		command.append("Linux_runWS.sh" + " -input tmp " + "-output " + otDir + " -Pwsurl=" + Utils.getURL(componentDistributionInfos) + " -Ptypesystems=" + Utils.getTypesystemsStr(componentMeta));
 		// * Then: add parameters.
 		// NO PARAMETERS in Web Services.
 		//command.append(galaxyParemeters(parameters));

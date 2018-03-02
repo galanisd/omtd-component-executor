@@ -199,7 +199,7 @@ public class GalaxyWrapperGenerator {
 			}
 			
 			// Set command
-			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), componentInfo.getParameterInfos(), componentDistributionInfos);
+			setToolCommand(tool, framework, componentID, dataInputGalaxyParam.getName(), componentInfo.getParameterInfos(), componentMeta);
 
 			return tool;
 		} catch (Exception e) {
@@ -210,15 +210,15 @@ public class GalaxyWrapperGenerator {
 
 	}
 
-	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyDataInputParamName, List<ParameterInfo> parametersInfos, List<ComponentDistributionInfo> componentDistributionInfos){
+	private void setToolCommand(Tool tool, String framework, String componentID, String galaxyDataInputParamName, List<ParameterInfo> parametersInfos, Component componentMeta){
 		String execCMD = "";
 		
 		// Works for java
-		String coord = getCoordinatesFromResourceIdentifier(componentID);
+		String coord = Utils.getMVNCoordinatesFromResourceIdentifier(componentID);
 		
 		// "Glue" for calling a Galaxy tool.
-		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand(framework);
-		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos), componentDistributionInfos); 
+		GalaxyToolExecutionCommand gtec = new GalaxyToolExecutionCommand();
+		execCMD = gtec.buildCheetahCode(galaxyDataInputParamName, coord, componentID, listParameters(parametersInfos), componentMeta); 
 		tool.setCommand(execCMD);	
 	}
 	
@@ -238,18 +238,6 @@ public class GalaxyWrapperGenerator {
 
 		return dataGalaxyParam;
 	}
-
-	public static String getCoordinatesFromResourceIdentifier(String compID){
-		String coordinates = "MAVEN COORDINATES N/A ";
-		if(compID.startsWith("mvn:")){
-			
-			int end = compID.indexOf("#");
-			coordinates = compID.substring("mvn:".length(), end);
-		}
-		
-		return coordinates;
-	}
-	
 	
 	public void setDefaultValue(ParameterInfo paramInfo, Param galaxyParam){
 		// Set default value.
