@@ -3,6 +3,7 @@ package eu.openminted.component.webservice;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.CollectionReaderFactory.createReader;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.uima.UIMAException;
@@ -43,10 +44,22 @@ public class WebServiceClient {
 		
 		AnalysisEngine remoteComponent = createEngine(RemoteComponent.class, RemoteComponent.URL_PARAM, webServiceURL);
 
+		createOutputFolder(outputFolder);
 		AnalysisEngine writer = createEngine(XmiWriter.class, XmiWriter.PARAM_TARGET_LOCATION, outputFolder,
 				XmiWriter.PARAM_OVERWRITE, Boolean.TRUE);
 
 		SimplePipeline.runPipeline(reader, remoteComponent, writer);
 
 	}
+	
+	private File createOutputFolder(String outputFolder) {
+		File outputFolderFile = new File(outputFolder);
+
+		if (!outputFolderFile.exists()) {
+			outputFolderFile.mkdirs();
+		}
+
+		return outputFolderFile;
+	}
+
 }
