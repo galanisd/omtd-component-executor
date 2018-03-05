@@ -100,6 +100,7 @@ public class Utils {
 
 		// return
 		// componentDistributionInfos.get(0).getComponentLoc().getDistributionURL();
+		System.out.println("image:" + componentDistributionInfos.get(0).getDistributionLocation());
 		return componentDistributionInfos.get(0).getDistributionLocation();
 	}
 }
