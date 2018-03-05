@@ -149,6 +149,8 @@ public class GalaxyWrapperGenerator {
 			Container container = new Container();
 			container.setType("docker");
 			
+			// If the component is Docker-based
+			// extract image form OMTD-SHARE.
 			if( Utils.isDocker(componentDistributionInfos)){
 				dockerImage = Utils.getImage(componentDistributionInfos);
 				System.out.println("Exracted image:" + dockerImage);
