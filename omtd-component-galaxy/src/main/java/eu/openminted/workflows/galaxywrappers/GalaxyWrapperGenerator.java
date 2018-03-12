@@ -381,7 +381,7 @@ public class GalaxyWrapperGenerator {
 	}
 	
 	private String normalizeIOParam(String initial){
-		String finalIOParam = initial.replaceAll("\\s+","");
+		String finalIOParam = initial.replaceAll("\\s+","_");
 		return finalIOParam;
 	}
 }
