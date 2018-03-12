@@ -172,7 +172,8 @@ public class GalaxyWrapperGenerator {
 			ArrayList<Param> inputParams = createInputParams(componentInfo);
 			
 			// * Create&add the data input param
-			Param dataInputGalaxyParam = createDataInputParam(componentShortName);
+			String ioParam = normalizeIOParam(componentShortName);
+			Param dataInputGalaxyParam = createDataInputParam(ioParam);
 			inputParams.add(dataInputGalaxyParam);
 			
 			inputs.setParams(inputParams);
@@ -188,7 +189,7 @@ public class GalaxyWrapperGenerator {
 			collection.setDiscoverDatasets(dd);
 			collection.setName("output");
 			collection.setType("list");
-			collection.setLabel(componentShortName + "_output");
+			collection.setLabel(ioParam + "_output");
 			outputs.setCollection(collection);
 			// info = componentInfo.getOutputResourceInfo();
 			// outputs.setParams(extractInputParams(info));
@@ -224,6 +225,7 @@ public class GalaxyWrapperGenerator {
 	
 	
 	private Param createDataInputParam(String name) {
+		name = normalizeIOParam(name);
 		Param dataGalaxyParam = new Param();
 
 		// dataGalaxyParam.setType("data");
@@ -376,5 +378,10 @@ public class GalaxyWrapperGenerator {
 		sanitizer.setSanitize("False");
 		
 		return sanitizer;
+	}
+	
+	private String normalizeIOParam(String initial){
+		String finalIOParam = initial.replaceAll("\\s+","");
+		return finalIOParam;
 	}
 }
