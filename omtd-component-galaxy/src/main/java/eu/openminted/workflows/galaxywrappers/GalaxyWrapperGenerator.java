@@ -383,7 +383,8 @@ public class GalaxyWrapperGenerator {
 	
 	private String normalizeIOParam(String initial){
 		//String finalIOParam = initial.replaceAll("\\s+","_");
-		String finaIOParam = DigestUtils.sha1Hex(initial.getBytes());
-		return finaIOParam;
+		//String finaIOParam = DigestUtils.sha1Hex(initial.getBytes());
+		
+		return "component";
 	}
 }
