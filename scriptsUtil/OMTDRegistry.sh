@@ -6,22 +6,19 @@ echo "Reading config...." >&2
 . $dir$1
 echo -e "Started.." $dir$1
 
-service=$baseURL/$resourceType/$resourceID
-echo "service:"$service
+service1=$baseURL/$resourceType/$resourceID
+service2=$baseURL/$resourceType/
+echo "service1:"$service1
 
 # Download resource xml.
-curl -H "Accept: application/xml" -X "GET" $service -o resourceMetadata.xml
+curl -H "Accept: application/xml" -X "GET" $service1 -o resourceMetadata.xml
 # Download resource json.
-curl -H "Accept: application/json" -X "GET" $service -o resourceMetadata.json
-
-# Retrieve json 
-metaJSON=`cat resourceMetadata.json`
-#echo $metaJSON
+curl -H "Accept: application/json" -X "GET" $service1 -o resourceMetadata.json
+#echo "\n" >> resourceMetadata.json
 
 # Delete it
 if [ $delete == "yes" ]; then
-	echo "service:"$service
-	#curl -H "Content-Type: application/json" -X "DELETE" -d $metaJSON $service 
-	curl  -H "Content-Type: application/json" -d "anything" -X "DELETE"  $service 
+	echo "service2:"$service2
+	curl -H "Content-Type: application/json" -X "DELETE" $service2 -d @resourceMetadata.json 
 	echo "deleting:"$delete
 fi
