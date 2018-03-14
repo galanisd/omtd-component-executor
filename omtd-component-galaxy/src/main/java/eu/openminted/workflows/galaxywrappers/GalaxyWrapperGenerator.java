@@ -24,6 +24,7 @@ import eu.openminted.workflows.galaxytool.Requirements;
 import eu.openminted.workflows.galaxytool.Sanitizer;
 import eu.openminted.workflows.galaxytool.Tool;
 import eu.openminted.workflows.galaxytool.Valid;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * @author ilsp
@@ -378,10 +379,11 @@ public class GalaxyWrapperGenerator {
 		sanitizer.setSanitize("False");
 		
 		return sanitizer;
-	}
+	}	
 	
 	private String normalizeIOParam(String initial){
-		String finalIOParam = initial.replaceAll("\\s+","_");
-		return finalIOParam;
+		//String finalIOParam = initial.replaceAll("\\s+","_");
+		String finaIOParam = DigestUtils.sha1Hex(initial.getBytes());
+		return finaIOParam;
 	}
 }
