@@ -21,11 +21,20 @@ public class GalaxyToolExecutionCommand {
 	public GalaxyToolExecutionCommand(){
 	}
 	
+	/**
+	 * Builds component's cheetah code for Galaxy wrapper.
+	 * @param inputDirVar
+	 * @param coordinates
+	 * @param componentID
+	 * @param parameters
+	 * @param componentMeta
+	 * @return
+	 */
 	public String buildCheetahCode(String inputDirVar, String coordinates, String componentID, ArrayList<String> parameters, Component componentMeta){
 		String cheetahCode = "";
 		
 		this.componentMeta = componentMeta;
-		componentDistributionInfos = componentMeta.getComponentInfo().getDistributionInfos();
+		this.componentDistributionInfos = componentMeta.getComponentInfo().getDistributionInfos();
 		
 		if(Utils.isDocker(componentDistributionInfos)){
 			cheetahCode = buildCheetahCodeDocker(inputDirVar, componentID, parameters);
@@ -34,8 +43,9 @@ public class GalaxyToolExecutionCommand {
 		}else{
         	framework = componentMeta.getComponentInfo().getComponentCreationInfo().getFramework().value();
 			System.out.println("Framework:" + framework);
+			
 			if(framework.equals(Framework.UIMA)){
-				cheetahCode =  buildCheetahCodeUIMA(inputDirVar, Utils.normalizeCoordinates(coordinates), componentID, parameters);
+				cheetahCode = buildCheetahCodeUIMA(inputDirVar, Utils.normalizeCoordinates(coordinates), componentID, parameters);
 			}else if(framework.equals(Framework.GATE)){
 				cheetahCode = buildCheetahCodeGATE(inputDirVar, coordinates, componentID, parameters);
 			}else { 
@@ -94,9 +104,9 @@ public class GalaxyToolExecutionCommand {
 		
 		// Build Docker executor command
 		// * First: command -input -output
-		command.append(Utils.getCommand(componentDistributionInfos));
+		command.append(Utils.getCommand(componentDistributionInfos) + " --input tmp " + "--output " + otDir);
 		// * Then: add parameters.
-		command.append(galaxyParemeters(parameters));
+		//command.append(galaxyParemeters(parameters));
 		// * Change line.
 		command.append("\n");
 		//command.append("]]>");
