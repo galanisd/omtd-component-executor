@@ -284,7 +284,7 @@ public class GalaxyWrapperGenerator {
 				galaxyParam.setSanitizer(createSanitizerWithAllAllowed());
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.BOOLEAN.value())){
 				galaxyParam.setType(GalaxyCons.booleanT);
-				System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
+				//System.out.println("boolean:" + paramInfo.getDefaultValue().get(0) + " -- " + paramInfo.getParameterName() );
 			}else if(parameterType.equalsIgnoreCase(ParameterTypeEnum.INTEGER.value())){
 				galaxyParam.setType(GalaxyCons.integerT);
 				System.out.println("integer:" + paramInfo.getParameterName());
