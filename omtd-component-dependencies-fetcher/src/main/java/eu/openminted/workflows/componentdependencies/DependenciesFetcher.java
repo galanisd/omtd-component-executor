@@ -48,16 +48,20 @@ public class DependenciesFetcher {
 		RemoteRepository central = new RemoteRepository.Builder("central", "default", "http://repo1.maven.org/maven2/")
 				.build();
 
-		// JUST FOR TESTING!
+		// JUST FOR TESTING!									
 		RemoteRepository zoid = new RemoteRepository.Builder("zoid", "default", "http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-snapshots/")
 				.build();
 
+		// JUST FOR TESTING!
+		RemoteRepository omtdR = new RemoteRepository.Builder("omtdR", "default", "https://repo.openminted.eu/content/repositories/snapshots/")
+				.build();
+		
 		CollectRequest collectRequest = new CollectRequest();
 		collectRequest.setRoot(dependency);
 		
 		collectRequest.addRepository(central);
 		collectRequest.addRepository(zoid);
-		
+		collectRequest.addRepository(omtdR);
 		
 		DependencyNode node = repoSystem.collectDependencies(session, collectRequest).getRoot();
 
