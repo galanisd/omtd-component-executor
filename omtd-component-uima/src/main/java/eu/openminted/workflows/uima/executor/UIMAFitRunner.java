@@ -232,13 +232,21 @@ public class UIMAFitRunner {
 						params[pos] = Integer.parseInt(paramValue);
 					} else if (f.getType().isAssignableFrom(Boolean.TYPE)) {
 						params[pos] = Boolean.parseBoolean(paramValue);
+					} else if (f.getType().isAssignableFrom(Float.TYPE)) {
+						System.out.println("Float");
+						params[pos] = Float.parseFloat(paramValue);
 					}
+					else if (f.getType().isAssignableFrom(Double.TYPE)) {
+						System.out.println("Double");
+						//params[pos] = Double.parseDouble(paramValue);
+						params[pos] = Float.parseFloat(paramValue);
+					}else {
+						params[pos] = paramValue;
+					}
+					
 					// else if(f.getType()){
 					// params[pos] = Pattern.compile(paramValue);
 					// }
-					else {
-						params[pos] = paramValue;
-					}
 
 				}
 			}
