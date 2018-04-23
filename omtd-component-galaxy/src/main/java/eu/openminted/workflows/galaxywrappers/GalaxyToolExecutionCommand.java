@@ -106,7 +106,7 @@ public class GalaxyToolExecutionCommand {
 		// * First: command -input -output
 		command.append(Utils.getCommand(componentDistributionInfos) + " --input tmp " + "--output " + otDir);
 		// * Then: add parameters.
-		//command.append(galaxyParemeters(parameters));
+		command.append(galaxyParemetersDock(parameters));
 		// * Change line.
 		command.append("\n");
 		//command.append("]]>");
@@ -155,6 +155,24 @@ public class GalaxyToolExecutionCommand {
 			
 			String paramValue = getParamValue(parameterName);
 			parametersStr.append("-P" + parameterName + "='" +  paramValue + "'\n");
+			parametersStr.append("#end if");
+		}
+
+		return parametersStr.toString();
+	}
+
+	private String galaxyParemetersDock(ArrayList<String> parameters){
+		StringBuilder parametersStr = new StringBuilder();
+	
+		for(int i = 0; i < parameters.size(); i++){
+			
+			String parameterName = parameters.get(i);
+			
+			parametersStr.append(" \n" );
+			parametersStr.append("#if $"  + parameterName + "\n");
+			
+			String paramValue = getParamValue(parameterName);
+			parametersStr.append("--param:" + parameterName + "='" +  paramValue + "'\n");
 			parametersStr.append("#end if");
 		}
 
