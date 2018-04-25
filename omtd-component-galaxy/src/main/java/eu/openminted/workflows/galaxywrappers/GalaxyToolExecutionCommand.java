@@ -181,12 +181,17 @@ public class GalaxyToolExecutionCommand {
 	
 	private String getParamValue(String parameterName){
 		String value = "$" + parameterName;
-		if(framework.equals(Framework.UIMA)){
-			if(parameterName.equals("targetLocation")){
-				value = this.otDir + value;
-			}
+		
+		if(Utils.isDocker(componentDistributionInfos)){
+			//
 		}else{
-			
+			if(framework.equals(Framework.UIMA)){
+				if(parameterName.equals("targetLocation")){
+					value = this.otDir + value;
+				}
+			}else{
+				
+			}	
 		}
 		
 		return value;
