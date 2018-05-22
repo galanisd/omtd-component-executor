@@ -12,6 +12,7 @@ import eu.openminted.registry.domain.Description;
 import eu.openminted.registry.domain.ParameterInfo;
 import eu.openminted.registry.domain.ParameterTypeEnum;
 import eu.openminted.registry.domain.ProcessingResourceInfo;
+import eu.openminted.registry.domain.ResourceIdentifier;
 import eu.openminted.workflows.galaxytool.Add;
 import eu.openminted.workflows.galaxytool.Collection;
 import eu.openminted.workflows.galaxytool.Container;
@@ -107,6 +108,26 @@ public class GalaxyWrapperGenerator {
 		}
 	}
 	
+	private String extractComponentID(Component componentMetad){
+		ComponentInfo componentInfo = componentMetad.getComponentInfo();
+		// Default.
+		String cid = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
+		List<ComponentDistributionInfo> componentDistributionInfos = componentMetad.getComponentInfo().getDistributionInfos();
+		
+		// Look for maven
+		if( !Utils.isDocker(componentDistributionInfos) && !Utils.isWebService(componentDistributionInfos)){
+			List<ResourceIdentifier> allIDs = componentInfo.getIdentificationInfo().getResourceIdentifiers();
+			
+			for(ResourceIdentifier ri : allIDs){
+				if(ri.getResourceIdentifierSchemeName().value().equalsIgnoreCase(eu.openminted.registry.domain.ResourceIdentifierSchemeNameEnum.MAVEN.value())){
+					cid = ri.getValue();
+				}
+			}
+		}
+		
+		return cid;
+	}
+	
 	public Tool generate(Component componentMeta) {
 		try {
 			// Get info
@@ -128,7 +149,8 @@ public class GalaxyWrapperGenerator {
 				desc = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			}
 			// * Component ID.
-			componentID = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
+			// componentID = componentInfo.getIdentificationInfo().getResourceIdentifiers().get(0).getValue();
+			componentID = extractComponentID(componentMeta);
 			// * Component full name.
 			String componentFullName = componentInfo.getIdentificationInfo().getResourceNames().get(0).getValue();
 			// * Framework used.
