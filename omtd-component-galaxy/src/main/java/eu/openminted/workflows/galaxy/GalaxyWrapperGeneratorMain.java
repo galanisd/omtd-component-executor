@@ -48,7 +48,10 @@ public class GalaxyWrapperGeneratorMain implements CommandLineRunner {
 		// --- 
 		GalaxyWrapperGenerator galaxyWrapperGenerator = new GalaxyWrapperGenerator(outPath);
 		galaxyWrapperGenerator.setDockerImage(dockerImage);
-		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy);
+		GalaxySectionGenerator galaxySectionGenerator = new GalaxySectionGenerator();
+		galaxySectionGenerator.addSection(galaxyWrappersFolderInGalaxy, galaxyWrappersFolderInGalaxy, GalaxySectionGenerator.ToolList_Type);
+		
+		
 		FileOutputStream coordinatesFOS = new FileOutputStream(coordinatesPath); 
 		FileOutputStream jobConf = new FileOutputStream(root + jobConfFile); 
 		File omtdsFilesDir = new File(omtdShareDescFolderAbsolute + "/");

@@ -8,51 +8,76 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import eu.openminted.workflows.galaxytool.Section;
+import eu.openminted.workflows.galaxytool.GenericSection;
+import eu.openminted.workflows.galaxytool.SectionWithListOfTools;
+import eu.openminted.workflows.galaxytool.SectionWithDir;
+import eu.openminted.workflows.galaxytool.ToolDir;
 import eu.openminted.workflows.galaxytool.ToolEntry;
+import eu.openminted.workflows.galaxytool.Toolbox;
 
 public class GalaxySectionGenerator {
 	
-	private String id;
-	private String name;
-
 	private Marshaller jaxbMarshaller;
 	private JAXBContext jaxbContext;
 	
-	private Section section;
+	public final static int ToolList_Type = 1;
+	public final static int Dir_Type = 2;
 	
-	public GalaxySectionGenerator(String id, String name){
-		this.id = id;
-		this.name = name;
+	private Toolbox toolbox ;
+	private SectionWithDir sectionWithDir;
+	private SectionWithListOfTools sectionWithListOfTools;
+	
+	public GalaxySectionGenerator(){
 		try{			
-			jaxbContext	 = JAXBContext.newInstance(Section.class);
+			jaxbContext	 = JAXBContext.newInstance(Toolbox.class);
 			jaxbMarshaller = jaxbContext.createMarshaller();
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);		
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);	
+			
+			toolbox = new Toolbox(); 
 		}catch(Exception e){
 			//log
 			e.printStackTrace();
 		}
+	}
+	
+	public void addSection(String sectionID, String sectionName, int sectionType){
 		
-		section = new Section();
-		section.setId(id);
-		section.setName(name);
-		
-		ArrayList<ToolEntry> tools = new ArrayList<ToolEntry>();
-		section.setTools(tools);
+		if(sectionType == ToolList_Type){
+			System.out.println(sectionType);
+			sectionWithListOfTools = new SectionWithListOfTools();
+			sectionWithListOfTools.setId(sectionID);
+			sectionWithListOfTools.setName(sectionName);
+			
+			ArrayList<ToolEntry> tools = new ArrayList<ToolEntry>();
+			sectionWithListOfTools.setTools(tools);
+			toolbox.getSectionWithListOfTools().add(sectionWithListOfTools);
+		}else if(sectionType == Dir_Type){
+			System.out.println(sectionType);
+			sectionWithDir = new SectionWithDir();	
+			sectionWithDir.setId(sectionID);
+			sectionWithDir.setName(sectionName);
+			
+			ToolDir dir = new ToolDir();
+			sectionWithDir.setToolWithDir(dir);
+			toolbox.getSectionWithDir().add(sectionWithDir);
+		}
+	
 	}
 	
 	public void addTool(String file){
 		ToolEntry entry = new ToolEntry();
 		entry.setFile(file);
-		
-		section.getTools().add(entry);
+		sectionWithListOfTools.getTools().add(entry);
 	}	
 	
+	public void addDir(String dirName){
+		sectionWithDir.getToolWithDir().setDir(dirName);
+	}
+	
 	public void write(String outFile){
-		
 		try {
 			FileOutputStream out = new FileOutputStream(outFile); 
-			jaxbMarshaller.marshal(section, out);
+			jaxbMarshaller.marshal(toolbox, out);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {

@@ -7,7 +7,9 @@ package eu.openminted.workflows.galaxytool;
 public class GalaxyCons {
 
 	// elements
+	public static final String toolbox = "toolbox";
 	public static final String tool = "tool";
+	public static final String toolDir = "tool_dir";
 	public static final String description = "description";
 	public static final String requirements = "requirements";
 	public static final String container = "container";
@@ -39,6 +41,8 @@ public class GalaxyCons {
 	public static final String directory = "directory";
 	public static final String file = "file";
 	public static final String help = "help";
+	public static final String dir = "dir";
+
 	
 	// values
 	public static final String textT = "text";
