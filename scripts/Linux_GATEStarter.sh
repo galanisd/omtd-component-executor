@@ -6,7 +6,7 @@
 println 'GATE Executor...'
 
 @GrabResolver(name='gate-snapshots', root='http://repo.gate.ac.uk/content/groups/public/')
-@Grab(group='uk.ac.gate', module='gate-core', version='8.5-SNAPSHOT', changing=true)
+@Grab(group='uk.ac.gate', module='gate-core', version='8.5.1')
 import gate.*;
 import gate.creole.*;
 import gate.util.persistence.PersistenceManager;
