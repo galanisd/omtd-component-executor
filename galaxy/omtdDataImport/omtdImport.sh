@@ -10,7 +10,7 @@ cd  /root/omtd-installations/omtd-store/scripts/;
 workDir=$(mktemp -d -p "$(pwd)");
 echo $workDir
 
-# Download archive and unzip it.
+# Download archive from OMTD-store and unzip it.
 echo $omtdStoreCorpusID
 zip=$workDir/$omtdStoreCorpusID".zip"
 bash LinuxStartOMTDStoreClient.sh url http://83.212.101.85:8090 downloadArch $omtdStoreCorpusID $zip;
