@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Get cmd arguments.
 omtdStoreCorpusID=$1
-outDir=$2
+omtdSubArchive=$2
+outDir=$3
 
 # Create working dir.
 cd  /root/omtd-installations/omtd-store/scripts/;
@@ -15,10 +17,12 @@ bash LinuxStartOMTDStoreClient.sh url http://83.212.101.85:8090 downloadArch $om
 cd $workDir;
 unzip $omtdStoreCorpusID".zip";
 
+# Log files found in omtdSubArchive
+find $omtdStoreCorpusID"/$omtdSubArchive/" > out.txt;
 # Move files to outDir
-find $omtdStoreCorpusID"/fulltext/" > out.txt;
 #mkdir -p $outDir;
-find $omtdStoreCorpusID"/fulltext/" -type f | xargs cp -t $outDir;
+find $omtdStoreCorpusID"/$omtdSubArchive/" -type f | xargs cp -t $outDir;
+# Cleanup working dir.
 rm -rf $workDir;
 
 

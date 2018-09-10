@@ -9,6 +9,9 @@
         <param type="text" optional="false" name="omtdStoreCorpusID" label="omtdStoreCorpusID" help="Corpus ID">
             <sanitizer sanitize="False"/>
         </param>
+        <param type="text" optional="false" name="omtdSubArchive" label="omtdSubArchive" help="subarchive name">
+            <sanitizer sanitize="False"/>
+        </param>        
     </inputs>
     <outputs>
         <collection type="list" name="output" label="importer_output">
