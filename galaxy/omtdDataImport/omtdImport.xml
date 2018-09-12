@@ -3,7 +3,7 @@
     <description>OMTD Importer</description>
     <command>
     mkdir -p $output.job_working_directory/working/out/;	
-    bash $__tool_directory__/omtdImport.sh $omtdStoreCorpusID $output.job_working_directory/working/out/
+    bash $__tool_directory__/omtdImport.sh $omtdStoreCorpusID $omtdSubArchive $output.job_working_directory/working/out/
     </command>
     <inputs>
         <param type="text" optional="false" name="omtdStoreCorpusID" label="omtdStoreCorpusID" help="Corpus ID">
