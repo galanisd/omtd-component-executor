@@ -1,0 +1,518 @@
+<?xml version='1.0' encoding='utf-8'?>
+<toolbox monitor="true">
+<!--
+  <section id="getext" name="Get Data">
+    <tool file="data_source/upload.xml" />
+    <tool file="data_source/ucsc_tablebrowser.xml" />
+    <tool file="data_source/ucsc_tablebrowser_test.xml" />
+    <tool file="data_source/ucsc_tablebrowser_archaea.xml" />
+    <tool file="data_source/ebi_sra.xml" />
+    <tool file="data_source/microbial_import.xml" />
+    <tool file="data_source/biomart.xml" />
+    <tool file="data_source/cbi_rice_mart.xml" />
+    <tool file="data_source/gramene_mart.xml" />
+    <tool file="data_source/fly_modencode.xml" />
+    <tool file="data_source/flymine.xml" />
+    <tool file="data_source/flymine_test.xml" />
+    <tool file="data_source/modmine.xml" />
+    <tool file="data_source/mousemine.xml" />
+    <tool file="data_source/ratmine.xml" />
+    <tool file="data_source/yeastmine.xml" />
+    <tool file="data_source/metabolicmine.xml" />
+    <tool file="data_source/worm_modencode.xml" />
+    <tool file="data_source/wormbase.xml" />
+    <tool file="data_source/wormbase_test.xml" />
+    <tool file="data_source/zebrafishmine.xml" />
+    <tool file="data_source/eupathdb.xml" />
+    <tool file="data_source/hbvar.xml" />
+    <tool file="genomespace/genomespace_importer.xml" />
+    <tool file="genomespace/genomespace_push.xml" />
+  </section>
+  <section id="send" name="Send Data">
+    <tool file="genomespace/genomespace_exporter.xml" />
+  </section>
+  <section id="collection_operations" name="Collection Operations">
+    <tool file="${model_tools_path}/unzip_collection.xml" />
+    <tool file="${model_tools_path}/zip_collection.xml" />
+    <tool file="${model_tools_path}/filter_failed_collection.xml" />
+    <tool file="${model_tools_path}/flatten_collection.xml" />
+    <tool file="${model_tools_path}/merge_collection.xml" />
+    <tool file="${model_tools_path}/relabel_from_file.xml" />
+    <tool file="${model_tools_path}/filter_from_file.xml" />
+    <tool file="${model_tools_path}/sort_collection_list.xml" />
+  </section>
+  <section id="liftOver" name="Lift-Over">
+    <tool file="extract/liftOver_wrapper.xml" />
+  </section>
+  <section id="textutil" name="Text Manipulation">
+    <tool file="filters/fixedValueColumn.xml" />
+    <tool file="filters/catWrapper.xml" />
+    <tool file="filters/cutWrapper.xml" />
+    <tool file="filters/mergeCols.xml" />
+    <tool file="filters/convert_characters.xml" />
+    <tool file="filters/CreateInterval.xml" />
+    <tool file="filters/cutWrapper.xml" />
+    <tool file="filters/changeCase.xml" />
+    <tool file="filters/pasteWrapper.xml" />
+    <tool file="filters/remove_beginning.xml" />
+    <tool file="filters/randomlines.xml" />
+    <tool file="filters/headWrapper.xml" />
+    <tool file="filters/tailWrapper.xml" />
+    <tool file="filters/trimmer.xml" />
+    <tool file="filters/wc_gnu.xml" />
+    <tool file="filters/secure_hash_message_digest.xml" />
+  </section>
+  <section id="filter" name="Filter and Sort">
+    <tool file="stats/filtering.xml" />
+    <tool file="filters/sorter.xml" />
+    <tool file="filters/grep.xml" />
+    
+    <label id="gff" text="GFF" />
+    <tool file="filters/gff/extract_GFF_Features.xml" />
+    <tool file="filters/gff/gff_filter_by_attribute.xml" />
+    <tool file="filters/gff/gff_filter_by_feature_count.xml" />
+    <tool file="filters/gff/gtf_filter_by_attribute_values_list.xml" />
+  </section>
+  <section id="group" name="Join, Subtract and Group">
+    <tool file="filters/joiner.xml" />
+    <tool file="filters/compare.xml" />
+    <tool file="stats/grouping.xml" />
+  </section>
+  <section id="convert" name="Convert Formats">
+    <tool file="filters/axt_to_concat_fasta.xml" />
+    <tool file="filters/axt_to_fasta.xml" />
+    <tool file="filters/axt_to_lav.xml" />
+    <tool file="filters/bed2gff.xml" />
+    <tool file="filters/gff2bed.xml" />
+    <tool file="filters/lav_to_bed.xml" />
+    <tool file="maf/maf_to_bed.xml" />
+    <tool file="maf/maf_to_interval.xml" />
+    <tool file="maf/maf_to_fasta.xml" />
+    <tool file="filters/wiggle_to_simple.xml" />
+    <tool file="filters/sff_extractor.xml" />
+    <tool file="filters/gtf2bedgraph.xml" />
+    <tool file="filters/wig_to_bigwig.xml" />
+    <tool file="filters/bed_to_bigbed.xml" />
+  </section>
+  <section id="features" name="Extract Features">
+    <tool file="filters/ucsc_gene_bed_to_exon_bed.xml" />
+  </section>
+  <section id="fetchSeq" name="Fetch Sequences">
+    <tool file="extract/extract_genomic_dna.xml" />
+  </section>
+  <section id="fetchAlign" name="Fetch Alignments">
+    <tool file="maf/interval2maf_pairwise.xml" />
+    <tool file="maf/interval2maf.xml" />
+    <tool file="maf/maf_split_by_species.xml" />
+    <tool file="maf/interval_maf_to_merged_fasta.xml" />
+    <tool file="maf/genebed_maf_to_fasta.xml" />
+    <tool file="maf/maf_stats.xml" />
+    <tool file="maf/maf_thread_for_species.xml" />
+    <tool file="maf/maf_limit_to_species.xml" />
+    <tool file="maf/maf_limit_size.xml" />
+    <tool file="maf/maf_by_block_number.xml" />
+    <tool file="maf/maf_reverse_complement.xml" />
+    <tool file="maf/maf_filter.xml" />
+  </section>
+  <section id="stats" name="Statistics">
+    <tool file="stats/gsummary.xml" />
+    <tool file="filters/uniq.xml" />
+  </section>
+  <section id="plots" name="Graph/Display Data">
+    <tool file="plotting/bar_chart.xml" />
+    <tool file="plotting/boxplot.xml" />
+    <tool file="maf/vcf_to_maf_customtrack.xml" />
+  </section>
+-->
+  <label id="omtdComponentsLabel" text="OMTD Components" version="" />
+  <section name="DataImport" id="omtdDataImport">
+     <tool_dir dir="omtdDataImport" />
+  </section>
+  <section name="GATE" id="omtdGATE">
+     <tool_dir dir="omtdToolsClfnByDS/omtdGATE" />
+  </section>
+  <section name="Docker" id="omtdDocker">
+     <tool_dir dir="omtdToolsClfnByDS/omtdDocker" />
+  </section>
+  <section name="UIMA" id="omtdUIMA">
+     <tool_dir dir="omtdToolsClfnByDS/omtdUIMA" />
+  </section>
+    <section id="omtdAccessComponent" name="Access Component">
+        <tool_dir dir="omtdTools/AccessComponent"/>
+    </section>
+    <section id="omtdWriter" name="Writer">
+        <tool_dir dir="omtdTools/Writer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdReader" name="Reader">
+        <tool_dir dir="omtdTools/Reader"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSupportComponent" name="Support component">
+        <tool_dir dir="omtdTools/SupportComponent"/>
+    </section>
+    <section id="omtdScriptBasedAnalyser" name="Script-based analyser">
+        <tool_dir dir="omtdTools/ScriptBasedAnalyser"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdTrainerOfMachineLearningModels" name="Trainer of Machine Learning models">
+        <tool_dir dir="omtdTools/TrainerOfMachineLearningModels"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdEvaluator" name="Evaluator">
+        <tool_dir dir="omtdTools/Evaluator"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdMatcher" name="Matcher">
+        <tool_dir dir="omtdTools/Matcher"/>
+    </section>
+    <section id="omtdGazeteerBasedMatcher" name="Gazeteer based matcher">
+        <tool_dir dir="omtdTools/GazeteerBasedMatcher"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdCrowdsourcingComponent" name="Crowdsourcing component">
+        <tool_dir dir="omtdTools/CrowdsourcingComponent"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSoftwareDevelopmentEnvironment" name="Software development environment">
+        <tool_dir dir="omtdTools/SoftwareDevelopmentEnvironment"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdMachineLearningPredictor" name="Machine Learning predictor">
+        <tool_dir dir="omtdTools/MachineLearningPredictor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdViewer" name="Viewer">
+        <tool_dir dir="omtdTools/Viewer"/>
+    </section>
+    <section id="omtdCorpusViewer" name="Corpus viewer">
+        <tool_dir dir="omtdTools/CorpusViewer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdLexiconViewer" name="Lexicon viewer">
+        <tool_dir dir="omtdTools/LexiconViewer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDataCollector" name="Data collector">
+        <tool_dir dir="omtdTools/DataCollector"/>
+    </section>
+    <section id="omtdCrawler" name="Crawler">
+        <tool_dir dir="omtdTools/Crawler"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdFeatureExtractor" name="Feature extractor">
+        <tool_dir dir="omtdTools/FeatureExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdValidator" name="Validator">
+        <tool_dir dir="omtdTools/Validator"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDebugger" name="Debugger">
+        <tool_dir dir="omtdTools/Debugger"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDataMerger" name="Data merger">
+        <tool_dir dir="omtdTools/DataMerger"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDataSplitter" name="Data splitter">
+        <tool_dir dir="omtdTools/DataSplitter"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdEditor" name="Editor">
+        <tool_dir dir="omtdTools/Editor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdFlowController" name="Flow controller">
+        <tool_dir dir="omtdTools/FlowController"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdVisualiser" name="Visualiser">
+        <tool_dir dir="omtdTools/Visualiser"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdConverter" name="Converter">
+        <tool_dir dir="omtdTools/Converter"/>
+    </section>
+    <section id="omtdDependencyConverter" name="Dependency converter">
+        <tool_dir dir="omtdTools/DependencyConverter"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdProcessor" name="Processor">
+        <tool_dir dir="omtdTools/Processor"/>
+    </section>
+    <section id="omtdAnnotator" name="Annotator">
+        <tool_dir dir="omtdTools/Annotator"/>
+    </section>
+    <section id="omtdCoReferenceAnnotator" name="Co-reference annotator">
+        <tool_dir dir="omtdTools/CoReferenceAnnotator"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSemanticAnnotator" name="Semantic annotator">
+        <tool_dir dir="omtdTools/SemanticAnnotator"/>
+    </section>
+    <section id="omtdAnnotatorOfSemanticRoleLabels" name="Annotator of semantic role labels">
+        <tool_dir dir="omtdTools/AnnotatorOfSemanticRoleLabels"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdReadabilityAnnotator" name="Readability annotator">
+        <tool_dir dir="omtdTools/ReadabilityAnnotator"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdNamedEntitityRecognizer" name="Named entitity recognizer">
+        <tool_dir dir="omtdTools/NamedEntitityRecognizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdChunker" name="Chunker">
+        <tool_dir dir="omtdTools/Chunker"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdLemmatizer" name="Lemmatizer">
+        <tool_dir dir="omtdTools/Lemmatizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdParser" name="Parser">
+        <tool_dir dir="omtdTools/Parser"/>
+    </section>
+    <section id="omtdConstituencyParser" name="Constituency parser">
+        <tool_dir dir="omtdTools/ConstituencyParser"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDependencyParser" name="Dependency parser">
+        <tool_dir dir="omtdTools/DependencyParser"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdMorphologicalTagger" name="Morphological tagger">
+        <tool_dir dir="omtdTools/MorphologicalTagger"/>
+    </section>
+    <section id="omtdPartOfSpeechTagger" name="Part of speech tagger">
+        <tool_dir dir="omtdTools/PartOfSpeechTagger"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdAligner" name="Aligner">
+        <tool_dir dir="omtdTools/Aligner"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdStemmer" name="Stemmer">
+        <tool_dir dir="omtdTools/Stemmer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSegmenter" name="Segmenter">
+        <tool_dir dir="omtdTools/Segmenter"/>
+    </section>
+    <section id="omtdSentenceSplitter" name="Sentence splitter">
+        <tool_dir dir="omtdTools/SentenceSplitter"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdTokenizer" name="Tokenizer">
+        <tool_dir dir="omtdTools/Tokenizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdGenerator" name="Generator">
+        <tool_dir dir="omtdTools/Generator"/>
+    </section>
+    <section id="omtdSummarizer" name="Summarizer">
+        <tool_dir dir="omtdTools/Summarizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSimplifier" name="Simplifier">
+        <tool_dir dir="omtdTools/Simplifier"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdAnalyzer" name="Analyzer">
+        <tool_dir dir="omtdTools/Analyzer"/>
+    </section>
+    <section id="omtdLexiconExtractorFromLexica" name="Lexicon extractor from lexica">
+        <tool_dir dir="omtdTools/LexiconExtractorFromLexica"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdTopicExtractor" name="Topic extractor">
+        <tool_dir dir="omtdTools/TopicExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSentimentAnalyzer" name="Sentiment analyzer">
+        <tool_dir dir="omtdTools/SentimentAnalyzer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdLanguageIdentifier" name="Language identifier">
+        <tool_dir dir="omtdTools/LanguageIdentifier"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdLexiconExtractorFromCorpora" name="Lexicon extractor from corpora">
+        <tool_dir dir="omtdTools/LexiconExtractorFromCorpora"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdTermExtractor" name="Term extractor">
+        <tool_dir dir="omtdTools/TermExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdKeywordExtractor" name="Keyword extractor">
+        <tool_dir dir="omtdTools/KeywordExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDisambiguator" name="Disambiguator">
+        <tool_dir dir="omtdTools/Disambiguator"/>
+    </section>
+    <section id="omtdWordSenseDisambiguator" name="Word sense disambiguator">
+        <tool_dir dir="omtdTools/WordSenseDisambiguator"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdDocumentClassifier" name="Document classifier">
+        <tool_dir dir="omtdTools/DocumentClassifier"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdPersuasiveExpressionMiner" name="Persuasive expression miner">
+        <tool_dir dir="omtdTools/PersuasiveExpressionMiner"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdEventExtractor" name="Event extractor">
+        <tool_dir dir="omtdTools/EventExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdContradictionDetector" name="Contradiction detector">
+        <tool_dir dir="omtdTools/ContradictionDetector"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdEmotionRecognizer" name="Emotion recognizer">
+        <tool_dir dir="omtdTools/EmotionRecognizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdInformationExtractor" name="Information extractor">
+        <tool_dir dir="omtdTools/InformationExtractor"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdVariablesDectector" name="Variables dectector">
+        <tool_dir dir="omtdTools/VariablesDectector"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdPreOrPostProcessor" name="Pre- or Post-Processor">
+        <tool_dir dir="omtdTools/PreOrPostProcessor"/>
+    </section>
+    <section id="omtdNormalizer" name="Normalizer">
+        <tool_dir dir="omtdTools/Normalizer"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdFilter" name="Filter">
+        <tool_dir dir="omtdTools/Filter"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdSpellingChecker" name="Spelling checker">
+        <tool_dir dir="omtdTools/SpellingChecker"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+    <section id="omtdGrammarChecker" name="Grammar checker">
+        <tool_dir dir="omtdTools/GrammarChecker"/>
+    </section>
+    <section id="omtdNothing" name="">
+        <tool_dir dir="omtdTools/Nothing"/>
+    </section>
+</toolbox>
